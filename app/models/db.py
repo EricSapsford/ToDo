@@ -34,6 +34,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 
@@ -56,6 +58,8 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            "firstName": self.first_name,
+            "last_name": self.last_name,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }
@@ -90,17 +94,17 @@ class ProjectColor(enum.Enum):
 
     def to_list():
         return [
-           "Berry Red"
+           "BerryRed"
            "Red"
            "Orange"
            "Yellow"
-           "Olive Green"
-           "Lime Green"
+           "OliveGreen"
+           "LimeGreen"
            "Green"
-           "Mint Green"
+           "MintGreen"
            "Teal"
-           "Sky Blue"
-           "Light Blue"
+           "SkyBlue"
+           "LightBlue"
            "Blue"
            "Grape"
            "Violet"
@@ -164,7 +168,7 @@ class Task(db.Model):
     labels = db.Column(db.String(800), nullable=True)
     status = db.Column(db.Boolean, nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
-    section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("sections.id")), nullable=False)
+    section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("sections.id")), nullable=True)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 
@@ -203,7 +207,7 @@ class Section(db.Model):
     updated_at = db.Column(db.Date, nullable=False)
 
     # one-to-many: one project can have many sections
-    sections_rel = db.relationship("Project", back_populates="projects_rel")
+    projects_rel = db.relationship("Project", back_populates="sections_rel")
 
     def to_dict(self):
         return {
