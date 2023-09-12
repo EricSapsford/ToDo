@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
+import * as projectActions from "../../store/project";
+
 function LoginFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -14,10 +16,12 @@ function LoginFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
-    if (data) {
+    if (!data.id) {
       setErrors(data);
     } else {
-        closeModal()
+      console.log("login Project fetch going off")
+      closeModal()
+      dispatch(projectActions.getAllProjectsForAUserThunk(data.id));
     }
   };
 
