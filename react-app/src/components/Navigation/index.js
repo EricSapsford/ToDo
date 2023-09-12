@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import UserControls from "../UserControls";
 
-import * as sessionActions from '../../store/session';
-import * as projectActions from "../../store/project";
-import * as taskActions from "../../store/task"
+// import * as sessionActions from '../../store/session';
+// import * as projectActions from "../../store/project";
+// import * as taskActions from "../../store/task"
 
 import './Navigation.css';
 
@@ -15,10 +15,6 @@ function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
-
-	// useEffect(() => {
-	// 	dispatch(projectActions.getAllProjectsForAUserThunk());
-	// }, [dispatch, sessionUser])
 
 	return (
 	<nav>

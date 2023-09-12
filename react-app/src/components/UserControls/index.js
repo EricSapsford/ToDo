@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { logout } from "../../store/session";
+import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import ProjectCard from "../ProjectCard";
 
 import * as projectActions from "../../store/project";
 
@@ -16,6 +16,9 @@ function UserControls({ user }) {
     if (showMenu) return;
     setShowMenu(true);
   };
+
+  const projState = useSelector((state) => (state.projects ? state.projects : {}))
+  const projArr = Object.values(projState.allProjects)
 
   useEffect(() => {
     if (!showMenu) return;
@@ -38,11 +41,6 @@ function UserControls({ user }) {
     console.log("projects sidebar Project fetch going off")
 	}, [dispatch])
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(logout());
-  };
-
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
@@ -54,7 +52,20 @@ function UserControls({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <div>Projects</div>
+            <div>
+              <div>
+                {projArr.map((project) => (
+                  <div key={project.id}>
+                    <ProjectCard project={project} />
+                  </div>
+                ))}
+              </div>
+
+              <OpenModalButton
+                buttonText={"Create Project"}
+                modalComponent={<ProjectFormCreate />}
+              />
+            </div>
           </>
         ) : (
           <>
