@@ -65,7 +65,7 @@ function UserControls({ user }) {
             <div>
               <div>
                 {projArr.map((project) => (
-                  <div className="update-button" key={project.id} style={{border: '1px solid gray'}}
+                  <div className="project-update-button" key={project.id} style={{border: '1px solid gray'}}
                   >
                     <ProjectCard project={project} />
                     <OpenModalButton

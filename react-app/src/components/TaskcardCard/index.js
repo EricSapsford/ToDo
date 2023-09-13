@@ -1,14 +1,15 @@
 import React from "react";
+import "./TaskcardCard.css"
 
-function TaskcardCard({ task }) {
+function TaskcardCard({ task, projectId }) {
 
   return (
     <>
-      <div>
-        <span>{task.name}</span>
-        <span>{task.description}</span>
-        <span>{task.labels}</span>
-        <span>{task.id}</span>
+      <div className="task-card-card-overdiv">
+        <div>{task.name}</div>
+        <div>{task.description}</div>
+        <div>Labels: {task.labels}</div>
+        {/* <span>{task.id}</span> */}
       </div>
     </>
   )

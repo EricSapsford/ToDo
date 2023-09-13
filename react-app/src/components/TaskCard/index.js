@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from 'react-router-dom';
+import OpenModalButton from "../OpenModalButton";
 import TaskcardCard from "../TaskcardCard";
+import TaskFormCreate from "../TaskFormCreate";
+import TaskFormDelete from "../TaskFormDelete";
+import TaskFormUpdate from "../TaskFormUpdate";
 
 import * as taskActions from "../../store/task";
 
@@ -23,10 +27,23 @@ return (
   <>
     <div className="task-card-center-div">
       {taskArr.map((task) => (
-        <div key={task.id}>
-          <TaskcardCard task={task} />
+        <div key={task.id} className="task-update-button">
+          <TaskcardCard task={task} projectId={projectId}/>
+          <OpenModalButton
+            buttonText={"Edit"}
+            modalComponent={<TaskFormUpdate task={task}/>}
+          />
+          <OpenModalButton
+            buttonText={"Delete"}
+            modalComponent={<TaskFormDelete taskId={task.id}/>}
+          />
         </div>
       ))}
+
+      <OpenModalButton
+        buttonText={"Add Task"}
+        modalComponent={<TaskFormCreate projectId={projectId}/>}
+      />
     </div>
   </>
 )

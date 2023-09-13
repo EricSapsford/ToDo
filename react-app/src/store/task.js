@@ -109,6 +109,23 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
   }
 }
 
+// DELETE A TASK
+export const deleteTaskThunk = (taskId) => async (dispatch) => {
+  const res = await fetch(`/api/tasks/${taskId}/delete`, {
+    method: "DELETE",
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(deleteTask(taskId));
+    return data;
+  } else {
+    const errors = await res.json()
+    return errors;
+  }
+}
+
 //===================================== REDUCER ===================================
 //===================================== REDUCER ===================================
 //===================================== REDUCER ===================================

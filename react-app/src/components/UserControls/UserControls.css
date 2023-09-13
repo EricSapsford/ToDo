@@ -1,7 +1,7 @@
-.update-button:hover button{
+.project-update-button:hover button{
   display: block;
 }
 
-.update-button button{
+.project-update-button button{
   display: none;
 }

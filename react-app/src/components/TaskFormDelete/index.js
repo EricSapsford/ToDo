@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import * as projectActions from "../../store/project"
+import * as taskActions from "../../store/task"
 
 
-function ProjectFormDelete({ projectId }) {
-  // console.log("here's what's coming in", projectId)
+function TaskFormDelete({ taskId }) {
+  // console.log("here's what's coming in", taskId)
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
@@ -13,7 +12,7 @@ function ProjectFormDelete({ projectId }) {
     e.preventDefault();
 
     try {
-      const res = await dispatch(projectActions.deleteProjectThunk(projectId))
+      const res = await dispatch(taskActions.deleteTaskThunk(taskId))
       if (res.message) {
         closeModal();
       }
@@ -31,7 +30,7 @@ function ProjectFormDelete({ projectId }) {
     <>
       <div>
         <div>
-          Delete this Project?
+          Delete this Task?
         </div>
         <button onClick={closeModal}>
           No, keep
@@ -44,4 +43,4 @@ function ProjectFormDelete({ projectId }) {
   )
 }
 
-export default ProjectFormDelete
+export default TaskFormDelete

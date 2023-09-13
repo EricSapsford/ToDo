@@ -9,7 +9,7 @@ function ProjectFormCreate() {
   }
 
   return (
-    <ProjectForm project={project} formType="Create" />
+    <ProjectForm project={project} formType={"Create"} />
   )
 }
 
