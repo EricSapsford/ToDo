@@ -5,6 +5,8 @@ import TaskcardCard from "../TaskcardCard";
 
 import * as taskActions from "../../store/task";
 
+import "./TaskCard.css"
+
 function TaskCard() {
 const dispatch = useDispatch();
 const { projectId } = useParams();
@@ -19,7 +21,7 @@ useEffect(() => {
 
 return (
   <>
-    <div>
+    <div className="task-card-center-div">
       {taskArr.map((task) => (
         <div key={task.id}>
           <TaskcardCard task={task} />

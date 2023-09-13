@@ -97,7 +97,7 @@ export const createProjectThunk = (createdProject) => async (dispatch) => {
 
 // UPDATE A PROJECT
 export const updateProjectThunk = (updatedProject) => async (dispatch) => {
-  const { name, color, view, projectId } = updateProject
+  const { name, color, view, projectId } = updatedProject
   const res = await fetch(`/api/projects/${projectId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -119,7 +119,7 @@ export const updateProjectThunk = (updatedProject) => async (dispatch) => {
 
 // DELETE A PROJECT
 export const deleteProjectThunk = (projectId) => async (dispatch) => {
-  const res = await fetch(`/api/restaurants/${projectId}/delete`, {
+  const res = await fetch(`/api/projects/${projectId}/delete`, {
     method: "DELETE",
     headers: { 'Content-Type': 'application/json' },
   })
