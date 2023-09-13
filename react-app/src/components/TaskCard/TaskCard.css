@@ -1,0 +1,12 @@
+.task-card-center-div {
+  width: 50%;
+  margin: auto;
+}
+
+.task-update-button:hover button{
+  display: block;
+}
+
+.task-update-button button{
+  display: none;
+}

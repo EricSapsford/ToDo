@@ -1,23 +1,33 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 import ProfileButton from './ProfileButton';
+import UserControls from "../UserControls";
+
+// import * as sessionActions from '../../store/session';
+// import * as projectActions from "../../store/project";
+// import * as taskActions from "../../store/task"
+
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
-	const sessionUser = useSelector(state => state.session.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const sessionUser = useSelector(state => state.session.user);
 
 	return (
-		<ul>
-			<li>
-				<NavLink exact to="/">Home</NavLink>
-			</li>
-			{isLoaded && (
-				<li>
-					<ProfileButton user={sessionUser} />
-				</li>
-			)}
-		</ul>
+	<nav>
+		<span>
+			{isLoaded && (<UserControls user={sessionUser} />)}
+			<NavLink exact to="/">
+				<span>
+					<span>DueTo-</span>
+				</span>
+			</NavLink>
+			{isLoaded && (<ProfileButton user={sessionUser} />)}
+		</span>
+	</nav>
 	);
 }
 
