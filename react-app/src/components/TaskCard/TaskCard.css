@@ -10,3 +10,11 @@
 .task-update-button button{
   display: none;
 }
+
+.task-update-button {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+  border-bottom: 1px solid lightgrey;
+  padding: 20px 0;
+}

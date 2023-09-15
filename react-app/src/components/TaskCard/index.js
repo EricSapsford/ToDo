@@ -29,14 +29,6 @@ return (
       {taskArr.map((task) => (
         <div key={task.id} className="task-update-button">
           <TaskcardCard task={task} projectId={projectId}/>
-          <OpenModalButton
-            buttonText={"Edit"}
-            modalComponent={<TaskFormUpdate task={task}/>}
-          />
-          <OpenModalButton
-            buttonText={"Delete"}
-            modalComponent={<TaskFormDelete taskId={task.id}/>}
-          />
         </div>
       ))}
 

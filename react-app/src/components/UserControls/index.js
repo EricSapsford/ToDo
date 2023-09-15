@@ -16,7 +16,9 @@ function UserControls({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false)
   const ulRef = useRef();
+  // console.log("user", user)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -46,17 +48,18 @@ function UserControls({ user }) {
 
   useEffect(() => {
     if (user) {
-      dispatch(projectActions.getAllProjectsForAUserThunk(user.id));
+      dispatch(projectActions.getAllProjectsForAUserThunk(user.id)).then(() => setIsLoaded(true))
     }
-    console.log("projects sidebar Project fetch going off")
-	}, [dispatch])
+    // dispatch(projectActions.getAllProjectsForAUserThunk(user.id)).then(() => setIsLoaded(true))
+    // console.log("projects sidebar Project fetch going off")
+	}, [dispatch, user])
 
-  const ulClassName = "profile-dropdown" + (showUserMenu ? "" : " hidden");
+  const ulClassName = "user-control-dropdown" + (showUserMenu ? "" : "-false");
   const closeMenu = () => setShowMenu(false);
 
   return (
     <>
-      <button onClick={toggleMenu}>
+      <button onClick={toggleMenu} className="projects-button-actual">
         Projects
       </button>
       <ul className={ulClassName} ref={ulRef}>

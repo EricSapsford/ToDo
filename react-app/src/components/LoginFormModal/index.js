@@ -19,9 +19,9 @@ function LoginFormModal() {
     if (!data.id) {
       setErrors(data);
     } else {
-      console.log("login Project fetch going off")
+      // console.log("login Project fetch going off")
       closeModal()
-      dispatch(projectActions.getAllProjectsForAUserThunk(data.id));
+      // await dispatch(projectActions.getAllProjectsForAUserThunk(data.id));
     }
   };
 
