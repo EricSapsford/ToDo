@@ -97,7 +97,7 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
       name,
       description,
       labels,
-      section_id: 1
+      section_id
     })
   })
   console.log("res inside thunk", res)
