@@ -89,7 +89,7 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
 // UPDATE A TASK
 export const updateTaskThunk = (updatedTask) => async (dispatch) => {
   const { name, description, labels, section_id, taskId } = updatedTask
-  console.log("task coming into thunk", updateTask)
+  console.log("task coming into thunk", updatedTask)
   const res = await fetch(`/api/tasks/${taskId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -97,7 +97,7 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
       name,
       description,
       labels,
-      section_id
+      section_id: 1
     })
   })
   console.log("res inside thunk", res)

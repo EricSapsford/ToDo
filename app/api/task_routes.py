@@ -32,7 +32,7 @@ def update_task(id):
         task_to_update.labels = form.data["labels"]
         task_to_update.status = True
         task_to_update.project_id = id
-        task_to_update.section_id = 1
+        task_to_update.section_id = form.data["section_id"]
         task_to_update.updated_at = datetime.datetime.now()
         db.session.commit()
         return task_to_update.to_dict()
