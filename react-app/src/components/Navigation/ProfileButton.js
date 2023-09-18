@@ -5,6 +5,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import "./Navigation.css"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -47,13 +48,14 @@ function ProfileButton({ user }) {
         <button onClick={openMenu}>
           <i className="fas fa-user-circle" />
         </button>
-        <ul className={ulClassName} ref={ulRef}>
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
+        <div className={ulClassName} ref={ulRef} id="logged-in-user-menu-div">
+          <div>Welcome {user.firstName} {user.last_name}</div>
+          <div>{user.username}</div>
+          <div>{user.email}</div>
+          <div className="logged-in-user-menu-logout-button">
             <button onClick={handleLogout}>Log Out</button>
-          </li>
-        </ul>
+          </div>
+        </div>
       </>
       ) : (
         <>

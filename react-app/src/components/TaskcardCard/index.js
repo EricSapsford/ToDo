@@ -33,7 +33,6 @@ function TaskcardCard({ task, projectId }) {
             <span className="task-card-card-label-span">{label}</span>
           ))}
         </div>
-        {/* <span>{task.id}</span> */}
       </div>
     </>
   )

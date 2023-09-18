@@ -25,6 +25,21 @@ useEffect(() => {
 
 return (
   <>
+    {taskArr.length === 0 ?
+    <>
+    <div className="task-card-center-div-empty">
+      <h1>Looks like this project is empty.</h1>
+      <h1>Click the button below to add some tasks</h1>
+      <div className="add-task-button-div">
+        <OpenModalButton
+        buttonText={"Add Task"}
+        modalComponent={<TaskFormCreate projectId={projectId}/>}
+        />
+      </div>
+    </div>
+    </>
+    :
+    <>
     <div className="task-card-center-div">
       {taskArr.map((task) => (
         <div key={task.id} className="task-update-button">
@@ -32,12 +47,17 @@ return (
         </div>
       ))}
 
-      <OpenModalButton
-        buttonText={"Add Task"}
-        modalComponent={<TaskFormCreate projectId={projectId}/>}
-      />
+      <div className="add-task-button-div">
+        <OpenModalButton
+          buttonText={"Add Task"}
+          modalComponent={<TaskFormCreate projectId={projectId}/>}
+        />
+      </div>
     </div>
+    </>
+}
   </>
+
 )
 }
 

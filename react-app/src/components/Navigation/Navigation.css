@@ -68,8 +68,18 @@
   animation-fill-mode: forwards;
 }
 
-.user-controls-div {
+#logged-in-user-menu-div {
+  /* background-color: rgb(255, 113, 113); */
+  border: 2px solid rgb(255, 113, 113);
+  background-color: rgb(255, 207, 207);
+  padding: 60px 30px;
+  position: absolute;
+  right: 0;
+  top: 47px;
+}
 
+#logged-in-user-menu-div div {
+  padding: 10px 0;
 }
 
 @keyframes buttonFadeIn {

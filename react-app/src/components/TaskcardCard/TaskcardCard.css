@@ -26,7 +26,16 @@
 
 .task-card-card-first-row-div button {
   top: 50%;
-  height: 30px
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.task-card-card-first-row-div button:hover {
+  background-color: rgb(255, 207, 207);
+  border-radius: 7px;
 }
 
 .task-card-card-button-container {

@@ -82,3 +82,62 @@
   z-index: 1;
   animation: 0.2s ease-in slideout;
 }
+
+.user-control-login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+}
+
+.user-control-login-buttons button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  /* font-size: 7pt; */
+  font-weight: 900;
+  color: white;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid white;
+  padding: 5px 10px;
+  margin-left: 15px;
+  animation:
+    0.2s ease-in buttonFadeOut,
+    0.2s ease-in wordFadeOut;
+  animation-fill-mode: forwards;
+}
+
+.user-control-login-buttons button:hover {
+  animation:
+  0.2s ease-in alternate buttonFadeIn,
+  0.2s ease-in alternate wordFadeIn;
+animation-fill-mode: forwards;
+}
+
+.create-project-button-div {
+  text-align: center;
+}
+
+.create-project-button-div button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  /* font-size: 7pt; */
+  font-weight: 900;
+  color: white;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid white;
+  padding: 5px 10px;
+  animation:
+    0.2s ease-in buttonFadeOut,
+    0.2s ease-in wordFadeOut;
+  animation-fill-mode: forwards;
+}
+
+.create-project-button-div button:hover {
+  animation:
+    0.2s ease-in alternate buttonFadeIn,
+    0.2s ease-in alternate wordFadeIn;
+  animation-fill-mode: forwards;
+}

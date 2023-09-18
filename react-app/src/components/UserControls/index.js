@@ -66,43 +66,37 @@ function UserControls({ user }) {
         {user ? (
           <>
             <div>
-              <div>
+              <div style={{textAlign: "center"}}>
+              <h1>Projects</h1>
                 {projArr.map((project) => (
-                  <div className="project-update-button" key={project.id} style={{border: '1px solid gray'}}
+                  <div className="project-update-button" key={project.id}
                   >
                     <ProjectCard project={project} />
-                    <OpenModalButton
-                      buttonText={"Edit"}
-                      modalComponent={<ProjectFormUpdate project={project}/>}
-                    />
-                      <OpenModalButton
-                      buttonText={"Delete"}
-                      modalComponent={<ProjectFormDelete projectId={project.id}/>}
-                    />
                   </div>
                 ))}
               </div>
-
+              <div className="create-project-button-div">
               <OpenModalButton
                 buttonText={"Create Project"}
                 modalComponent={<ProjectFormCreate />}
-              />
+                />
+              </div>
             </div>
           </>
         ) : (
-          <>
+          <div className="user-control-login-buttons">
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
-            />
+              />
 
             <OpenModalButton
               buttonText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
-            />
-          </>
+              />
+          </div>
         )}
       </ul>
     </>

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as projectActions from "../../store/project";
+import "./ProjectForm.css"
 
 function ProjectForm({ project, formType }) {
   // console.log("project coming in from update", project)
@@ -72,23 +73,24 @@ function ProjectForm({ project, formType }) {
 
   return (
     <>
+    <div className="login-modal-div">
       <form
         onSubmit={handleSubmit}
         // encType="multipart/form-data"
-      >
+        >
 
         {formType === "Create" ?
-        <div>
-          Add Project
+        <div className="log-in-title">
+          <h1>Add Project</h1>
         </div>
         :
-        <div>
-          Edit
+        <div className="log-in-title">
+          <h1>Edit</h1>
         </div>
         }
 
         <div>
-          <div>
+          <div className="inputs-and-login-button">
             <input
               className={formType === "Create" ? "create-project-input" : "update-project-input"}
               type="text"
@@ -98,19 +100,19 @@ function ProjectForm({ project, formType }) {
               value={name}
               placeholder="Name"
               required
-            />
+              />
           </div>
           {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
         </div>
 
         <div>
-          <div>
+          <div className="modal-select-div">
             <select
               onChange={(e) => setColor(e.target.value)}
               value={color}
               className={formType === "Create" ? "create-project-select" : "update-project-select"}
               required
-            >
+              >
               <option value="" disabled selected>(select color)</option>
               <option key={"BerryRed"} value={"BerryRed"}>BerryRed</option>
               <option key={"Red"} value={"Red"}>Red</option>
@@ -137,12 +139,13 @@ function ProjectForm({ project, formType }) {
           {errors.color && (<div className="errorsDiv">{errors.color}</div>)}
         </div>
 
-        <div>
+        <div className="inputs-and-login-button">
           <button>
             {formType === "Create" ? "Add" : "Save"}
           </button>
         </div>
       </form>
+    </div>
     </>
   )
 }
