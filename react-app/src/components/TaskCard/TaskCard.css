@@ -10,3 +10,33 @@
 .task-update-button button{
   display: none;
 }
+
+.task-update-button {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+  border-bottom: 1px solid lightgrey;
+  padding: 20px 0;
+}
+
+.task-card-center-div-empty {
+  text-align: center;
+}
+
+.add-task-button-div button{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  /* font-size: 7pt; */
+  font-weight: bolder;
+  color: rgb(255, 113, 113);
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid rgb(255, 113, 113);
+  padding: 5px 10px;
+  margin-right: 15px;
+}
+
+.add-task-button-div button:hover {
+  background-color: rgb(255, 207, 207);
+}

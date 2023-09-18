@@ -1,5 +1,54 @@
+.task-card-card-label-span {
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
+  border-radius: 7px;
+  margin: 10px 5px;
+}
+
 .task-card-card-overdiv {
-  margin: 10px 0;
-  border-top: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
+  width: 100%;
+}
+
+.task-card-card-overdiv div {
+  margin: 6px 0;
+}
+
+.task-card-card-first-row-div {
+  margin: 6px 0;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+}
+
+.task-card-card-name-div {
+  width: 100%;
+}
+
+.task-card-card-first-row-div button {
+  top: 50%;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.task-card-card-first-row-div button:hover {
+  background-color: rgb(255, 207, 207);
+  border-radius: 7px;
+}
+
+.task-card-card-button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.task-card-card-description-div,
+.task-card-card-label-div {
+  padding: 8px 0;
+  /* border: 1px solid green; */
+}
+
+.task-card-card-label-div {
+  padding-bottom: 22px;
 }

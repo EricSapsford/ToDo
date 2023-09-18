@@ -1,0 +1,54 @@
+.log-in-title {
+  width: 100%;
+  text-align: center;
+}
+
+#modal-content {
+  border-radius: 12px;
+}
+
+.login-modal-div {
+  padding: 50px;
+  background-color: rgb(255, 207, 207);
+  border-radius: 12px;
+}
+
+.inputs-and-login-button {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+}
+
+.inputs-and-login-button button {
+  border: none;
+  cursor: pointer;
+  /* font-size: 7pt; */
+  font-weight: 900;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid rgb(255, 113, 113);
+  padding: 5px 10px;
+  /* margin-left: 15px; */
+  animation:
+    0.2s ease-in buttonFadeOut,
+    0.2s ease-in wordFadeOut;
+  animation-fill-mode: forwards;
+}
+
+.inputs-and-login-button input {
+  background-color: white;
+  border: none;
+  /* font-size: 7pt; */
+  font-weight: 900;
+  color: rgb(255, 113, 113);
+  border: 2px solid rgb(255, 113, 113);
+  padding: 5px 10px;
+  /* margin-left: 15px; */
+}
+
+.inputs-and-login-button button:hover {
+  animation:
+    0.2s ease-in alternate buttonFadeIn,
+    0.2s ease-in alternate wordFadeIn;
+  animation-fill-mode: forwards;
+}

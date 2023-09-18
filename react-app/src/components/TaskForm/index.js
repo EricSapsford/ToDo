@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as taskActions from "../../store/task";
+import "./TaskForm.css"
 
 function TaskForm ({ task, formType }) {
   const dispatch = useDispatch()
@@ -83,23 +84,24 @@ function TaskForm ({ task, formType }) {
 
   return (
     <>
+    <div className="login-modal-div">
       <form
         onSubmit={handleSubmit}
         // encType="multipart/form-data"
-      >
+        >
 
         {formType === "Create" ?
-          <div>
-            Add Task
+          <div className="log-in-title">
+            <h1>Add Task</h1>
           </div>
           :
-          <div>
-            Edit
+          <div className="log-in-title">
+            <h1>Edit</h1>
           </div>
         }
 
         <div>
-          <div>
+          <div className="inputs-and-login-button">
             <input
               className={formType === "Create" ? "create-project-input" : "update-project-input"}
               type="text"
@@ -115,7 +117,7 @@ function TaskForm ({ task, formType }) {
         </div>
 
         <div>
-          <div>
+          <div className="task-form-textarea">
             <textarea
               rows="8" cols="56"
               id="comments"
@@ -123,13 +125,13 @@ function TaskForm ({ task, formType }) {
               onChange={e => setDescription(e.target.value)}
               value={description}
               placeholder="Description (optional)"
-            />
+              />
           </div>
           {errors.description && (<div className="errorsDiv">{errors.description}</div>)}
         </div>
 
         <div>
-          <div>
+          <div className="task-form-label-input-div">
             <input
               id="label-input-field"
               className={formType === "Create" ? "create-project-input" : "update-project-input"}
@@ -147,13 +149,14 @@ function TaskForm ({ task, formType }) {
           {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
         </div>
 
-        <div>
+        <div className="inputs-and-login-button">
           <button>
             {formType === "Create" ? "Add Task" : "Save"}
           </button>
         </div>
 
       </form>
+    </div>
     </>
   )
 }

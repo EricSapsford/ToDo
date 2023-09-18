@@ -16,7 +16,9 @@ function UserControls({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false)
   const ulRef = useRef();
+  // console.log("user", user)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -46,60 +48,55 @@ function UserControls({ user }) {
 
   useEffect(() => {
     if (user) {
-      dispatch(projectActions.getAllProjectsForAUserThunk(user.id));
+      dispatch(projectActions.getAllProjectsForAUserThunk(user.id)).then(() => setIsLoaded(true))
     }
-    console.log("projects sidebar Project fetch going off")
-	}, [dispatch])
+    // dispatch(projectActions.getAllProjectsForAUserThunk(user.id)).then(() => setIsLoaded(true))
+    // console.log("projects sidebar Project fetch going off")
+	}, [dispatch, user])
 
-  const ulClassName = "profile-dropdown" + (showUserMenu ? "" : " hidden");
+  const ulClassName = "user-control-dropdown" + (showUserMenu ? "" : "-false");
   const closeMenu = () => setShowMenu(false);
 
   return (
     <>
-      <button onClick={toggleMenu}>
+      <button onClick={toggleMenu} className="projects-button-actual">
         Projects
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <div>
-              <div>
+              <div style={{textAlign: "center"}}>
+              <h1>Projects</h1>
                 {projArr.map((project) => (
-                  <div className="project-update-button" key={project.id} style={{border: '1px solid gray'}}
+                  <div className="project-update-button" key={project.id}
                   >
                     <ProjectCard project={project} />
-                    <OpenModalButton
-                      buttonText={"Edit"}
-                      modalComponent={<ProjectFormUpdate project={project}/>}
-                    />
-                      <OpenModalButton
-                      buttonText={"Delete"}
-                      modalComponent={<ProjectFormDelete projectId={project.id}/>}
-                    />
                   </div>
                 ))}
               </div>
-
+              <div className="create-project-button-div">
               <OpenModalButton
                 buttonText={"Create Project"}
                 modalComponent={<ProjectFormCreate />}
-              />
+                />
+              </div>
             </div>
           </>
         ) : (
-          <>
+          <div className="user-control-login-buttons">
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
-            />
+              />
 
             <OpenModalButton
               buttonText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
-            />
-          </>
+              />
+          </div>
         )}
       </ul>
     </>

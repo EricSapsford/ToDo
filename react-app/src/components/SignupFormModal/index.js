@@ -10,13 +10,23 @@ function SignupFormModal() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
+
+	const user = {
+		username,
+		email,
+		password,
+		firstName,
+		lastName
+	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			const data = await dispatch(signUp(username, email, password));
+			const data = await dispatch(signUp(user));
 			if (data) {
 				setErrors(data);
 			} else {
@@ -31,51 +41,63 @@ function SignupFormModal() {
 
 	return (
 		<>
+		<div className="login-modal-div">
+		<div className="log-in-title">
 			<h1>Sign Up</h1>
+			</div>
 			<form onSubmit={handleSubmit}>
 				<ul>
 					{errors.map((error, idx) => (
 						<li key={idx}>{error}</li>
 					))}
 				</ul>
-				<label>
-					Email
+				<div className="inputs-and-login-button">
 					<input
 						type="text"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
+						placeholder="Email"
 					/>
-				</label>
-				<label>
-					Username
 					<input
 						type="text"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						required
+						placeholder="Username"
 					/>
-				</label>
-				<label>
-					Password
+					<input
+						type="text"
+						value={firstName}
+						onChange={(e) => setFirstName(e.target.value)}
+						required
+						placeholder="First Name"
+					/>
+					<input
+						type="text"
+						value={lastName}
+						onChange={(e) => setLastName(e.target.value)}
+						required
+						placeholder="Last Name"
+					/>
 					<input
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
+						placeholder="Password"
 					/>
-				</label>
-				<label>
-					Confirm Password
 					<input
 						type="password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
+						placeholder="Confirm Password"
 					/>
-				</label>
 				<button type="submit">Sign Up</button>
+			</div>
 			</form>
+			</div>
 		</>
 	);
 }

@@ -28,16 +28,18 @@ function TaskFormDelete({ taskId }) {
 
   return (
     <>
-      <div>
-        <div>
-          Delete this Task?
+      <div className="login-modal-div">
+        <div className="log-in-title">
+          <h1>Delete this Task?</h1>
         </div>
-        <button onClick={closeModal}>
-          No, keep
-        </button>
-        <button onClick={handleDelete}>
-          Yes, delete
-        </button>
+        <div className="inputs-and-login-button">
+          <button onClick={closeModal}>
+            No, keep
+          </button>
+          <button onClick={handleDelete}>
+            Yes, delete
+          </button>
+        </div>
       </div>
     </>
   )

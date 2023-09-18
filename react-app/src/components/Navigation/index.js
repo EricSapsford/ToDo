@@ -17,15 +17,19 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
 	return (
-	<nav>
-		<span>
+	<nav className='whole-ass-nav-bar'>
+		<span className='nav-bar-top-span'>
+			<div className='user-controls-div'>
 			{isLoaded && (<UserControls user={sessionUser} />)}
+			</div>
 			<NavLink exact to="/">
 				<span>
-					<span>DueTo-</span>
+					<span className='DueTo-words-actual'><i class="fa-solid fa-house"></i></span>
 				</span>
 			</NavLink>
+			<div className='profile-buttons-div'>
 			{isLoaded && (<ProfileButton user={sessionUser} />)}
+			</div>
 		</span>
 	</nav>
 	);

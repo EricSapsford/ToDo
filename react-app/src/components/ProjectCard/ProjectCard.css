@@ -1,0 +1,38 @@
+.project-card-name {
+  position: relative;
+  background-color: whitesmoke;
+  margin: 10px 0;
+  padding: 10px 0;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.project-name-div {
+  text-decoration: none;
+  color: black;
+  font-weight: bolder;
+}
+
+.project-card-modal-button-edit {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+}
+
+.project-card-modal-button-edit button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.project-card-modal-button-delete {
+  position: absolute;
+  top: 10px;
+  right: 0;
+}
+
+.project-card-modal-button-delete button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
