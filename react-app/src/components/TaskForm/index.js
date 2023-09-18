@@ -53,10 +53,10 @@ function TaskForm ({ task, formType }) {
     } else if (formType === "Update") {
 
       try {
-        // console.log("This is what you're sending", task)
+        console.log("This is what you're sending", task)
         const res = await dispatch(taskActions.updateTaskThunk(task));
         closeModal();
-        // console.log("This is what's coming back in the component", res)
+        console.log("This is what's coming back in the component", res)
         {res.errors ? setErrors(res.errors) : setErrors([]); }
         if (res.task.id) {
           setErrors([]);
