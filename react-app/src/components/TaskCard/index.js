@@ -8,6 +8,7 @@ import TaskFormDelete from "../TaskFormDelete";
 import TaskFormUpdate from "../TaskFormUpdate";
 
 import * as taskActions from "../../store/task";
+import * as sectionActions from "../../store/section";
 
 import "./TaskCard.css"
 
@@ -20,6 +21,7 @@ const taskState = useSelector(state => state.tasks ? state.tasks : {})
 const taskArr = Object.values(taskState.allTasks)
 
 useEffect(() => {
+  dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
   dispatch(taskActions.getAllTasksForAProjectThunk(projectId))
 }, [dispatch, projectId])
 

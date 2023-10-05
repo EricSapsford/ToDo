@@ -6,7 +6,7 @@ function TaskFormCreate({ projectId }) {
     name: "",
     description: "",
     labels: "",
-    sectionId: null,
+    // sectionId: null,
     projectId
   }
 

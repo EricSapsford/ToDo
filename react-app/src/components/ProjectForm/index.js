@@ -25,7 +25,7 @@ function ProjectForm({ project, formType }) {
       ...project,
       name,
       color,
-      view: "False",
+      view: "List",
       projectId: project.id
     }
 

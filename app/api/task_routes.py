@@ -30,7 +30,6 @@ def update_task(id):
         task_to_update.name = form.data["name"]
         task_to_update.description = form.data["description"]
         task_to_update.labels = form.data["labels"]
-        task_to_update.status = True
         task_to_update.project_id = id
         task_to_update.section_id = form.data["section_id"]
         task_to_update.updated_at = datetime.datetime.now()
@@ -50,7 +49,7 @@ def delete_task(id):
     was_it_deleted = Task.query.get(id)
     if was_it_deleted == None:
         res = {
-            "message": "Successfully deleted project",
+            "message": "Successfully deleted task",
             "id": id
         }
         return res

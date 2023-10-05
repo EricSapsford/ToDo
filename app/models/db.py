@@ -116,6 +116,16 @@ class ProjectColor(enum.Enum):
            "Taupe"
         ]
 
+class ProjectView(enum.Enum):
+    List = "List"
+    Board = "Board"
+
+    def to_list():
+        return [
+            "List"
+            "Board"
+        ]
+
 class Project(db.Model):
     __tablename__ = "projects"
 
@@ -125,7 +135,7 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     color = db.Column(db.Enum(ProjectColor), nullable=False)
-    view = db.Column(db.Boolean, nullable=False)
+    view = db.Column(db.Enum(ProjectView), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
@@ -144,7 +154,7 @@ class Project(db.Model):
             "id": self.id,
             "name": self.name,
             "color": str(self.color).split(".")[1],
-            "view": self.view,
+            "view": str(self.view).split(".")[1],
             "userId": self.user_id,
             "createdAt": self.created_at,
             "updatedAt": self.updated_at,
@@ -166,14 +176,16 @@ class Task(db.Model):
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(2000), nullable=True)
     labels = db.Column(db.String(800), nullable=True)
-    status = db.Column(db.Boolean, nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
-    section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("sections.id")), nullable=True)
+    section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("sections.id")), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 
     # one-to-many: one project can have many tasks
     projects_rel = db.relationship("Project", back_populates="tasks_rel")
+
+    # one-to-many: one section can have many tasks
+    sections_rel = db.relationship("Section", back_populates="tasks_rel")
 
     def to_dict(self):
         return {
@@ -181,7 +193,6 @@ class Task(db.Model):
             "name": self.name,
             "description": self.description,
             "labels": self.labels,
-            "status": self.status,
             "projectId": self.project_id,
             "sectionId": self.section_id,
             "createdAt": self.created_at,
@@ -208,6 +219,9 @@ class Section(db.Model):
 
     # one-to-many: one project can have many sections
     projects_rel = db.relationship("Project", back_populates="sections_rel")
+
+    # one-to-many: one section can have many tasks
+    tasks_rel = db.relationship("Task", back_populates="sections_rel", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

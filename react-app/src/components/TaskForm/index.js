@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as taskActions from "../../store/task";
@@ -7,9 +7,9 @@ import "./TaskForm.css"
 
 function TaskForm ({ task, formType }) {
   const dispatch = useDispatch()
-  const history = useHistory()
+  // const history = useHistory()
   const { closeModal } = useModal()
-  const { projectId } = useParams()
+  // const { projectId } = useParams()
 
   const [name, setName] = useState(task?.name)
   const [description, setDescription] = useState(task?.description)
@@ -19,6 +19,11 @@ function TaskForm ({ task, formType }) {
 
   const [errors, setErrors] = useState([]);
 
+  const sectionState = useSelector(state => state.sections ? state.sections : {})
+  const sectionArr = Object.values(sectionState.allSections)
+
+  console.log("section test", sectionArr[0].id);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,7 +32,7 @@ function TaskForm ({ task, formType }) {
       name,
       description,
       labels,
-      sectionId: null,
+      sectionId: sectionArr[0].id,
       taskId: task.id,
     }
 

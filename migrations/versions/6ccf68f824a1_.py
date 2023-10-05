@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0d093328d1df
+Revision ID: 6ccf68f824a1
 Revises:
-Create Date: 2023-09-08 09:50:25.019675
+Create Date: 2023-10-04 09:54:15.511700
 
 """
 from alembic import op
@@ -12,8 +12,9 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
+
 # revision identifiers, used by Alembic.
-revision = '0d093328d1df'
+revision = '6ccf68f824a1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,7 +43,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('color', sa.Enum('BerryRed', 'Red', 'Orange', 'Yellow', 'OliveGreen', 'LimeGreen', 'Green', 'MintGreen', 'Teal', 'SkyBlue', 'LightBlue', 'Blue', 'Grape', 'Violet', 'Lavender', 'Magenta', 'Salmon', 'Charcoal', 'Grey', 'Taupe', name='projectcolor'), nullable=False),
-    sa.Column('view', sa.Boolean(), nullable=False),
+    sa.Column('view', sa.Enum('List', 'Board', name='projectview'), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.Date(), nullable=False),
     sa.Column('updated_at', sa.Date(), nullable=False),
@@ -71,9 +72,8 @@ def upgrade():
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('description', sa.String(length=2000), nullable=True),
     sa.Column('labels', sa.String(length=800), nullable=True),
-    sa.Column('status', sa.Boolean(), nullable=False),
     sa.Column('project_id', sa.Integer(), nullable=False),
-    sa.Column('section_id', sa.Integer(), nullable=True),
+    sa.Column('section_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.Date(), nullable=False),
     sa.Column('updated_at', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),

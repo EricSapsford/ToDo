@@ -65,7 +65,7 @@ export const getAllTasksForAProjectThunk = (projectId) => async (dispatch) => {
 
 // CREATE A TASK
 export const createTaskThunk = (createdTask) => async (dispatch) => {
-  const { name, description, labels, section_id, projectId } = createdTask
+  const { name, description, labels, sectionId, projectId } = createdTask
   const res = await fetch(`/api/projects/${projectId}/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -73,7 +73,7 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
       name,
       description,
       labels,
-      section_id
+      section_id: sectionId
     })
   })
   if (res.ok) {
@@ -88,7 +88,7 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
 
 // UPDATE A TASK
 export const updateTaskThunk = (updatedTask) => async (dispatch) => {
-  const { name, description, labels, section_id, taskId } = updatedTask
+  const { name, description, labels, sectionId, taskId } = updatedTask
   console.log("task coming into thunk", updatedTask)
 
   const res = await fetch(`/api/tasks/${taskId}/update`, {
@@ -98,7 +98,7 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
       name,
       description,
       labels,
-      section_id
+      section_id: sectionId
     })
   })
   console.log("res inside thunk", res)
