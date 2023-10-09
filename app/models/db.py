@@ -176,6 +176,7 @@ class Task(db.Model):
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(2000), nullable=True)
     labels = db.Column(db.String(800), nullable=True)
+    due_date = db.Column(db.Date, nullable=True)
     project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
     section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("sections.id")), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
@@ -193,6 +194,7 @@ class Task(db.Model):
             "name": self.name,
             "description": self.description,
             "labels": self.labels,
+            "dueDate": self.due_date,
             "projectId": self.project_id,
             "sectionId": self.section_id,
             "createdAt": self.created_at,

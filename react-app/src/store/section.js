@@ -21,11 +21,33 @@ const getAllSectionsForAUser = (sections) => {
   }
 }
 
+const createSection = (section) => {
+  return {
+    type: CREATE_SECTION,
+    section
+  }
+}
+
+const updateSection = (section) => {
+  return {
+    type: UPDATE_SECTION,
+    section
+  }
+}
+
+const deleteSection = (sectionId) => {
+  return {
+    type: DELETE_SECTION,
+    sectionId
+  }
+}
+
 //===================================== THUNKS ====================================
 //===================================== THUNKS ====================================
 //===================================== THUNKS ====================================
 //===================================== THUNKS ====================================
 
+// GET ALL SECTIONS FOR A PROJECT
 export const getAllSectionsForAUserThunk = (projectId) => async (dispatch) => {
   const res = await fetch(`/api/projects/${projectId}/sections`, {
     method: "GET",
@@ -39,6 +61,63 @@ export const getAllSectionsForAUserThunk = (projectId) => async (dispatch) => {
   } else {
     const errors = await res.json();
     return errors
+  }
+}
+
+// CREATE A PROJECT
+export const createSectionThunk = (createdSection) => async (dispatch) => {
+  const { name, projectId } = createdSection
+  const res = await fetch(`/api/projects/${projectId}/section/create`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name
+    })
+  })
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(createSection(data));
+    return data
+  } else {
+    const errors = await res.json();
+    return errors
+  }
+}
+
+// UPDATE A SECTION
+export const updateSectionThunk = (updatedSection) => async (dispatch) => {
+  const { name, sectionId } = updatedSection
+  const res = await fetch(`/api/sections/${sectionId}/update`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name,
+    })
+  })
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(updateSection(data));
+    return data
+  } else {
+    const errors = await res.json();
+    return errors
+  }
+}
+
+// DELETE A SECTION
+export const deleteSectionThunk = (sectionId) => async (dispatch) => {
+  const res = await fetch(`/api/sections/${sectionId}/delete`, {
+    method: "DELETE",
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(deleteSection(sectionId));
+    return data;
+  } else {
+    const errors = await res.json()
+    return errors;
   }
 }
 
@@ -61,6 +140,36 @@ const sectionReducer = (state = initialState, action) => {
       action.sections.forEach((sectionObj) => {
         newState.allSections[sectionObj.id] = sectionObj
       });
+      return newState
+    }
+
+    case CREATE_SECTION: {
+      if (action.section.id) {
+        const newState = { ...state, allSections: { ...state.allSections } }
+        newState.allSections[action.section.id] = action.section
+        return newState;
+      } else if (action.section.errors) {
+        return state
+      } else {
+        return state
+      }
+    }
+
+    case UPDATE_SECTION: {
+      if (action.section.id) {
+        const newState = { ...state, allSections: { ...state.allSections } }
+        newState.allSections[action.section.id] = action.section
+        return newState;
+      } else if (action.section.errors) {
+        return state
+      } else {
+        return state
+      }
+    }
+
+    case DELETE_SECTION: {
+      const newState = { ...state, allSections: { ...state.allSections } }
+      delete newState.allSections[action.sectionId]
       return newState
     }
 

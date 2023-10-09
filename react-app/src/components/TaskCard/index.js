@@ -17,47 +17,95 @@ const dispatch = useDispatch();
 const { projectId } = useParams();
 console.log(projectId)
 
+const [isLoaded, setIsLoaded] = useState(false)
+
 const taskState = useSelector(state => state.tasks ? state.tasks : {})
 const taskArr = Object.values(taskState.allTasks)
+
+const project = useSelector(state => state.projects.allProjects[projectId] ? state.projects.allProjects[projectId] : {})
+
+const sectionState = useSelector(state => state.sections ? state.sections : {})
+const sectionsArr = Object.values(sectionState.allSections)
 
 useEffect(() => {
   dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
   dispatch(taskActions.getAllTasksForAProjectThunk(projectId))
+  setIsLoaded(true)
 }, [dispatch, projectId])
 
 return (
   <>
-    {taskArr.length === 0 ?
-    <>
-    <div className="task-card-center-div-empty">
-      <h1>Looks like this project is empty.</h1>
-      <h1>Click the button below to add some tasks</h1>
-      <div className="add-task-button-div">
-        <OpenModalButton
-        buttonText={"Add Task"}
-        modalComponent={<TaskFormCreate projectId={projectId}/>}
-        />
-      </div>
-    </div>
-    </>
-    :
-    <>
-    <div className="task-card-center-div">
-      {taskArr.map((task) => (
-        <div key={task.id} className="task-update-button">
-          <TaskcardCard task={task} projectId={projectId}/>
+      {isLoaded && taskArr.length === 0 && project.view === "List" && (
+      <>
+      <div className="task-card-center-div-empty">
+        <h1>Looks like this project is empty.</h1>
+        <h1>Click the button below to add some tasks</h1>
+        <div className="add-task-button-div">
+          <OpenModalButton
+            buttonText={"Add Task"}
+            modalComponent={<TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>}
+          />
         </div>
-      ))}
-
-      <div className="add-task-button-div">
-        <OpenModalButton
-          buttonText={"Add Task"}
-          modalComponent={<TaskFormCreate projectId={projectId}/>}
-        />
       </div>
-    </div>
-    </>
-}
+      </>
+      )}
+
+      {isLoaded && project.view === "List" && taskArr.length > 0 && (
+      <>
+      <div className="task-card-center-div">
+        <div>
+          <h1>{project.name}</h1>
+        </div>
+        {taskArr.map((task) => (
+          <div key={task.id} className="task-update-button">
+            <TaskcardCard task={task} projectId={projectId}/>
+          </div>
+        ))}
+
+        <div className="add-task-button-div">
+          <OpenModalButton
+            buttonText={"Add Task"}
+            modalComponent={<TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>}
+          />
+        </div>
+      </div>
+      </>
+      )}
+
+      {isLoaded && project.view === "Board" && (
+        <>
+          <div className="project-name-div">
+            <h1>{project.name}</h1>
+          </div>
+          <div className="section-center-div">
+            <div className="section-column-overdiv">
+              {sectionsArr.map((section) => (
+                <div key={section.id} className="section-map-div">
+                  <h2>{section.name}</h2>
+                  {taskArr.map((task) => (
+                    task.sectionId === section.id ?
+                    <div key={task.id} className="task-update-button">
+                      <TaskcardCard task={task} projectId={projectId}/>
+                    </div>
+                    :
+                    null
+                    ))}
+
+                  <div className="add-task-button-div">
+                    <OpenModalButton
+                      buttonText={"Add Task"}
+                      modalComponent={<TaskFormCreate projectId={projectId} sectionId={section.id}/>}
+                    />
+                  </div>
+
+                </div>
+              ))}
+            </div>
+
+
+          </div>
+        </>
+      )}
   </>
 
 )

@@ -7,15 +7,13 @@ import "./TaskForm.css"
 
 function TaskForm ({ task, formType }) {
   const dispatch = useDispatch()
-  // const history = useHistory()
   const { closeModal } = useModal()
-  // const { projectId } = useParams()
 
   const [name, setName] = useState(task?.name)
   const [description, setDescription] = useState(task?.description)
   const [labelChunk, setLabelChunk] = useState("")
   const [labels, setLabels] = useState(task?.labels)
-  const [sectionId, setSectionId] = useState(task?.sectionId)
+  // const [sectionId, setSectionId] = useState(task?.sectionId)
 
   const [errors, setErrors] = useState([]);
 
@@ -32,7 +30,6 @@ function TaskForm ({ task, formType }) {
       name,
       description,
       labels,
-      sectionId: sectionArr[0].id,
       taskId: task.id,
     }
 
@@ -80,8 +77,10 @@ function TaskForm ({ task, formType }) {
   const appendLabel = (e) => {
     if (labels === "") {
       setLabels(labelChunk)
+      setLabelChunk("")
     } else {
       setLabels(`${labels},${labelChunk}`)
+      setLabelChunk("")
     }
     // console.log("Current Label String", labels)
   }
@@ -152,6 +151,15 @@ function TaskForm ({ task, formType }) {
             </span>
           </div>
           {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
+        </div>
+
+        <div>
+            <span className="task-form-add-label-label">Labels:</span>
+          <div className="task-form-added-label-div" size={60}>
+            {labels.split(",").map((label) => (
+            <div className="task-form-added-label-span">{label}</div>
+          ))}
+          </div>
         </div>
 
         <div className="inputs-and-login-button">

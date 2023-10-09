@@ -38,3 +38,25 @@
 .task-form-label-input-div span button:hover {
   background-color: rgb(255, 113, 113);
 }
+
+.task-form-added-label-div {
+  display: flex;
+  flex-direction: row;
+  font-weight: 900;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.task-form-added-label-span {
+  padding: 5px 10px;
+  border: 1px solid grey;
+  border-radius: 7px;
+  margin-right: 5px;
+  background-color: white;
+  cursor: default;
+}
+
+.task-form-add-label-label {
+  padding: 0 15px;
+  font-weight: 900;
+}

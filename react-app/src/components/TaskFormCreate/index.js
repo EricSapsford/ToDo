@@ -1,12 +1,12 @@
 import TaskForm from "../TaskForm";
 
-function TaskFormCreate({ projectId }) {
+function TaskFormCreate({ projectId, sectionId }) {
 
   let task = {
     name: "",
     description: "",
     labels: "",
-    // sectionId: null,
+    sectionId,
     projectId
   }
 

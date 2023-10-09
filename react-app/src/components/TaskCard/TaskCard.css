@@ -40,3 +40,23 @@
 .add-task-button-div button:hover {
   background-color: rgb(255, 207, 207);
 }
+
+.section-column-overdiv {
+  display: flex;
+  flex-direction: column;
+  flex-flow: wrap;
+}
+
+.project-name-div {
+  width: 50%;
+  margin: auto;
+}
+
+.section-center-div {
+  width: 100%;
+  margin: 0 330px;
+}
+
+.section-map-div {
+  margin: 0 10px;
+}
