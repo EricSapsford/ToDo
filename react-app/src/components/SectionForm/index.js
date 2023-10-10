@@ -12,7 +12,7 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
   const { closeModal } = useModal()
 
   const [name, setName] = useState(section?.name)
-  // const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true)
 
   const [editSectionNameToggle, setEditSectionNameToggle] = useState(false)
   const [errors, setErrors] = useState([]);
@@ -21,13 +21,13 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
     setEditSectionNameToggle(!editSectionNameToggle)
   }
 
-  // useEffect(() => {
-  //   if (name.length > 0) {
-  //     setDisabled(false)
-  //   } else {
-  //     setDisabled(true)
-  //   }
-  // }, [name])
+  useEffect(() => {
+    if (name && name.length > 0) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  }, [name])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,7 +122,7 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
       <div className="section-form-submit-button">
         <button
           onClick={handleSubmit}
-          // disabled={disabled}
+          disabled={disabled}
         >
           {formType === "Create" ? "Add section" : "Save"}
         </button>
