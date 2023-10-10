@@ -6,6 +6,8 @@ import TaskcardCard from "../TaskcardCard";
 import TaskFormCreate from "../TaskFormCreate";
 import TaskFormDelete from "../TaskFormDelete";
 import TaskFormUpdate from "../TaskFormUpdate";
+import SectionFormUpdate from "../SectionFormUpdate"
+import SectionFormCreate from "../SectionFormCreate"
 
 import * as taskActions from "../../store/task";
 import * as sectionActions from "../../store/section";
@@ -15,7 +17,6 @@ import "./TaskCard.css"
 function TaskCard() {
 const dispatch = useDispatch();
 const { projectId } = useParams();
-console.log(projectId)
 
 const [isLoaded, setIsLoaded] = useState(false)
 
@@ -81,7 +82,7 @@ return (
             <div className="section-column-overdiv">
               {sectionsArr.map((section) => (
                 <div key={section.id} className="section-map-div">
-                  <h2>{section.name}</h2>
+                  <SectionFormUpdate section={section} sectionId={section.id}/>
                   {taskArr.map((task) => (
                     task.sectionId === section.id ?
                     <div key={task.id} className="task-update-button">
@@ -100,6 +101,10 @@ return (
 
                 </div>
               ))}
+
+              <span>
+                <SectionFormCreate projectId={projectId}/>
+              </span>
             </div>
 
 

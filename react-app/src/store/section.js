@@ -64,7 +64,7 @@ export const getAllSectionsForAUserThunk = (projectId) => async (dispatch) => {
   }
 }
 
-// CREATE A PROJECT
+// CREATE A SECTION
 export const createSectionThunk = (createdSection) => async (dispatch) => {
   const { name, projectId } = createdSection
   const res = await fetch(`/api/projects/${projectId}/section/create`, {

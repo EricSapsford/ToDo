@@ -20,8 +20,6 @@ function TaskForm ({ task, formType }) {
   const sectionState = useSelector(state => state.sections ? state.sections : {})
   const sectionArr = Object.values(sectionState.allSections)
 
-  console.log("section test", sectionArr[0].id);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,10 +53,8 @@ function TaskForm ({ task, formType }) {
     } else if (formType === "Update") {
 
       try {
-        console.log("This is what you're sending", task)
         const res = await dispatch(taskActions.updateTaskThunk(task));
         closeModal();
-        console.log("This is what's coming back in the component", res)
         {res.errors ? setErrors(res.errors) : setErrors([]); }
         if (res.task.id) {
           setErrors([]);
