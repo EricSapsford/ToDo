@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
@@ -12,7 +12,7 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
   const { closeModal } = useModal()
 
   const [name, setName] = useState(section?.name)
-  const [placeholderCont, setPlaceholderCont] = useState()
+  const [disabled, setDisabled] = useState(true)
 
   const [editSectionNameToggle, setEditSectionNameToggle] = useState(false)
   const [errors, setErrors] = useState([]);
@@ -21,6 +21,13 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
     setEditSectionNameToggle(!editSectionNameToggle)
   }
 
+  useEffect(() => {
+    if (name.length > 0) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  }, [name])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +39,7 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
       sectionId,
       projectId
     }
+
 
     if (formType === "Create") {
 
@@ -112,7 +120,7 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
 
 
       <div className="section-form-submit-button">
-        <button onClick={handleSubmit}>
+        <button onClick={handleSubmit} disabled={disabled}>
           {formType === "Create" ? "Add section" : "Save"}
         </button>
       </div>
