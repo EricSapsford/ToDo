@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
@@ -18,6 +18,7 @@ function TaskForm ({ task, formType }) {
   // const [sectionId, setSectionId] = useState(task?.sectionId)
 
   const [editTaskToggle, setEditTaskToggle] = useState(formType === "Create" ? true : false)
+  const [disabled, setDisabled] = useState(true)
   const [errors, setErrors] = useState([]);
 
   const sectionState = useSelector(state => state.sections ? state.sections : {})
@@ -32,6 +33,14 @@ function TaskForm ({ task, formType }) {
     dueDateArr = task.dueDate.split(" ")
     day = dueDateArr[0].slice(0, -1)
   }
+
+  useEffect(() => {
+    if (labelChunk && labelChunk.length > 0) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  }, [labelChunk])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,6 +75,7 @@ function TaskForm ({ task, formType }) {
     } else if (formType === "Update") {
 
       try {
+        setEditTaskToggle(!editTaskToggle)
         const res = await dispatch(taskActions.updateTaskThunk(task));
         closeModal();
         {res.errors ? setErrors(res.errors) : setErrors([]); }
@@ -161,9 +171,11 @@ function TaskForm ({ task, formType }) {
             />
             <span>
               <button
+                className="add-label-button"
                 onClick={appendLabel}
                 type="button"
                 style={formType === "Update" ? {display: "block"} : {}}
+                disabled={disabled}
               >
                 Add Label
               </button>

@@ -35,8 +35,14 @@
   font-weight: bolder;
 }
 
-.task-form-label-input-div span button:hover {
+.add-label-button:hover {
   background-color: rgb(255, 113, 113);
+}
+
+.add-label-button:disabled {
+  background-color: grey;
+  color: black;
+  cursor: default;
 }
 
 .task-form-added-label-div {

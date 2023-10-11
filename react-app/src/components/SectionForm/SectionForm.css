@@ -76,6 +76,11 @@
   background-color: #b1382f;
 }
 
+.section-form-submit-button:disabled {
+  background-color: grey;
+  cursor: default;
+}
+
 .section-form-cancel-button {
   border: none;
   background-color: rgb(235, 235, 235);
