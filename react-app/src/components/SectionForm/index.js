@@ -87,7 +87,7 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
 
   return (
     <>
-    <div>
+    <div className="section-form-overdiv">
       {editSectionNameToggle ?
       <form
         onSubmit={handleSubmit}

@@ -37,7 +37,7 @@ function ProjectForm({ project, formType }) {
         closeModal();
         // console.log("This is what's coming back in the component", res)
         {res.errors ? setErrors(res.errors) : setErrors([]); }
-        if (res.project.id) {
+        if (res.ok) {
           setErrors([]);
           history.push(`projects/${res.project.id}`)
         } else {
