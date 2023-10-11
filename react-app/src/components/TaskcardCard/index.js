@@ -26,10 +26,17 @@ function TaskcardCard({ task, projectId }) {
           <div className="task-card-card-name-div">
             {task.name}
           </div>
-            <OpenModalButton
+            {/* <OpenModalButton
               buttonText={<i class="fa-solid fa-pen-to-square fa-xl"></i>}
               modalComponent={<TaskFormUpdate task={task}/>}
-            />
+            /> */}
+            {/* <button
+              className="update-task-button"
+              onClick={toggleUpdateForm}
+              // style={{position: "relative", top: "-5px"}}
+            >
+              <i class="fa-solid fa-pen-to-square fa-xl"></i>
+            </button> */}
             <OpenModalButton
               buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
               modalComponent={<TaskFormDelete taskId={task.id}/>}

@@ -4,9 +4,7 @@ function TaskFormUpdate({task}) {
 
   return (
     <>
-      <div>
-        <TaskForm task={task} formType={"Update"} />
-      </div>
+      <TaskForm task={task} formType={"Update"} />
     </>
   )
 }

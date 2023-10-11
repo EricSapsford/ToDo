@@ -36,7 +36,7 @@ useEffect(() => {
 
 return (
   <>
-      {isLoaded && taskArr.length === 0 && project.view === "List" && (
+      {isLoaded && sectionsArr.length > 0 && taskArr.length === 0 && project.view === "List" && (
       <>
       <div className="task-card-center-div-empty">
         <h1>Looks like this project is empty.</h1>
@@ -51,7 +51,7 @@ return (
       </>
       )}
 
-      {isLoaded && project.view === "List" && taskArr.length > 0 && (
+      {isLoaded && sectionsArr.length > 0 && project.view === "List" && taskArr.length > 0 && (
       <>
       <div className="task-card-center-div">
         <div>
@@ -59,7 +59,7 @@ return (
         </div>
         {taskArr.map((task) => (
           <div key={task.id} className="task-update-button">
-            <TaskcardCard task={task} projectId={projectId}/>
+            <TaskFormUpdate task={task} />
           </div>
         ))}
 
@@ -86,7 +86,7 @@ return (
                   {taskArr.map((task) => (
                     task.sectionId === section.id ?
                     <div key={task.id} className="task-update-button">
-                      <TaskcardCard task={task} projectId={projectId}/>
+                      <TaskFormUpdate task={task} />
                     </div>
                     :
                     null

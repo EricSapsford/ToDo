@@ -17,3 +17,53 @@
   text-align: center;
   margin: 20px 0;
 }
+
+#list,
+#board {
+  appearance: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.project-view-radio-divs{
+  display: flex;
+  flex-direction: row;
+}
+
+.project-view-radio-overdiv {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  background-color: lightgrey;
+  border-radius: 10px;
+  padding: 3px 2px;
+}
+
+.project-input-radio-div {
+  /* flex-basis: 76px; */
+  line-height: 1.67;
+  min-width: 76px;
+  width: 50%;
+  padding: 0;
+  text-align: center;
+  margin: 0 2px;
+  border-radius: 5px;
+}
+
+.project-radio-label {
+  display: block;
+  width: 100%;
+}
+
+#project-input-active {
+  background-color: white;
+}
+
+/* .svg-demo {
+  display: block;
+  height: 100%;
+  width: 100%;
+} */
