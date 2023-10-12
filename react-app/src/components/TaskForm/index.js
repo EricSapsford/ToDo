@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+// import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";
 import TaskFormDelete from "../TaskFormDelete";
@@ -56,6 +56,10 @@ function TaskForm ({ task, formType }) {
     if (formType === "Create") {
 
       try {
+        setName("")
+        setDescription("")
+        setLabelChunk("")
+        setLabels("")
         // console.log("This is what you're sending", task)
         const res = await dispatch(taskActions.createTaskThunk(task));
         closeModal();
@@ -77,7 +81,6 @@ function TaskForm ({ task, formType }) {
       try {
         setEditTaskToggle(!editTaskToggle)
         const res = await dispatch(taskActions.updateTaskThunk(task));
-        closeModal();
         {res.errors ? setErrors(res.errors) : setErrors([]); }
         if (res.task.id) {
           setErrors([]);
@@ -104,6 +107,10 @@ function TaskForm ({ task, formType }) {
     // console.log("Current Label String", labels)
   }
 
+  // const toggleFormToggle = () => {
+  //   setFormToggle(!edit)
+  // }
+
   const toggleUpdateForm = () => {
     setEditTaskToggle(!editTaskToggle)
   }
@@ -112,22 +119,14 @@ function TaskForm ({ task, formType }) {
   return (
     <>
     {editTaskToggle ?
-    <div className={formType === "Create" ? "login-modal-div" : ""}>
+    <div>
       <form
         onSubmit={handleSubmit}
         // encType="multipart/form-data"
         >
 
-        {formType === "Create" ?
-          <div className="log-in-title">
-            <h1>Add Task</h1>
-          </div>
-          :
-          null
-        }
-
         <div>
-          <div className={formType === "Create" ? "inputs-and-login-button" : ""}>
+          <div>
             <input
               className={formType === "Create" ? "create-project-input" : "update-project-input"}
               type="text"
@@ -135,7 +134,7 @@ function TaskForm ({ task, formType }) {
               size={formType === "Create" ? 60 : 36}
               onChange={(e) => setName(e.target.value)}
               value={name}
-              placeholder="Name"
+              placeholder="Task name"
               required
             />
           </div>
@@ -143,7 +142,7 @@ function TaskForm ({ task, formType }) {
         </div>
 
         <div>
-          <div className={formType === "Create" ? "task-form-textarea" : ""}>
+          <div>
             <textarea
               rows={formType === "Create" ? 8 : 4}
               cols={formType === "Create" ? 56 : 35}
@@ -158,10 +157,10 @@ function TaskForm ({ task, formType }) {
         </div>
 
         <div>
-          <div className={formType === "Create" ? "task-form-label-input-div" : ""}>
+          <div>
             <input
               id="label-input-field"
-              className={formType === "Create" ? "create-project-input" : "update-project-input"}
+              className="create-task-label-input"
               type="text"
               name="labels"
               // size={formType === "Create" ? 60 : 36}
@@ -193,7 +192,7 @@ function TaskForm ({ task, formType }) {
           </div>
         </div>
 
-        <div className={formType === "Create" ? "inputs-and-login-button" : ""}>
+        <div>
           <button
             style={formType === "Update" ? {display: "block"} : {}}
           >
@@ -249,7 +248,6 @@ function TaskForm ({ task, formType }) {
       <div>
         {dueDateArr.length > 0 ? <span>{day} {dueDateArr[2]} {dueDateArr[1]}</span> : null}
       </div>
-
     </div>
     }
     </>

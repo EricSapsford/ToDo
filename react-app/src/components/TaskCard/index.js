@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from 'react-router-dom';
-import OpenModalButton from "../OpenModalButton";
+// import OpenModalButton from "../OpenModalButton";
 import TaskcardCard from "../TaskcardCard";
 import TaskFormCreate from "../TaskFormCreate";
-import TaskFormDelete from "../TaskFormDelete";
+// import TaskFormDelete from "../TaskFormDelete";
 import TaskFormUpdate from "../TaskFormUpdate";
 import SectionFormUpdate from "../SectionFormUpdate"
 import SectionFormCreate from "../SectionFormCreate"
@@ -19,6 +19,7 @@ const dispatch = useDispatch();
 const { projectId } = useParams();
 
 const [isLoaded, setIsLoaded] = useState(false)
+const [createTaskToggle, setCreateTaskToggle] = useState(false)
 
 const taskState = useSelector(state => state.tasks ? state.tasks : {})
 const taskArr = Object.values(taskState.allTasks)
@@ -34,6 +35,11 @@ useEffect(() => {
   setIsLoaded(true)
 }, [dispatch, projectId])
 
+const toggleCreateTaskForm = () => {
+  console.log(createTaskToggle)
+  setCreateTaskToggle(!createTaskToggle)
+}
+
 return (
   <>
       {isLoaded && sectionsArr.length > 0 && taskArr.length === 0 && project.view === "List" && (
@@ -42,10 +48,7 @@ return (
         <h1>Looks like this project is empty.</h1>
         <h1>Click the button below to add some tasks</h1>
         <div className="add-task-button-div">
-          <OpenModalButton
-            buttonText={"Add Task"}
-            modalComponent={<TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>}
-          />
+          <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
         </div>
       </div>
       </>
@@ -64,10 +67,13 @@ return (
         ))}
 
         <div className="add-task-button-div">
-          <OpenModalButton
-            buttonText={"Add Task"}
-            modalComponent={<TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>}
-          />
+          {createTaskToggle ?
+            <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
+          :
+            <button onClick={toggleCreateTaskForm}>
+              + Create task
+            </button>
+          }
         </div>
       </div>
       </>
@@ -91,13 +97,9 @@ return (
                     :
                     null
                     ))}
-
-                  <div className="add-task-button-div">
-                    <OpenModalButton
-                      buttonText={"Add Task"}
-                      modalComponent={<TaskFormCreate projectId={projectId} sectionId={section.id}/>}
-                    />
-                  </div>
+                    <div className="add-task-button-div">
+                      <TaskFormCreate projectId={projectId} sectionId={section.id}/>
+                    </div>
 
                 </div>
               ))}

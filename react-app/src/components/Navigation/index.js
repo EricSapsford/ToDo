@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -17,21 +17,23 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
 	return (
-	<nav className='whole-ass-nav-bar'>
-		<span className='nav-bar-top-span'>
-			<div className='user-controls-div'>
-			{isLoaded && (<UserControls user={sessionUser} />)}
-			</div>
-			<NavLink exact to="/">
-				<span>
-					<span className='DueTo-words-actual'><i class="fa-solid fa-house"></i></span>
+		<>
+			<nav className='whole-ass-nav-bar'>
+				<span className='nav-bar-top-span'>
+					<div className='user-controls-div'>
+					{isLoaded && (<UserControls user={sessionUser} />)}
+					</div>
+					<NavLink exact to="/">
+						<span>
+							<span className='DueTo-words-actual'><i class="fa-solid fa-house"></i></span>
+						</span>
+					</NavLink>
+					<div className='profile-buttons-div'>
+					{isLoaded && (<ProfileButton user={sessionUser} />)}
+					</div>
 				</span>
-			</NavLink>
-			<div className='profile-buttons-div'>
-			{isLoaded && (<ProfileButton user={sessionUser} />)}
-			</div>
-		</span>
-	</nav>
+			</nav>
+		</>
 	);
 }
 
