@@ -22,7 +22,7 @@ function LoginFormModal() {
     if (!data.id) {
       setErrors(data);
     } else {
-      // console.log("login Project fetch going off")
+      console.log("login Project fetch going off")
       closeModal()
       // await dispatch(projectActions.getAllProjectsForAUserThunk(data.id));
     }
@@ -34,14 +34,13 @@ function LoginFormModal() {
     let demoPassword = 'password'
     const data = await dispatch(login(demoEmail, demoPassword));
     closeModal()
-    // history.push("projects/1")
+    history.push("/projects")
   };
 
   return (
     <>
-    <div className="login-modal-div">
+    <div className="login-form-div">
         <div className="log-in-title">
-          <h1>Log In</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <ul>
@@ -49,25 +48,30 @@ function LoginFormModal() {
               <li key={idx}>{error}</li>
             ))}
           </ul>
-          <div className="inputs-and-login-button">
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Email"
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Password"
-            />
-          <button type="submit">Log In</button>
-          <button onClick={handleDemoUser}>
-            Log In as Demo User
-          </button>
+          <div className="login-buttons-and-inputs-div">
+            <div className="login-inputs-div">
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="Email"
+                />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Password"
+                />
+            </div>
+            <div className="login-buttons-div">
+              <button type="submit">Log In</button>
+              <button onClick={handleDemoUser}>
+                Log In as Demo User
+              </button>
+              <button type="button">Not a user? Sign up here!</button>
+            </div>
           </div>
         </form>
       </div>

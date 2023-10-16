@@ -44,13 +44,13 @@ return (
   <>
       {isLoaded && sectionsArr.length > 0 && taskArr.length === 0 && project.view === "List" && (
       <>
-      <div className="task-card-center-div-empty">
-        <h1>Looks like this project is empty.</h1>
-        <h1>Click the button below to add some tasks</h1>
-        <div className="add-task-button-div">
+        <div className="task-card-center-div-empty">
+          <h1>Looks like this project is empty.</h1>
+          <h1>Click the button below to add some tasks</h1>
+        </div>
+        <div className="add-task-button-empty-list-div">
           <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
         </div>
-      </div>
       </>
       )}
 
@@ -67,13 +67,7 @@ return (
         ))}
 
         <div className="add-task-button-div">
-          {createTaskToggle ?
             <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
-          :
-            <button onClick={toggleCreateTaskForm}>
-              + Create task
-            </button>
-          }
         </div>
       </div>
       </>

@@ -9,6 +9,7 @@ function TaskFormCreate({ projectId, sectionId }) {
     setCreateTaskToggle(!createTaskToggle)
   }
 
+
   let task = {
     name: "",
     description: "",
@@ -23,13 +24,19 @@ function TaskFormCreate({ projectId, sectionId }) {
       {createTaskToggle ?
         <>
           <TaskForm task={task} formType={"Create"} />
-          <button onClick={toggleCreateTaskForm}>
+          <button
+            onClick={toggleCreateTaskForm}
+            className="task-form-create-cancel-button"
+          >
             Cancel
           </button>
         </>
         :
-          <button onClick={toggleCreateTaskForm}>
-            + Create task
+          <button
+            className="task-form-create-add-task-button"
+            onClick={toggleCreateTaskForm}
+          >
+            <i class="fa-solid fa-plus"></i> Add task
           </button>
         }
     </>

@@ -23,27 +23,10 @@
   text-align: center;
 }
 
-/* .add-task-button-div button{
-  background-color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bolder;
-  color: rgb(255, 113, 113);
-  background-color: transparent;
-  border-radius: 10px;
-  border: 2px solid rgb(255, 113, 113);
-  padding: 5px 10px;
-  margin-right: 15px;
-} */
-
-.add-task-button-div button:hover {
-  background-color: rgb(255, 207, 207);
-}
-
 .section-column-overdiv {
   display: flex;
-  flex-direction: column;
-  flex-flow: wrap;
+  flex-direction: row;
+  overflow-x: auto;
 }
 
 .project-name-div {
@@ -52,10 +35,16 @@
 }
 
 .section-center-div {
-  width: 100%;
+  width: calc(100% - 330px);
   margin: 0 330px;
+
 }
 
 .section-map-div {
   margin: 0 10px;
+}
+
+.add-task-button-empty-list-div {
+  position: relative;
+  right: -35.5%;
 }

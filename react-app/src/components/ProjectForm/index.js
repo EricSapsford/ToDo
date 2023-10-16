@@ -40,7 +40,7 @@ function ProjectForm({ project, formType }) {
         {res.errors ? setErrors(res.errors) : setErrors([]); }
         if (res.id) {
           setErrors([]);
-          history.push(`${res.id}`)
+          history.push(window.location.pathname === "/projects" ? `projects/${res.id}` : `${res.id}`)
         } else {
           return res
         }

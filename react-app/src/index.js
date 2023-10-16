@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { ModalProvider, Modal } from "./context/Modal";
 import configureStore from "./store";
@@ -9,6 +9,7 @@ import * as sessionActions from "./store/session";
 import App from "./App";
 
 import "./index.css";
+import HomePage from "./components/HomePage";
 
 const store = configureStore();
 
@@ -25,8 +26,15 @@ function Root() {
 		<ModalProvider>
 			<Provider store={store}>
 				<BrowserRouter>
-					<App />
-					<Modal />
+					<Switch>
+						<Route exact path="/">
+							<HomePage />
+						</Route>
+						<Route>
+							<App />
+							<Modal />
+						</Route>
+					</Switch>
 				</BrowserRouter>
 			</Provider>
 		</ModalProvider>

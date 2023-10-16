@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as projectActions from "../../store/project"
 
@@ -7,6 +8,7 @@ import * as projectActions from "../../store/project"
 function ProjectFormDelete({ projectId }) {
   // console.log("here's what's coming in", projectId)
   const dispatch = useDispatch();
+  const history = useHistory();
   const { closeModal } = useModal();
 
   const handleDelete = async (e) => {
@@ -16,6 +18,7 @@ function ProjectFormDelete({ projectId }) {
       const res = await dispatch(projectActions.deleteProjectThunk(projectId))
       if (res.message) {
         closeModal();
+        history.push("/projects")
       }
     } catch (res) {
       console.log("res", res)

@@ -14,7 +14,7 @@ import './Navigation.css';
 function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(state => state.session.user ? state.session.user : null);
 
 	return (
 		<>
@@ -23,7 +23,7 @@ function Navigation({ isLoaded }){
 					<div className='user-controls-div'>
 					{isLoaded && (<UserControls user={sessionUser} />)}
 					</div>
-					<NavLink exact to="/">
+					<NavLink exact to={ sessionUser ? "/projects" : "/"}>
 						<span>
 							<span className='DueTo-words-actual'><i class="fa-solid fa-house"></i></span>
 						</span>

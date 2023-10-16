@@ -11,9 +11,30 @@
 
 .logo-ticker {
   color: white;
+  height: 50%;
+  width: 50%;
+  position: relative;
+  top: 30%;
+  left: 18%;
+
+  font-size: xx-large;
 }
 
-.home-page-login-form-div {
+.checklist-image {
+  width: 50px;
   position: relative;
-  float: right;
+  top: 5px;
+}
+
+.welcome-message {
+  position: absolute;
+  top: 80%;
+  right: 3.4%;
+  width: 100%;
+  text-align: center;
+}
+
+.error-message-div {
+  max-width: 200px;
+  margin-bottom: 20px;
 }

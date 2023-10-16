@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import LoginFormModal from '../LoginFormModal';
+import SplashForms from '../SplashForms';
 import "./HomePage.css"
 
 function HomePage () {
@@ -11,10 +12,16 @@ function HomePage () {
     <>
       <div className='home-page-overdiv'>
         <div className='logo-ticker'>
-          Due{suffix}
+          <h3 className='welcome-message'>
+            Welcome! Log in or sign up to begin managing your tasks!
+          </h3>
+          <h1 className='logo-ticker-span'>
+            <img className="checklist-image" src="../../checklist.png" /> Due{suffix}
+          </h1>
         </div>
         <div className='home-page-login-form-span'>
-          <LoginFormModal />
+          {/* <LoginFormModal /> */}
+          <SplashForms />
         </div>
       </div>
     </>

@@ -50,7 +50,8 @@ function SectionForm ({ section, sectionId, projectId, formType }) {
     if (formType === "Create") {
 
       try {
-        console.log("This is what you're sending", section)
+        // console.log("This is what you're sending", section)
+        setName("")
         const res = await dispatch(sectionActions.createSectionThunk(section));
         toggleSectionName()
         {res.errors ? setErrors(res.errors) : setErrors([]); }

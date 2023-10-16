@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";
 import TaskFormDelete from "../TaskFormDelete";
@@ -10,6 +10,7 @@ import "./TaskForm.css"
 function TaskForm ({ task, formType }) {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
+  const { projectId } = useParams()
 
   const [name, setName] = useState(task?.name)
   const [description, setDescription] = useState(task?.description)
@@ -23,6 +24,8 @@ function TaskForm ({ task, formType }) {
 
   const sectionState = useSelector(state => state.sections ? state.sections : {})
   const sectionArr = Object.values(sectionState.allSections)
+
+  const projectView = useSelector(state => state.projects ? state.projects.allProjects[projectId].view : {})
 
   let labelsArr = task.labels.split(",")
 
@@ -128,10 +131,10 @@ function TaskForm ({ task, formType }) {
         <div>
           <div>
             <input
-              className={formType === "Create" ? "create-project-input" : "update-project-input"}
+              className="task-form-input"
               type="text"
               name="name"
-              size={formType === "Create" ? 60 : 36}
+              size={projectView === "List" ? 60 : 32}
               onChange={(e) => setName(e.target.value)}
               value={name}
               placeholder="Task name"
@@ -144,8 +147,9 @@ function TaskForm ({ task, formType }) {
         <div>
           <div>
             <textarea
-              rows={formType === "Create" ? 8 : 4}
-              cols={formType === "Create" ? 56 : 35}
+              className="task-form-input"
+              rows={projectView === "List" ? 8 : 1}
+              cols={projectView === "List" ? 56 : 30}
               id="comments"
               name="description"
               onChange={e => setDescription(e.target.value)}
@@ -157,18 +161,17 @@ function TaskForm ({ task, formType }) {
         </div>
 
         <div>
-          <div>
+          <div className="task-form-label-div">
             <input
-              id="label-input-field"
-              className="create-task-label-input"
+              className="task-form-label-input"
               type="text"
               name="labels"
-              // size={formType === "Create" ? 60 : 36}
+              size={projectView === "List" ? 60 : 23}
               onChange={(e) => setLabelChunk(e.target.value)}
               value={labelChunk}
-              placeholder="Labels"
+              placeholder={formType === "Create" ? "Labels (optional)" : "Labels"}
             />
-            <span>
+            <div>
               <button
                 className="add-label-button"
                 onClick={appendLabel}
@@ -178,13 +181,12 @@ function TaskForm ({ task, formType }) {
               >
                 Add Label
               </button>
-            </span>
+            </div>
           </div>
           {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
         </div>
 
         <div>
-            <span className="task-form-add-label-label">Labels:</span>
           <div className="task-form-added-label-div" size={60}>
             {labels.split(",").map((label) => (
             <div className={labels.length === 0 ? "" : "task-form-added-label-span"}>{label}</div>
@@ -192,24 +194,31 @@ function TaskForm ({ task, formType }) {
           </div>
         </div>
 
-        <div>
-          <button
-            style={formType === "Update" ? {display: "block"} : {}}
-          >
-            {formType === "Create" ? "Add Task" : "Save"}
-          </button>
-        </div>
+        <div className="task-form-buttons-div">
 
-        {formType === "Update" ?
-        <button
-          onClick={toggleUpdateForm}
-          style={formType === "Update" ? {display: "block"} : {}}
-        >
-          Cancel
-        </button>
-        :
-        null
-        }
+          <div>
+            <button
+              className="task-form-submit-button"
+              style={formType === "Update" ? {display: "block"} : {}}
+              >
+              {formType === "Create" ? "Add Task" : <i class="fa-regular fa-floppy-disk fa-2xl"></i>}
+            </button>
+          </div>
+
+          {formType === "Update" ?
+          <div>
+            <button
+              className="task-form-update-cancel-button"
+              onClick={toggleUpdateForm}
+              style={formType === "Update" ? {display: "block"} : {}}
+              >
+              <i class="fa-solid fa-x fa-2xl"></i>
+            </button>
+          </div>
+          :
+          null
+          }
+        </div>
 
       </form>
     </div>
@@ -239,15 +248,19 @@ function TaskForm ({ task, formType }) {
         {task.description}
       </div>
 
-      <div className="task-card-card-label-div">Labels:
+      {labels === "" ?
+      null
+      :
+      <div className="task-card-card-label-div">
         {labelsArr.map((label) => (
           <span className="task-card-card-label-span">{label}</span>
         ))}
       </div>
+      }
 
-      <div>
+      {/* <div>
         {dueDateArr.length > 0 ? <span>{day} {dueDateArr[2]} {dueDateArr[1]}</span> : null}
-      </div>
+      </div> */}
     </div>
     }
     </>
