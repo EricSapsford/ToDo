@@ -3,7 +3,7 @@ import { useModal } from "../../context/Modal";
 import * as taskActions from "../../store/task"
 
 
-function TaskFormDelete({ taskId }) {
+function TaskFormDelete({ task }) {
   // console.log("here's what's coming in", taskId)
   const dispatch = useDispatch();
   const { closeModal } = useModal();
@@ -12,7 +12,7 @@ function TaskFormDelete({ taskId }) {
     e.preventDefault();
 
     try {
-      const res = await dispatch(taskActions.deleteTaskThunk(taskId))
+      const res = await dispatch(taskActions.deleteTaskThunk(task))
       if (res.message) {
         closeModal();
       }

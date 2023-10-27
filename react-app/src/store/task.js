@@ -1,3 +1,8 @@
+const today = Date()
+const dayStringArr = today.split(" ")
+const dayString = `${dayStringArr[0]}, ${dayStringArr[2]} ${dayStringArr[1]} ${dayStringArr[3]} 00:00:00 GMT`
+
+
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
@@ -42,10 +47,10 @@ const updateTask = (task) => {
   }
 }
 
-const deleteTask = (taskId) => {
+const deleteTask = (task) => {
   return {
     type: DELETE_TASK,
-    taskId
+    task
   }
 }
 
@@ -142,15 +147,15 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
 }
 
 // DELETE A TASK
-export const deleteTaskThunk = (taskId) => async (dispatch) => {
-  const res = await fetch(`/api/tasks/${taskId}/delete`, {
+export const deleteTaskThunk = (task) => async (dispatch) => {
+  const res = await fetch(`/api/tasks/${task.id}/delete`, {
     method: "DELETE",
     headers: { 'Content-Type': 'application/json' },
   })
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(deleteTask(taskId));
+    dispatch(deleteTask(task));
     return data;
   } else {
     const errors = await res.json()
@@ -190,8 +195,11 @@ const taskReducer = (state = initialState, action) => {
 
     case CREATE_TASK: {
       if (action.task.id) {
-        const newState = { ...state, allTasks: { ...state.allTasks } }
+        const newState = { ...state, allTasks: { ...state.allTasks }, todaysTasks: { ...state.todaysTasks } }
         newState.allTasks[action.task.id] = action.task
+        if (action.task.dueDate === dayString) {
+          newState.todaysTasks[action.task.id] = action.task
+        }
         return newState;
       } else if (action.task.errors) {
         return state
@@ -202,8 +210,11 @@ const taskReducer = (state = initialState, action) => {
 
     case UPDATE_TASK: {
       if (action.task.id) {
-        const newState = { ...state, allTasks: { ...state.allTasks } }
+        const newState = { ...state, allTasks: { ...state.allTasks }, todaysTasks: { ...state.todaysTasks } }
         newState.allTasks[action.task.id] = action.task
+        if (action.task.dueDate === dayString) {
+          newState.todaysTasks[action.task.id] = action.task
+        }
         return newState;
       } else if (action.task.errors) {
         return state
@@ -213,8 +224,11 @@ const taskReducer = (state = initialState, action) => {
     }
 
     case DELETE_TASK: {
-      const newState = { ...state, allTasks: { ...state.allTasks } }
-      delete newState.allTasks[action.taskId]
+      const newState = { ...state, allTasks: { ...state.allTasks }, todaysTasks: { ...state.todaysTasks } }
+      delete newState.allTasks[action.task.id]
+      if (action.task.dueDate === dayString) {
+        delete newState.todaysTasks[action.task.id]
+      }
       return newState
     }
 

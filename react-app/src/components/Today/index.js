@@ -33,17 +33,18 @@ function Today () {
     projectArr.map((project) => (
       projectNameObj[project.id] = project.name
     ))
-    console.log("projectNameObj", projectNameObj)
+    // console.log("projectNameObj", projectNameObj)
   }
 
   useEffect(() => {
     dispatch(taskActions.getAllTasksForTodayThunk())
     setIsLoaded(true)
+    console.log("splash useEffect just went off")
   }, [dispatch])
 
   return (
     <>
-      {isLoaded && (
+      {isLoaded && projectIdSet.size > 0 && projectArr.length !== 0 && (
       <div className='task-card-center-div'>
         <div>
           <h1>Today's tasks</h1>

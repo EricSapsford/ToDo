@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from ..models.db import db, Task
+from ..models.db import db, Task, Project
 from flask_login import login_required, current_user
 from ..forms.tasks_form import TaskForm
 import datetime

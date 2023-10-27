@@ -10,6 +10,7 @@ import "./TaskForm.css"
 function TaskForm ({ task, formType }) {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
+  // const { projectId } = useParams()
 
   // use this over useParam so this component works when on the "today" page
   const projectId = task.projectId
@@ -293,7 +294,7 @@ function TaskForm ({ task, formType }) {
         </button>
         <OpenModalButton
           buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
-          modalComponent={<TaskFormDelete taskId={task.id}/>}
+          modalComponent={<TaskFormDelete task={task}/>}
         />
       </div>
 
