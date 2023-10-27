@@ -28,11 +28,11 @@ function TaskFormDelete({ taskId }) {
 
   return (
     <>
-      <div className="login-modal-div">
+      <div className="project-form-modal-div">
         <div className="log-in-title">
           <h1>Delete this Task?</h1>
         </div>
-        <div className="inputs-and-login-button">
+        <div className="project-form-modal-buttons">
           <button onClick={closeModal}>
             No, keep
           </button>

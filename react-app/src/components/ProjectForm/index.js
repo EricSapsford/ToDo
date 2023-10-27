@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
@@ -17,6 +17,13 @@ function ProjectForm({ project, formType }) {
   const [view, setView ] = useState(project.view ? project.view : "List")
 
   const [errors, setErrors] = useState([]);
+  const [disabled, setDisabled] = useState(true)
+
+  useEffect(() => {
+    if (name.length > 0 && color !== "") {
+      setDisabled(false)
+    }
+  }, [name, color])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,7 +81,7 @@ function ProjectForm({ project, formType }) {
 
   return (
     <>
-    <div className="login-modal-div">
+    <div className="project-form-modal-div">
       <form
         onSubmit={handleSubmit}
         // encType="multipart/form-data"
@@ -91,7 +98,7 @@ function ProjectForm({ project, formType }) {
         }
 
         <div>
-          <div className="inputs-and-login-button">
+          <div className="project-form-name-input">
             <input
               className={formType === "Create" ? "create-project-input" : "update-project-input"}
               type="text"
@@ -115,17 +122,17 @@ function ProjectForm({ project, formType }) {
               required
               >
               <option value="" disabled selected>(select color)</option>
-              <option key={"BerryRed"} value={"BerryRed"}>BerryRed</option>
+              <option key={"BerryRed"} value={"BerryRed"}>Berry Red</option>
               <option key={"Red"} value={"Red"}>Red</option>
               <option key={"Orange"} value={"Orange"}>Orange</option>
               <option key={"Yellow"} value={"Yellow"}>Yellow</option>
-              <option key={"OliveGreen"} value={"OliveGreen"}>OliveGreen</option>
-              <option key={"LimeGreen"} value={"LimeGreen"}>LimeGreen</option>
+              <option key={"OliveGreen"} value={"OliveGreen"}>Olive Green</option>
+              <option key={"LimeGreen"} value={"LimeGreen"}>Lime Green</option>
               <option key={"Green"} value={"Green"}>Green</option>
-              <option key={"MintGreen"} value={"MintGreen"}>MintGreen</option>
+              <option key={"MintGreen"} value={"MintGreen"}>Mint Green</option>
               <option key={"Teal"} value={"Teal"}>Teal</option>
-              <option key={"SkyBlue"} value={"SkyBlue"}>SkyBlue</option>
-              <option key={"LightBlue"} value={"LightBlue"}>LightBlue</option>
+              <option key={"SkyBlue"} value={"SkyBlue"}>Sky Blue</option>
+              <option key={"LightBlue"} value={"LightBlue"}>Light Blue</option>
               <option key={"Blue"} value={"Blue"}>Blue</option>
               <option key={"Grape"} value={"Grape"}>Grape</option>
               <option key={"Violet"} value={"Violet"}>Violet</option>
@@ -209,9 +216,19 @@ function ProjectForm({ project, formType }) {
             </div>
         </div>
 
-        <div className="inputs-and-login-button">
-          <button>
+        <div className="project-form-add-cancel-buttons">
+          <button
+            className="project-form-add-button"
+            disabled={disabled}
+          >
             {formType === "Create" ? "Add" : "Save"}
+          </button>
+          <button
+            className="project-form-cancel-button"
+            type="button"
+            onClick={() => closeModal()}
+          >
+            Cancel
           </button>
         </div>
       </form>

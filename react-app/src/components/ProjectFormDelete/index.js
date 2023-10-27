@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as projectActions from "../../store/project"
 
+import "./ProjectFormDelete.css"
+
 
 function ProjectFormDelete({ projectId }) {
   // console.log("here's what's coming in", projectId)
@@ -32,11 +34,11 @@ function ProjectFormDelete({ projectId }) {
 
   return (
     <>
-      <div className="login-modal-div">
+      <div className="project-form-modal-div">
         <div className="log-in-title">
           <h1>Delete this Project?</h1>
         </div>
-        <div className="inputs-and-login-button">
+        <div className="project-form-modal-buttons">
           <button onClick={closeModal}>
             No, keep
           </button>

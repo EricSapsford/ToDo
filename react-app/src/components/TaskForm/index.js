@@ -10,12 +10,15 @@ import "./TaskForm.css"
 function TaskForm ({ task, formType }) {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
-  const { projectId } = useParams()
+
+  // use this over useParam so this component works when on the "today" page
+  const projectId = task.projectId
 
   const [name, setName] = useState(task?.name)
   const [description, setDescription] = useState(task?.description)
   const [labelChunk, setLabelChunk] = useState("")
   const [labels, setLabels] = useState(task?.labels)
+  const [dueDate, setDueDate] = useState(task?.dueDate)
   // const [sectionId, setSectionId] = useState(task?.sectionId)
 
   const [editTaskToggle, setEditTaskToggle] = useState(formType === "Create" ? true : false)
@@ -29,13 +32,47 @@ function TaskForm ({ task, formType }) {
 
   let labelsArr = task.labels.split(",")
 
+  const dateObj = {
+    "Jan": "01",
+    "Feb": "02",
+    "Mar": "03",
+    "Apr": "04",
+    "May": "05",
+    "Jun": "06",
+    "Jul": "07",
+    "Aug": "08",
+    "Sep": "09",
+    "Oct": "10",
+    "Nov": "11",
+    "Dec": "12"
+  }
   let dueDateArr = [];
   let day = "";
+  // let valueChunk = "";
 
   if (task.dueDate) {
     dueDateArr = task.dueDate.split(" ")
     day = dueDateArr[0].slice(0, -1)
   }
+
+  // if (dueDateArr.length !== 0) {
+  //   valueChunk = `${dueDateArr[3]}-${dateObj[dueDateArr[2]]}-${dueDateArr[1]}`
+  // }
+
+  // useEffect(() => {
+  //   console.log("dueDate", dueDate)
+  //   if (task.dueDate) {
+  //     dueDateArr = task.dueDate.split(" ")
+  //     day = dueDateArr[0].slice(0, -1)
+  //   }
+
+  //   if (dueDateArr.length !== 0) {
+  //     valueChunk = `${dueDateArr[3]}-${dateObj[dueDateArr[2]]}-${dueDateArr[1]}`
+  //   }
+  // }, [dueDate, setDueDate])
+
+
+
 
   useEffect(() => {
     if (labelChunk && labelChunk.length > 0) {
@@ -53,6 +90,7 @@ function TaskForm ({ task, formType }) {
       name,
       description,
       labels,
+      dueDate,
       taskId: task.id,
     }
 
@@ -63,6 +101,7 @@ function TaskForm ({ task, formType }) {
         setDescription("")
         setLabelChunk("")
         setLabels("")
+        // setDueDate("")
         // console.log("This is what you're sending", task)
         const res = await dispatch(taskActions.createTaskThunk(task));
         closeModal();
@@ -83,7 +122,9 @@ function TaskForm ({ task, formType }) {
 
       try {
         setEditTaskToggle(!editTaskToggle)
+        // console.log("This is what you're sending", task)
         const res = await dispatch(taskActions.updateTaskThunk(task));
+        // console.log("This is what's coming back in the component", res)
         {res.errors ? setErrors(res.errors) : setErrors([]); }
         if (res.task.id) {
           setErrors([]);
@@ -109,10 +150,6 @@ function TaskForm ({ task, formType }) {
     }
     // console.log("Current Label String", labels)
   }
-
-  // const toggleFormToggle = () => {
-  //   setFormToggle(!edit)
-  // }
 
   const toggleUpdateForm = () => {
     setEditTaskToggle(!editTaskToggle)
@@ -194,6 +231,22 @@ function TaskForm ({ task, formType }) {
           </div>
         </div>
 
+        {/* <div>
+          <div>
+            Due date:
+            <input
+              className="task-form-input"
+              type="date"
+              name="date"
+              size={projectView === "List" ? 60 : 32}
+              onChange={(e) => setDueDate(e.target.value)}
+              value={valueChunk}
+            />
+            (optional)
+          </div>
+          {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
+        </div> */}
+
         <div className="task-form-buttons-div">
 
           <div>
@@ -258,9 +311,9 @@ function TaskForm ({ task, formType }) {
       </div>
       }
 
-      {/* <div>
-        {dueDateArr.length > 0 ? <span>{day} {dueDateArr[2]} {dueDateArr[1]}</span> : null}
-      </div> */}
+      <div>
+        {dueDateArr.length > 0 ? <span>Due {day}, {dueDateArr[2]} {dueDateArr[1]}</span> : null}
+      </div>
     </div>
     }
     </>

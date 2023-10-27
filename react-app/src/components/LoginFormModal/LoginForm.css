@@ -2,6 +2,10 @@
 DO NOT DELETE UNLESS YOU WANT TO
 RESTYLE ALL REMAINING MODALS */
 
+/* JOKES ON YOU, I DID AND NOW
+ALMOST ALL OF THESE ARE COMPLETELY
+USELESS */
+
 .log-in-title {
   width: 100%;
   text-align: center;
@@ -99,17 +103,14 @@ RESTYLE ALL REMAINING MODALS */
   font-size: medium;
   cursor: pointer;
 
-  animation:
-  0.2s ease-in buttonSplashFadeOut,
-  0.2s ease-in wordSplashFadeOut;
-animation-fill-mode: forwards;
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .login-buttons-div button:hover {
-  animation:
-  0.2s ease-in alternate buttonSplashFadeIn,
-  0.2s ease-in alternate wordSplashFadeIn;
-animation-fill-mode: forwards;
+  background-color: white;
+  color: #d1453b;
 }
 
 

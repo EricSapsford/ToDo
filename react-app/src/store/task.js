@@ -4,6 +4,7 @@
 //=================================== CONSTANTS ===================================
 
 const GET_ALL_TASKS_FOR_A_PROJECT = "tasks/getAllTasksForAProject"
+const GET_ALL_TASKS_FOR_TODAY = "tasks/getAllTasksForToday"
 const CREATE_TASK = "tasks/createTask"
 const UPDATE_TASK = "tasks/updateTask"
 const DELETE_TASK = "tasks/deleteTask"
@@ -16,6 +17,13 @@ const DELETE_TASK = "tasks/deleteTask"
 const getAllTasksForAProject = (tasks) => {
   return {
     type: GET_ALL_TASKS_FOR_A_PROJECT,
+    tasks
+  }
+}
+
+const getAllTasksForToday = (tasks) => {
+  return {
+    type: GET_ALL_TASKS_FOR_TODAY,
     tasks
   }
 }
@@ -63,6 +71,23 @@ export const getAllTasksForAProjectThunk = (projectId) => async (dispatch) => {
   }
 }
 
+// GET ALL TASKS FOR TODAY
+export const getAllTasksForTodayThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/tasks/today`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+  if (res.ok) {
+    const { tasks } = await res.json();
+
+    dispatch(getAllTasksForToday(tasks))
+    return tasks
+  } else {
+    const errors = await res.json();
+    return errors
+  }
+}
+
 // CREATE A TASK
 export const createTaskThunk = (createdTask) => async (dispatch) => {
   const { name, description, labels, sectionId, projectId } = createdTask
@@ -73,6 +98,7 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
       name,
       description,
       labels,
+      // due_date: dueDate,
       section_id: sectionId
     })
   })
@@ -98,6 +124,7 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
       name,
       description,
       labels,
+      // due_date: dueDate,
       section_id: sectionId
     })
   })
@@ -138,7 +165,7 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
 
 const initialState = {
   allTasks: {},
-  singleTask: {}
+  todaysTasks: {}
 }
 
 const taskReducer = (state = initialState, action) => {
@@ -149,6 +176,14 @@ const taskReducer = (state = initialState, action) => {
       const newState = { ...state, allTasks: {} }
       action.tasks.forEach((taskObj) => {
         newState.allTasks[taskObj.id] = taskObj
+      });
+      return newState
+    }
+
+    case GET_ALL_TASKS_FOR_TODAY: {
+      const newState = { ...state, todaysTasks: {} }
+      action.tasks.forEach((taskObj) => {
+        newState.todaysTasks[taskObj.id] = taskObj
       });
       return newState
     }

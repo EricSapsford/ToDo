@@ -14,6 +14,7 @@ function TaskFormCreate({ projectId, sectionId }) {
     name: "",
     description: "",
     labels: "",
+    // dueDate: "",
     sectionId,
     projectId
   }

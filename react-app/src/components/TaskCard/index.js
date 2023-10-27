@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from 'react-router-dom';
-// import OpenModalButton from "../OpenModalButton";
 import TaskcardCard from "../TaskcardCard";
 import TaskFormCreate from "../TaskFormCreate";
-// import TaskFormDelete from "../TaskFormDelete";
 import TaskFormUpdate from "../TaskFormUpdate";
 import SectionFormUpdate from "../SectionFormUpdate"
 import SectionFormCreate from "../SectionFormCreate"
@@ -75,7 +73,7 @@ return (
 
       {isLoaded && project.view === "Board" && (
         <>
-          <div className="project-name-div">
+          <div className="project-top-name-div">
             <h1>{project.name}</h1>
           </div>
           <div className="section-center-div">

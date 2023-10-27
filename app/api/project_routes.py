@@ -116,6 +116,7 @@ def create_task(id):
             name = form.data["name"],
             description = form.data["description"],
             labels = form.data["labels"],
+            # due_date = form.data["due_date"],
             project_id = id,
             section_id = form.data["section_id"],
             created_at = datetime.datetime.now(),

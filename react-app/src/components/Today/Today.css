@@ -1,3 +1,22 @@
-.today-overdiv {
+.today-project-header {
+  margin-top: 50px;
+}
+
+.today-project-header h2 {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  padding: 20px 0;
+  color: black;
   text-align: center;
+}
+
+.today-project-header a {
+  width: fit-content;
+}
+
+.today-project-header h2:hover {
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-radius: 7px;
+  background-color: lightgrey;
 }

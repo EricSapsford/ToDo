@@ -35,17 +35,15 @@
   border: 1px solid white;
   padding: 5px 10px;
   margin-right: 15px;
-  animation:
-    0.2s ease-in buttonFadeOut,
-    0.2s ease-in wordFadeOut;
-  animation-fill-mode: forwards;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .profile-buttons-div button:hover {
-  animation:
-    0.2s ease-in alternate buttonFadeIn,
-    0.2s ease-in alternate wordFadeIn;
-  animation-fill-mode: forwards;
+  background-color: whitesmoke;
+  color: #d1453b;
 }
 
 .DueTo-words-actual {
@@ -54,23 +52,20 @@
   padding: 4px 7px;
   border-radius: 10px;
   margin: 0 10px;
-  animation:
-    0.2s ease-in buttonFadeOut,
-    0.2s ease-in wordFadeOut;
-  animation-fill-mode: forwards;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .DueTo-words-actual:hover {
-  animation:
-    0.2s ease-in alternate buttonFadeIn,
-    0.2s ease-in alternate wordFadeIn;
-  animation-fill-mode: forwards;
+  background-color: whitesmoke;
+  color: #d1453b;
 }
 
 #logged-in-user-menu-div {
-  /* background-color: rgb(255, 113, 113); */
-  border: 2px solid rgb(255, 113, 113);
-  background-color: rgb(255, 207, 207);
+  border: 2px solid #d1453b;
+  background-color: whitesmoke;
   padding: 60px 30px;
   position: absolute;
   right: 0;
@@ -81,7 +76,19 @@
   padding: 10px 0;
 }
 
-@keyframes buttonFadeIn {
+.log-out-button button {
+  background-color: transparent;
+  color: black;
+  border-color: black;
+}
+
+.log-out-button button:hover {
+  background-color: #d1453b;
+  color: white;
+  border-color: #d1453b;
+}
+
+/* @keyframes buttonFadeIn {
   0% {
     background-color: transparent;
   }
@@ -119,4 +126,4 @@
   100% {
    color: white;
   }
- }
+ } */

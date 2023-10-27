@@ -102,15 +102,23 @@
 .section-form-delete-button button {
   border: none;
   background-color: transparent;
-  padding: 5px 3px;
+  padding: 7px 5px;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .section-form-delete-button button:hover {
-  background-color: rgb(218, 218, 218);
+  background-color: #d1453b;
+  color: white;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .section-form-delete-button button:active {
-  background-color: rgb(200, 200, 200);
+  background-color: #992f28;
+  color: white;
+
+  transition: none;
 }

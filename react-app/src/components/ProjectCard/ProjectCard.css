@@ -1,22 +1,46 @@
 .project-card-name {
   position: relative;
   background-color: whitesmoke;
-  margin: 10px 0;
-  padding: 10px 0;
+  margin: 15px 0;
+  padding: 5px 0;
   border-radius: 7px;
-  text-align: center;
+  text-align: left;
+
+  transition: background-color 0.2s ease-in;
+}
+
+.project-card-name:hover {
+  background-color: lightgrey;
 }
 
 .project-name-div {
+  position: relative;
+  right: 40px;
+
   text-decoration: none;
   color: black;
   font-weight: bolder;
 }
 
+.project-name-div svg {
+  position: relative;
+  top: -1px;
+}
+
+.project-name-div div {
+  overflow: hidden;
+  width: 76px;
+}
+
+.project-name-div {
+  display: flex;
+  flex-direction: row;
+}
+
 .project-card-modal-button-edit {
   position: absolute;
-  top: 10px;
-  right: 30px;
+  top: 8px;
+  right: 32px;
 }
 
 .project-card-modal-button-edit button {
@@ -27,12 +51,17 @@
 
 .project-card-modal-button-delete {
   position: absolute;
-  top: 10px;
-  right: 0;
+  top: 8px;
+  left: 170px;
 }
 
 .project-card-modal-button-delete button {
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.project-card-modal-button-delete button:hover,
+.project-card-modal-button-edit button:hover {
+  color: #d1453b;
 }

@@ -127,11 +127,16 @@
 
   border: 1px solid lightgrey;
   background-color: transparent;
+  color: black;
   border-radius: 7px;
   padding: 10px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 1.1em;
   cursor: pointer;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .task-form-create-add-task-button:hover {
@@ -143,6 +148,7 @@
 .task-form-create-add-task-button:active {
   background-color: #992f28;
   border: 1px solid #992f28;
+  color: white;
 }
 
 /* CANCEL CREATE */

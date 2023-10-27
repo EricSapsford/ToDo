@@ -52,7 +52,7 @@ function ProfileButton({ user }) {
           <div>Welcome {user.firstName} {user.last_name}</div>
           <div>{user.username}</div>
           <div>{user.email}</div>
-          <div className="logged-in-user-menu-logout-button">
+          <div className="log-out-button">
             <button onClick={handleLogout}>Log Out</button>
           </div>
         </div>
