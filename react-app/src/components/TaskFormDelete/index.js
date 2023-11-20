@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as taskActions from "../../store/task"
+import * as sectionActions from "../../store/section"
 
 
 function TaskFormDelete({ task }) {
@@ -8,11 +9,14 @@ function TaskFormDelete({ task }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
+  const projectId = task.projectId
+
   const handleDelete = async (e) => {
     e.preventDefault();
 
     try {
       const res = await dispatch(taskActions.deleteTaskThunk(task))
+      await dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
       if (res.message) {
         closeModal();
       }

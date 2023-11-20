@@ -86,12 +86,19 @@ export const createSectionThunk = (createdSection) => async (dispatch) => {
 
 // UPDATE A SECTION
 export const updateSectionThunk = (updatedSection) => async (dispatch) => {
-  const { name, sectionId } = updatedSection
+  const { name, taskOrder, sectionId } = updatedSection
+  console.log("name in thunk", name)
+  console.log("id in thunk", sectionId)
+  console.log("taskOrder in thunk", taskOrder)
+  console.log("What we'll be doing to it and sending to the db", taskOrder.join())
+  // const taskOrderString = taskOrder.join()
+  // console.log("Encoded string", taskOrderString)
   const res = await fetch(`/api/sections/${sectionId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name,
+      task_order: taskOrder.join()
     })
   })
   if (res.ok) {

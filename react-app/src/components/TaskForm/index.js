@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+
+import { Draggable } from 'react-beautiful-dnd'
+
 import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";
 import TaskFormDelete from "../TaskFormDelete";
 import * as taskActions from "../../store/task";
+import * as sectionActions from "../../store/section"
 import "./TaskForm.css"
 
-function TaskForm ({ task, formType }) {
+function TaskForm ({ task, index, formType }) {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
   // const { projectId } = useParams()
@@ -105,6 +109,7 @@ function TaskForm ({ task, formType }) {
         // setDueDate("")
         // console.log("This is what you're sending", task)
         const res = await dispatch(taskActions.createTaskThunk(task));
+        await dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
         closeModal();
         // console.log("This is what's coming back in the component", res)
         {res.errors ? setErrors(res.errors) : setErrors([]); }
@@ -277,45 +282,59 @@ function TaskForm ({ task, formType }) {
       </form>
     </div>
     :
-    <div className="task-card-card-overdiv">
-      {/* <svg width="24" height="24">
-      <path fill="currentColor" d="M11.23 13.7l-2.15-2a.55.55 0 0 0-.74-.01l.03-.03a.46.46 0 0 0 0 .68L11.24 15l5.4-5.01a.45.45 0 0 0 0-.68l.02.03a.55.55 0 0 0-.73 0l-4.7 4.35z"></path>
-      </svg> */}
 
-      <div className="task-card-card-first-row-div">
-        <div className="task-card-card-name-div">
-          {task.name}
-        </div>
-        <button
-          className="update-task-button"
-          onClick={toggleUpdateForm}
+    // <Draggable
+    //   draggableId={`${task.id}`}
+    //   index={index}
+    // >
+      // {(provided) => (
+        <div
+          className="task-card-card-overdiv"
+          // {...provided.draggableProps}
+          // {...provided.dragHandleProps}
+          // innerRef = {provided.innerRef}
         >
-          <i class="fa-solid fa-pen-to-square fa-xl"></i>
-        </button>
-        <OpenModalButton
-          buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
-          modalComponent={<TaskFormDelete task={task}/>}
-        />
-      </div>
+          {/* <svg width="24" height="24">
+          <path fill="currentColor" d="M11.23 13.7l-2.15-2a.55.55 0 0 0-.74-.01l.03-.03a.46.46 0 0 0 0 .68L11.24 15l5.4-5.01a.45.45 0 0 0 0-.68l.02.03a.55.55 0 0 0-.73 0l-4.7 4.35z"></path>
+        </svg> */}
 
-      <div className="task-card-card-description-div">
-        {task.description}
-      </div>
+          <div className="task-card-card-first-row-div">
+            <div className="task-card-card-name-div">
+              {task.name}
+            </div>
+            <button
+              className="update-task-button"
+              onClick={toggleUpdateForm}
+              >
+              <i class="fa-solid fa-pen-to-square fa-xl"></i>
+            </button>
+            <OpenModalButton
+              buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
+              modalComponent={<TaskFormDelete task={task}/>}
+              />
+          </div>
 
-      {labels === "" ?
-      null
-      :
-      <div className="task-card-card-label-div">
-        {labelsArr.map((label) => (
-          <span className="task-card-card-label-span">{label}</span>
-        ))}
-      </div>
-      }
+          <div className="task-card-card-description-div">
+            {task.description}
+          </div>
 
-      <div>
-        {dueDateArr.length > 0 ? <span>Due {day}, {dueDateArr[2]} {dueDateArr[1]}</span> : null}
-      </div>
-    </div>
+          {labels === "" ?
+          null
+          :
+          <div className="task-card-card-label-div">
+            {labelsArr.map((label) => (
+              <span className="task-card-card-label-span">{label}</span>
+              ))}
+          </div>
+          }
+
+          <div>
+            {dueDateArr.length > 0 ? <span>Due {day}, {dueDateArr[2]} {dueDateArr[1]}</span> : null}
+          </div>
+        </div>
+      // )}
+
+    // </Draggable>
     }
     </>
   )
