@@ -31,20 +31,24 @@ const project = useSelector(state => state.projects.allProjects[projectId] ? sta
 
 const sectionState = useSelector(state => state.sections ? state.sections : {})
 const sectionsArr = Object.values(sectionState.allSections)
-const taskOrder = sectionsArr[0] ? sectionsArr[0].taskOrder : []
 
 let experiemtnalTorder = []
+let sectionsOrder = []
 
 if (sectionsArr) {
   for (let i = 0; i < sectionsArr.length; i++) {
     experiemtnalTorder = [ ...experiemtnalTorder, ...sectionsArr[i].taskOrder ]
+  }
+
+  for (let j = 0; j < sectionsArr.length; j++) {
+    sectionsOrder.push(String(sectionsArr[j].id))
   }
 }
 
 if (taskArr) {
 
   let taskOrderNum = experiemtnalTorder.map(Number)
-  // console.log("Numbers", taskOrderNum)
+  console.log("Numbers", taskOrderNum)
 
   const sortFunction = (a, b) => {
     let idA = a.id;
@@ -62,6 +66,7 @@ if (taskArr) {
 // console.log("taskOrder", taskOrder)
 // console.log("sectionArr", sectionsArr)
 // console.log("taskArr", taskArr)
+// console.log(sectionsOrder)
 
 useEffect(() => {
   // console.log("use effect going off")
@@ -77,7 +82,7 @@ const toggleCreateTaskForm = () => {
 
 const handleDragEnd = async (result) => {
   const { destination, source, draggableId } = result
-  // console.log("destation, source, draggableId", destination, source, draggableId)
+  console.log("destation, source, draggableId", destination, source, draggableId)
 
   // TASK WAS PICKED UP AND DROPPED OUTSIDE OF DRAGDROPCONTEXT
   if (!destination) {
@@ -137,6 +142,11 @@ const handleDragEnd = async (result) => {
 
   // TASK WAS PICKED UP AND DROPPED WITHIN A DIFFERENT SECTION
   if (destination.droppableId !== source.droppableId) {
+
+    if (sectionsOrder.indexOf(destination.droppableId) > sectionsOrder.indexOf(source.droppableId)) {
+      destination.index = destination.index - 1
+    }
+
     const startingSection = sectionState.allSections[source.droppableId]
     const endingSection = sectionState.allSections[destination.droppableId]
 

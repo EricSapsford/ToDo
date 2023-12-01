@@ -8,6 +8,10 @@
 .task-card-card-overdiv {
   width: 100%;
   min-width: 300px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 7px;
+  padding: 10px;
 }
 
 .task-card-card-overdiv div {

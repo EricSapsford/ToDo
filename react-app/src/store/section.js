@@ -142,7 +142,7 @@ export const deleteSectionThunk = (sectionId) => async (dispatch) => {
 // DRAG A TASK BETWEEN SECTIONS
 export const dragBetweenSectionThunk = (grabBag) => async (dispatch) => {
   const { sourceSection, destinationSection, sourceNewTaskOrder, destinationNewTaskOrder, taskId} = grabBag
-  console.log("grabbag in thunk", grabBag)
+  // console.log("grabbag in thunk", grabBag)
   const res = await fetch(`/api/sections/dragBetween`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

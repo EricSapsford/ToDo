@@ -37,21 +37,6 @@ function TaskForm ({ task, index, formType }) {
 
   let labelsArr = task.labels.split(",")
 
-  const dateObj = {
-    "Jan": "01",
-    "Feb": "02",
-    "Mar": "03",
-    "Apr": "04",
-    "May": "05",
-    "Jun": "06",
-    "Jul": "07",
-    "Aug": "08",
-    "Sep": "09",
-    "Oct": "10",
-    "Nov": "11",
-    "Dec": "12"
-  }
-
   const dateObject = {
     "01": "Jan",
     "02": "Feb",
@@ -279,9 +264,7 @@ function TaskForm ({ task, index, formType }) {
     </div>
     :
 
-        <div
-          className="task-card-card-overdiv"
-        >
+        <div>
           {/* <svg width="24" height="24">
           <path fill="currentColor" d="M11.23 13.7l-2.15-2a.55.55 0 0 0-.74-.01l.03-.03a.46.46 0 0 0 0 .68L11.24 15l5.4-5.01a.45.45 0 0 0 0-.68l.02.03a.55.55 0 0 0-.73 0l-4.7 4.35z"></path>
         </svg> */}

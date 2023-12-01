@@ -14,6 +14,7 @@ function TaskFormUpdate({task, index}) {
             ref = {provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            className="task-card-card-overdiv"
           >
             <TaskForm task={task} index={index} formType={"Update"} />
           </div>
