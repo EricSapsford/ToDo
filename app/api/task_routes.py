@@ -40,7 +40,7 @@ def update_task(id):
         task_to_update.name = form.data["name"]
         task_to_update.description = form.data["description"]
         task_to_update.labels = form.data["labels"]
-        # task_to_update.due_date = form.data["due_date"]
+        task_to_update.due_date = form.data["due_date"]
         task_to_update.section_id = form.data["section_id"]
         task_to_update.updated_at = datetime.datetime.now()
         db.session.commit()

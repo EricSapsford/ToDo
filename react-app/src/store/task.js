@@ -14,6 +14,8 @@ const CREATE_TASK = "tasks/createTask"
 const UPDATE_TASK = "tasks/updateTask"
 const DELETE_TASK = "tasks/deleteTask"
 
+const DRAG_BETWEEN_TASK = "tasks/dragBetweenTask"
+
 //================================ ACTION CREATORS ================================
 //================================ ACTION CREATORS ================================
 //================================ ACTION CREATORS ================================
@@ -51,6 +53,13 @@ const deleteTask = (task) => {
   return {
     type: DELETE_TASK,
     task
+  }
+}
+
+export const dragBetweenTask = (grabBag) => {
+  return {
+    type: DRAG_BETWEEN_TASK,
+    grabBag
   }
 }
 
@@ -95,7 +104,7 @@ export const getAllTasksForTodayThunk = () => async (dispatch) => {
 
 // CREATE A TASK
 export const createTaskThunk = (createdTask) => async (dispatch) => {
-  const { name, description, labels, sectionId, projectId } = createdTask
+  const { name, description, dueDate, labels, sectionId, projectId } = createdTask
   const res = await fetch(`/api/projects/${projectId}/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -103,7 +112,7 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
       name,
       description,
       labels,
-      // due_date: dueDate,
+      due_date: dueDate,
       section_id: sectionId
     })
   })
@@ -119,7 +128,7 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
 
 // UPDATE A TASK
 export const updateTaskThunk = (updatedTask) => async (dispatch) => {
-  const { name, description, labels, sectionId, taskId } = updatedTask
+  const { name, description, labels, dueDate, sectionId, taskId } = updatedTask
   console.log("task coming into thunk", updatedTask)
 
   const res = await fetch(`/api/tasks/${taskId}/update`, {
@@ -129,19 +138,19 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
       name,
       description,
       labels,
-      // due_date: dueDate,
+      due_date: dueDate,
       section_id: sectionId
     })
   })
-  console.log("res inside thunk", res)
+  // console.log("res inside thunk", res)
   if (res.ok) {
     const data = await res.json();
-    console.log("res.ok data", data)
+    // console.log("res.ok data", data)
     dispatch(updateTask(data));
     return data
   } else {
     const errors = await res.json();
-    console.log("res not ok errors", errors)
+    // console.log("res not ok errors", errors)
     return errors
   }
 }
@@ -229,6 +238,13 @@ const taskReducer = (state = initialState, action) => {
       if (action.task.dueDate === dayString) {
         delete newState.todaysTasks[action.task.id]
       }
+      return newState
+    }
+
+    case DRAG_BETWEEN_TASK: {
+      const newState = { ...state, allTasks: { ... state.allTasks } }
+      newState.allTasks[action.grabBag.task.id] = action.grabBag.task
+
       return newState
     }
 

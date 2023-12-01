@@ -24,11 +24,3 @@ function TaskFormUpdate({task, index}) {
 }
 
 export default TaskFormUpdate
-// {taskArr.map((task) => (
-//   task.sectionId === section.id ?
-//   <div key={task.id} className="task-update-button">
-//     <TaskFormUpdate task={task} />
-//   </div>
-//   :
-//   null
-//   ))}

@@ -41,12 +41,10 @@ if (sectionsArr) {
   }
 }
 
-console.log("experiment", experiemtnalTorder)
-
 if (taskArr) {
 
-  let taskOrderNum = taskOrder.map(Number)
-  console.log("Numbers", taskOrderNum)
+  let taskOrderNum = experiemtnalTorder.map(Number)
+  // console.log("Numbers", taskOrderNum)
 
   const sortFunction = (a, b) => {
     let idA = a.id;
@@ -61,28 +59,32 @@ if (taskArr) {
   taskArr.sort(sortFunction)
 }
 
-console.log("taskOrder", taskOrder)
-console.log("sectionArr", sectionsArr)
-console.log("taskArr", taskArr)
+// console.log("taskOrder", taskOrder)
+// console.log("sectionArr", sectionsArr)
+// console.log("taskArr", taskArr)
 
 useEffect(() => {
+  // console.log("use effect going off")
   dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
   dispatch(taskActions.getAllTasksForAProjectThunk(projectId))
   setIsLoaded(true)
 }, [dispatch, projectId])
 
 const toggleCreateTaskForm = () => {
-  console.log(createTaskToggle)
+  // console.log(createTaskToggle)
   setCreateTaskToggle(!createTaskToggle)
 }
 
 const handleDragEnd = async (result) => {
   const { destination, source, draggableId } = result
+  // console.log("destation, source, draggableId", destination, source, draggableId)
 
+  // TASK WAS PICKED UP AND DROPPED OUTSIDE OF DRAGDROPCONTEXT
   if (!destination) {
     return;
   }
 
+  // TASK WAS PICKED UP AND DROPPED BACK WHERE IT STARTED
   if (
     destination.droppableId === source.droppableId &&
     destination.index === source.index
@@ -90,23 +92,30 @@ const handleDragEnd = async (result) => {
     return;
   }
 
+  // TASK WAS PICKED UP AND DROPPED WITHIN SAME SECTION
+  if (destination.droppableId === source.droppableId) {
   const section = sectionState.allSections[source.droppableId]
-  // console.log("section", section)
+  // console.log("section in handleDragEnd", section)
 
-  const newTaskIds = section.taskOrder
-  // console.log("newTaskIds", newTaskIds)
+  const sliceTaskArr = section.taskOrder
+  const newTaskIds = experiemtnalTorder
+  // console.log("newTaskIds in handleDragEnd", newTaskIds)
+
+  const sliceFunc = (element) => element === sliceTaskArr[0]
+  const slicePoint = newTaskIds.findIndex(sliceFunc)
 
   newTaskIds.splice(source.index, 1);
   newTaskIds.splice(destination.index, 0, draggableId);
-  // console.log("newTaskIds, but now it's", newTaskIds)
+
+  const taskOrderSlice = experiemtnalTorder.slice(slicePoint, slicePoint + sliceTaskArr.length)
 
   const newSection = {
     ...section,
     sectionId: section.id,
-    taskOrder: newTaskIds
+    taskOrder: taskOrderSlice
   }
 
-  console.log("section, but now it's", newSection)
+  // console.log("section, but now it's", newSection)
 
   try {
     // console.log("This is what you're sending", section)
@@ -123,6 +132,61 @@ const handleDragEnd = async (result) => {
       setErrors(data.errors);
     }
   }
+
+  }
+
+  // TASK WAS PICKED UP AND DROPPED WITHIN A DIFFERENT SECTION
+  if (destination.droppableId !== source.droppableId) {
+    const startingSection = sectionState.allSections[source.droppableId]
+    const endingSection = sectionState.allSections[destination.droppableId]
+
+    const startingSliceTaskArr = startingSection.taskOrder
+    const endingSliceTaskArr = endingSection.taskOrder
+    const newTaskIds = experiemtnalTorder
+
+    newTaskIds.splice(source.index, 1);
+
+    const endingSlicePoint = newTaskIds.indexOf(endingSliceTaskArr[0])
+
+    newTaskIds.splice(destination.index, 0, draggableId);
+
+    const draggableIdSlicePoint = startingSliceTaskArr.indexOf(draggableId)
+
+    // mutate original task order array from source section to be sent to DB
+    startingSliceTaskArr.splice(draggableIdSlicePoint, 1)
+
+    // new task order array from destination section now ready to be sent to DB
+    const endingTaskOrderSlice = newTaskIds.slice(endingSlicePoint, endingSlicePoint + endingSliceTaskArr.length + 1)
+
+    const grabBag = {
+      sourceSection: source.droppableId,
+      destinationSection: destination.droppableId,
+      sourceNewTaskOrder: startingSliceTaskArr,
+      destinationNewTaskOrder: endingTaskOrderSlice,
+      taskId: draggableId
+    }
+
+    // console.log("grabBag", grabBag)
+
+    try {
+      // console.log("This is what you're sending", section)
+      const res = await dispatch(sectionActions.dragBetweenSectionThunk(grabBag));
+      {res.errors ? setErrors(res.errors) : setErrors([]); }
+      if (res.ok) {
+        setErrors([]);
+      } else {
+        return res
+      }
+    } catch (res) {
+      const data = res
+      if (data && data.errors) {
+        setErrors(data.errors);
+      }
+    }
+
+  }
+
+
 }
 
 
@@ -172,7 +236,7 @@ return (
         </DragDropContext>
 
           <div className="add-task-button-div">
-              <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
+            <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
           </div>
 
       </div>
@@ -187,32 +251,45 @@ return (
           <div className="section-center-div">
             <div className="section-column-overdiv">
 
-
+              <DragDropContext
+                onDragEnd={handleDragEnd}
+              >
               {sectionsArr.map((section) => (
-
                 <div key={section.id} className="section-map-div">
                   <SectionFormUpdate section={section} sectionId={section.id}/>
 
 
-                   {taskArr.map((task, index) => (
-                      task.sectionId === section.id ?
-                      <div key={task.id} className="task-update-button">
-                        <TaskFormUpdate key={task.id} task={task} index={index} />
-                      </div>
-                      :
-                      null
-                    ))}
+                    <Droppable
+                      droppableId={`${section.id}`}
+                    >
+                      {(provided) => (
+                        <div
+                          ref = {provided.innerRef}
+                          {...provided.droppableProps}
+                        >
+                        {taskArr.map((task, index) => (
+                          task.sectionId === section.id ?
+                          <div key={task.id} className="task-update-button">
+                            <TaskFormUpdate key={task.id} task={task} index={index} />
+                          </div>
+                          :
+                          null
+                        ))}
+                        {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
 
-                    <div className="add-task-button-div">
-                      <TaskFormCreate projectId={projectId} sectionId={section.id}/>
-                    </div>
-
+                  <div className="add-task-button-div">
+                    <TaskFormCreate projectId={projectId} sectionId={section.id}/>
+                  </div>
                 </div>
               ))}
+              </DragDropContext>
 
-              <span>
-                <SectionFormCreate projectId={projectId}/>
-              </span>
+                <span>
+                  <SectionFormCreate projectId={projectId}/>
+                </span>
             </div>
 
 

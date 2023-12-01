@@ -51,33 +51,27 @@ function TaskForm ({ task, index, formType }) {
     "Nov": "11",
     "Dec": "12"
   }
-  let dueDateArr = [];
-  let day = "";
-  // let valueChunk = "";
 
-  if (task.dueDate) {
-    dueDateArr = task.dueDate.split(" ")
-    day = dueDateArr[0].slice(0, -1)
+  const dateObject = {
+    "01": "Jan",
+    "02": "Feb",
+    "03": "Mar",
+    "04": "Apr",
+    "05": "May",
+    "06": "Jun",
+    "07": "Jul",
+    "08": "Aug",
+    "09": "Sep",
+    "10": "Oct",
+    "11": "Nov",
+    "12": "Dec"
   }
 
-  // if (dueDateArr.length !== 0) {
-  //   valueChunk = `${dueDateArr[3]}-${dateObj[dueDateArr[2]]}-${dueDateArr[1]}`
-  // }
+  let dueDateArr = [];
 
-  // useEffect(() => {
-  //   console.log("dueDate", dueDate)
-  //   if (task.dueDate) {
-  //     dueDateArr = task.dueDate.split(" ")
-  //     day = dueDateArr[0].slice(0, -1)
-  //   }
-
-  //   if (dueDateArr.length !== 0) {
-  //     valueChunk = `${dueDateArr[3]}-${dateObj[dueDateArr[2]]}-${dueDateArr[1]}`
-  //   }
-  // }, [dueDate, setDueDate])
-
-
-
+  if (task.dueDate) {
+    dueDateArr = task.dueDate.split("-")
+  }
 
   useEffect(() => {
     if (labelChunk && labelChunk.length > 0) {
@@ -106,7 +100,7 @@ function TaskForm ({ task, index, formType }) {
         setDescription("")
         setLabelChunk("")
         setLabels("")
-        // setDueDate("")
+        setDueDate("")
         // console.log("This is what you're sending", task)
         const res = await dispatch(taskActions.createTaskThunk(task));
         await dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
@@ -237,7 +231,8 @@ function TaskForm ({ task, index, formType }) {
           </div>
         </div>
 
-        {/* <div>
+        {/* DUE DATE START HERE */}
+        <div>
           <div>
             Due date:
             <input
@@ -246,12 +241,13 @@ function TaskForm ({ task, index, formType }) {
               name="date"
               size={projectView === "List" ? 60 : 32}
               onChange={(e) => setDueDate(e.target.value)}
-              value={valueChunk}
+              value={dueDate}
             />
             (optional)
           </div>
           {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
-        </div> */}
+        </div>
+        {/* DUE DATE END HERE */}
 
         <div className="task-form-buttons-div">
 
@@ -283,16 +279,8 @@ function TaskForm ({ task, index, formType }) {
     </div>
     :
 
-    // <Draggable
-    //   draggableId={`${task.id}`}
-    //   index={index}
-    // >
-      // {(provided) => (
         <div
           className="task-card-card-overdiv"
-          // {...provided.draggableProps}
-          // {...provided.dragHandleProps}
-          // innerRef = {provided.innerRef}
         >
           {/* <svg width="24" height="24">
           <path fill="currentColor" d="M11.23 13.7l-2.15-2a.55.55 0 0 0-.74-.01l.03-.03a.46.46 0 0 0 0 .68L11.24 15l5.4-5.01a.45.45 0 0 0 0-.68l.02.03a.55.55 0 0 0-.73 0l-4.7 4.35z"></path>
@@ -329,12 +317,9 @@ function TaskForm ({ task, index, formType }) {
           }
 
           <div>
-            {dueDateArr.length > 0 ? <span>Due {day}, {dueDateArr[2]} {dueDateArr[1]}</span> : null}
+            {dueDateArr.length > 0 ? <span>Due: {dateObject[dueDateArr[1]]} {dueDateArr[2]}</span> : null}
           </div>
         </div>
-      // )}
-
-    // </Draggable>
     }
     </>
   )

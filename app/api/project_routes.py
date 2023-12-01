@@ -20,8 +20,6 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 # Get all projects for a specific user
-
-
 @project_routes.route("/<int:id>")
 def get_all_projects(id):
     projects = Project.query.filter(id == Project.user_id).all()
@@ -29,8 +27,6 @@ def get_all_projects(id):
     return res
 
 # Get all sections for a specific project
-
-
 @project_routes.route("/<int:id>/sections")
 def get_all_sections(id):
     sections = Section.query.filter(Section.project_id == id).all()
@@ -38,8 +34,6 @@ def get_all_sections(id):
     return res
 
 # Get all tasks for a specific project
-
-
 @project_routes.route("/<int:id>/tasks")
 @login_required
 def get_all_tasks(id):
@@ -48,8 +42,6 @@ def get_all_tasks(id):
     return res
 
 # Get details for a specific project
-
-
 @project_routes.route("/<int:id>")
 @login_required
 def get_one_project(id):
@@ -58,8 +50,6 @@ def get_one_project(id):
     return res
 
 # Create a new Project for a user
-
-
 @project_routes.route("/create", methods=["POST"])
 @login_required
 def create_project():
@@ -129,7 +119,7 @@ def create_task(id):
             name=form.data["name"],
             description=form.data["description"],
             labels=form.data["labels"],
-            # due_date = form.data["due_date"],
+            due_date = form.data["due_date"],
             project_id=id,
             section_id=form.data["section_id"],
             created_at=datetime.datetime.now(),
