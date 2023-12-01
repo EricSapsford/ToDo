@@ -22,8 +22,7 @@ def validation_errors_to_error_messages(validation_errors):
 @task_routes.route("/today")
 @login_required
 def todays_tasks():
-    tasks = Task.query.filter(Task.due_date == datetime.date.today())
-    print(datetime.date.today())
+    tasks = Task.query.filter(Task.due_date == datetime.date.today()).all()
     if tasks:
         res = {"tasks": [task.to_dict() for task in tasks]}
         return res
