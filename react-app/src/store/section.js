@@ -1,3 +1,5 @@
+import { dragBetweenTask } from "./task"
+
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
@@ -8,6 +10,8 @@ const GET_ONE_SECTION = "sections/getOneSection"
 const CREATE_SECTION = "sections/createSection"
 const UPDATE_SECTION = "sections/updateSection"
 const DELETE_SECTION = "sections/deleteSection"
+
+const DRAG_BETWEEN_SECTION = "sections/dragBetweenSection"
 
 //================================ ACTION CREATORS ================================
 //================================ ACTION CREATORS ================================
@@ -39,6 +43,13 @@ const deleteSection = (sectionId) => {
   return {
     type: DELETE_SECTION,
     sectionId
+  }
+}
+
+const dragBetweenSection = (grabBag) => {
+  return {
+    type: DRAG_BETWEEN_SECTION,
+    grabBag
   }
 }
 
@@ -86,12 +97,19 @@ export const createSectionThunk = (createdSection) => async (dispatch) => {
 
 // UPDATE A SECTION
 export const updateSectionThunk = (updatedSection) => async (dispatch) => {
-  const { name, sectionId } = updatedSection
+  const { name, taskOrder, sectionId } = updatedSection
+  // console.log("name in thunk", name)
+  // console.log("id in thunk", sectionId)
+  // console.log("taskOrder in thunk", taskOrder)
+  // console.log("What we'll be doing to it and sending to the db", taskOrder.join())
+  // const taskOrderString = taskOrder.join()
+  // console.log("Encoded string", taskOrderString)
   const res = await fetch(`/api/sections/${sectionId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name,
+      task_order: taskOrder.join()
     })
   })
   if (res.ok) {
@@ -114,6 +132,33 @@ export const deleteSectionThunk = (sectionId) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(deleteSection(sectionId));
+    return data;
+  } else {
+    const errors = await res.json()
+    return errors;
+  }
+}
+
+// DRAG A TASK BETWEEN SECTIONS
+export const dragBetweenSectionThunk = (grabBag) => async (dispatch) => {
+  const { sourceSection, destinationSection, sourceNewTaskOrder, destinationNewTaskOrder, taskId} = grabBag
+  console.log("grabbag in thunk", grabBag)
+  const res = await fetch(`/api/sections/dragBetween`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      task_id: taskId,
+      source_section_id: sourceSection,
+      destination_section_id: destinationSection,
+      source_task_order: sourceNewTaskOrder,
+      destination_task_order: destinationNewTaskOrder
+    })
+  })
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(dragBetweenSection(data));
+    dispatch(dragBetweenTask(data));
     return data;
   } else {
     const errors = await res.json()
@@ -170,6 +215,20 @@ const sectionReducer = (state = initialState, action) => {
     case DELETE_SECTION: {
       const newState = { ...state, allSections: { ...state.allSections } }
       delete newState.allSections[action.sectionId]
+      return newState
+    }
+
+    //! UPDATE
+    case DRAG_BETWEEN_SECTION: {
+      console.log("action object in reducer", action)
+      const newState = { ...state, allSections: { ...state.allSections } }
+
+      //source section
+      newState.allSections[action.grabBag.source.id] = action.grabBag.source
+
+      //destination section
+      newState.allSections[action.grabBag.destination.id] = action.grabBag.destination
+
       return newState
     }
 

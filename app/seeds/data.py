@@ -2,11 +2,13 @@ import datetime
 from datetime import timedelta
 import random
 
+
 def random_future_date():
-  start_date = datetime.date.today()
-  end_date = start_date + timedelta(days=10)
-  res = start_date + (end_date - start_date) * random.random()
-  return res
+    start_date = datetime.date.today()
+    end_date = start_date + timedelta(days=10)
+    res = start_date + (end_date - start_date) * random.random()
+    return res
+
 
 users = [
     {
@@ -459,6 +461,7 @@ sections = [
         "id": 1,
         "name": "section1",
         "project_id": 1,
+        "task_order": "1,2,3,4,5,6,7,16",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -466,6 +469,7 @@ sections = [
         "id": 2,
         "name": "section2",
         "project_id": 2,
+        "task_order": "8,9,10,11",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -473,6 +477,7 @@ sections = [
         "id": 3,
         "name": "section3",
         "project_id": 3,
+        "task_order": "12,13",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -480,6 +485,7 @@ sections = [
         "id": 4,
         "name": "section4",
         "project_id": 4,
+        "task_order": "14,15",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -487,6 +493,7 @@ sections = [
         "id": 5,
         "name": "section5",
         "project_id": 5,
+        "task_order": "17",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -494,6 +501,7 @@ sections = [
         "id": 6,
         "name": "section6",
         "project_id": 6,
+        "task_order": "18",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -501,6 +509,7 @@ sections = [
         "id": 7,
         "name": "section7",
         "project_id": 7,
+        "task_order": "empty",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -508,6 +517,7 @@ sections = [
         "id": 8,
         "name": "section8",
         "project_id": 8,
+        "task_order": "empty",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -515,6 +525,7 @@ sections = [
         "id": 9,
         "name": "section9",
         "project_id": 9,
+        "task_order": "21",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -522,6 +533,7 @@ sections = [
         "id": 10,
         "name": "section10",
         "project_id": 10,
+        "task_order": "empty",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -529,6 +541,7 @@ sections = [
         "id": 11,
         "name": "section11",
         "project_id": 11,
+        "task_order": "empty",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -536,6 +549,7 @@ sections = [
         "id": 12,
         "name": "section12",
         "project_id": 12,
+        "task_order": "empty",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -543,6 +557,7 @@ sections = [
         "id": 13,
         "name": "section13",
         "project_id": 13,
+        "task_order": "empty",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -550,6 +565,7 @@ sections = [
         "id": 14,
         "name": "section14",
         "project_id": 14,
+        "task_order": "empty",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -557,6 +573,7 @@ sections = [
         "id": 15,
         "name": "section15",
         "project_id": 1,
+        "task_order": "19,20",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },

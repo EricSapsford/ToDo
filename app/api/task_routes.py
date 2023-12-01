@@ -1,8 +1,9 @@
 from flask import Blueprint, request
-from ..models.db import db, Task, Project
+from ..models.db import db, Task, Section
 from flask_login import login_required, current_user
 from ..forms.tasks_form import TaskForm
 import datetime
+import re
 
 
 task_routes = Blueprint("tasks", __name__)
@@ -39,7 +40,7 @@ def update_task(id):
         task_to_update.name = form.data["name"]
         task_to_update.description = form.data["description"]
         task_to_update.labels = form.data["labels"]
-        # task_to_update.due_date = form.data["due_date"]
+        task_to_update.due_date = form.data["due_date"]
         task_to_update.section_id = form.data["section_id"]
         task_to_update.updated_at = datetime.datetime.now()
         db.session.commit()
@@ -53,6 +54,22 @@ def update_task(id):
 def delete_task(id):
 
     task_to_delete = Task.query.get(id)
+    section_to_update = Section.query.get(task_to_delete.section_id)
+
+    #regex optimization start
+    #--------------------------------------
+    task_order_string = section_to_update.task_order
+
+    patternBegEnd = r'^' + re.escape(str(id)) + ',|,' + re.escape(str(id)) + '$'
+    patternMid = r',' + re.escape(str(id)) + ','
+
+    task_order_string = re.sub(patternBegEnd, "", task_order_string)
+    task_order_string = re.sub(patternMid, ",", task_order_string)
+
+    section_to_update.task_order = task_order_string
+    #regex optimization end
+    #--------------------------------------
+
     db.session.delete(task_to_delete)
     db.session.commit()
     was_it_deleted = Task.query.get(id)

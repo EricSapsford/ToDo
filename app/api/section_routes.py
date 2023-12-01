@@ -6,6 +6,7 @@ import datetime
 
 section_routes = Blueprint("sections", __name__)
 
+
 def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
@@ -16,7 +17,8 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
-### Update a section
+# Update a section
+
 @section_routes.route("/<int:id>/update", methods=["PUT"])
 @login_required
 def update_section(id):
@@ -27,12 +29,14 @@ def update_section(id):
     if form.validate_on_submit():
         section_to_update = Section.query.get(id)
         section_to_update.name = form.data["name"]
+        section_to_update.task_order = form.data["task_order"]
         db.session.commit()
         return section_to_update.to_dict()
     if form.errors:
-        return { "errors": validation_errors_to_error_messages(form.errors) }
+        return {"errors": validation_errors_to_error_messages(form.errors)}
 
-### Delete a section
+# Delete a section
+
 @section_routes.route("/<int:id>/delete", methods=["DELETE"])
 @login_required
 def delete_section(id):
@@ -48,4 +52,32 @@ def delete_section(id):
         }
         return res
     else:
-        return { "message": "Unable to delete" }, 400
+        return {"message": "Unable to delete"}, 400
+
+# Drag a Task between sections
+@section_routes.route("/dragBetween", methods=["PUT"])
+@login_required
+def drag_between():
+
+    section_1_to_update = Section.query.get(int(request.json["source_section_id"]))
+    section_2_to_update = Section.query.get(int(request.json["destination_section_id"]))
+    task_to_update = Task.query.get(int(request.json["task_id"]))
+
+    section_1_to_update.task_order = ",".join([ele for ele in request.json["source_task_order"]])
+    section_2_to_update.task_order = ",".join([ele for ele in request.json["destination_task_order"]])
+
+    task_to_update.section_id = int(request.json["destination_section_id"])
+
+    db.session.commit()
+
+    source = section_1_to_update.to_dict()
+    destination = section_2_to_update.to_dict()
+    task = task_to_update.to_dict()
+
+    res = {
+        "source": source,
+        "destination": destination,
+        "task": task
+    }
+
+    return res
