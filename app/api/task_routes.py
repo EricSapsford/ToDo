@@ -23,8 +23,13 @@ def validation_errors_to_error_messages(validation_errors):
 @login_required
 def todays_tasks():
     tasks = Task.query.filter(Task.due_date == datetime.date.today())
-    res = {"tasks": [task.to_dict() for task in tasks]}
-    return res
+    print(datetime.date.today())
+    if tasks:
+        res = {"tasks": [task.to_dict() for task in tasks]}
+        return res
+    else:
+        res = { "message": "No tasks for today"}, 200
+        return res
 
 
 ### Update a task
