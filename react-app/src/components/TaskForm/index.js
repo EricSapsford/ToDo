@@ -53,9 +53,17 @@ function TaskForm ({ task, index, formType }) {
   }
 
   let dueDateArr = [];
+  let dateString = "";
+  let dow = 0;
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  let dayOfTheWeek = "";
 
   if (task.dueDate) {
     dueDateArr = task.dueDate.split("-")
+    dateString = task.dueDate + "T00:00:00"
+    const DD = new Date(`${dateString}`)
+    dow = DD.getDay()
+    dayOfTheWeek = dayNames[dow]
   }
 
   useEffect(() => {
@@ -300,7 +308,7 @@ function TaskForm ({ task, index, formType }) {
           }
 
           <div>
-            {dueDateArr.length > 0 ? <span>Due: {dateObject[dueDateArr[1]]} {dueDateArr[2]}</span> : null}
+            {dueDateArr.length > 0 ? <span>Due: {dayOfTheWeek}, {dateObject[dueDateArr[1]]} {dueDateArr[2]}</span> : null}
           </div>
         </div>
     }
