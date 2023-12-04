@@ -509,7 +509,7 @@ sections = [
         "id": 7,
         "name": "section7",
         "project_id": 7,
-        "task_order": "empty",
+        "task_order": "",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -517,7 +517,7 @@ sections = [
         "id": 8,
         "name": "section8",
         "project_id": 8,
-        "task_order": "empty",
+        "task_order": "",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -533,7 +533,7 @@ sections = [
         "id": 10,
         "name": "section10",
         "project_id": 10,
-        "task_order": "empty",
+        "task_order": "",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -541,7 +541,7 @@ sections = [
         "id": 11,
         "name": "section11",
         "project_id": 11,
-        "task_order": "empty",
+        "task_order": "",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -549,7 +549,7 @@ sections = [
         "id": 12,
         "name": "section12",
         "project_id": 12,
-        "task_order": "empty",
+        "task_order": "",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -557,7 +557,7 @@ sections = [
         "id": 13,
         "name": "section13",
         "project_id": 13,
-        "task_order": "empty",
+        "task_order": "",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -565,7 +565,7 @@ sections = [
         "id": 14,
         "name": "section14",
         "project_id": 14,
-        "task_order": "empty",
+        "task_order": "",
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },

@@ -34,21 +34,11 @@ const sectionsArr = Object.values(sectionState.allSections)
 
 let experiemtnalTorder = []
 let sectionsOrder = []
+let sectionsObj = {}
 
-if (sectionsArr) {
-  for (let i = 0; i < sectionsArr.length; i++) {
-    experiemtnalTorder = [ ...experiemtnalTorder, ...sectionsArr[i].taskOrder ]
-  }
-
-  for (let j = 0; j < sectionsArr.length; j++) {
-    sectionsOrder.push(String(sectionsArr[j].id))
-  }
-}
-
-if (taskArr) {
-
-  let taskOrderNum = experiemtnalTorder.map(Number)
-  console.log("Numbers", taskOrderNum)
+function sortTaskArray(sortingArray) {
+  let taskOrderNum = sortingArray.map(Number)
+  // console.log("Numbers", taskOrderNum)
 
   const sortFunction = (a, b) => {
     let idA = a.id;
@@ -63,16 +53,35 @@ if (taskArr) {
   taskArr.sort(sortFunction)
 }
 
+if (sectionsArr) {
+  for (let i = 0; i < sectionsArr.length; i++) {
+    experiemtnalTorder = [ ...experiemtnalTorder, ...sectionsArr[i].taskOrder ]
+  }
+
+  for (let j = 0; j < sectionsArr.length; j++) {
+    sectionsOrder.push(String(sectionsArr[j].id))
+
+    sectionsObj[sectionsArr[j].id] = sectionsArr[j].taskOrder
+  }
+}
+
+if (taskArr) {
+  sortTaskArray(experiemtnalTorder)
+}
+
+
+
 // console.log("taskOrder", taskOrder)
 // console.log("sectionArr", sectionsArr)
 // console.log("taskArr", taskArr)
-// console.log(sectionsOrder)
+// console.log("sectionsOrder", sectionsOrder)
+// console.log("sectionsObj", sectionsObj)
 
 useEffect(() => {
   // console.log("use effect going off")
   dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
-  dispatch(taskActions.getAllTasksForAProjectThunk(projectId))
-  setIsLoaded(true)
+  .then(() => dispatch(taskActions.getAllTasksForAProjectThunk(projectId)))
+  .then(() => setIsLoaded(true))
 }, [dispatch, projectId])
 
 const toggleCreateTaskForm = () => {
@@ -83,6 +92,18 @@ const toggleCreateTaskForm = () => {
 const handleDragEnd = async (result) => {
   const { destination, source, draggableId } = result
   console.log("destation, source, draggableId", destination, source, draggableId)
+
+
+  // COURSE CORRECT
+  if (destination.index <= 0) {
+    if (destination.droppableId === sectionsOrder[0]) {
+      destination.index = 0;
+    } else {
+      destination.index = experiemtnalTorder.indexOf(sectionsObj[sectionsOrder[sectionsOrder.indexOf(destination.droppableId) - 1]][sectionsObj[sectionsOrder[sectionsOrder.indexOf(destination.droppableId) - 1]].length - 1]) + 1
+    }
+
+    console.log("destination index in if block", destination.index)
+  }
 
   // TASK WAS PICKED UP AND DROPPED OUTSIDE OF DRAGDROPCONTEXT
   if (!destination) {
@@ -100,27 +121,31 @@ const handleDragEnd = async (result) => {
   // TASK WAS PICKED UP AND DROPPED WITHIN SAME SECTION
   if (destination.droppableId === source.droppableId) {
   const section = sectionState.allSections[source.droppableId]
-  // console.log("section in handleDragEnd", section)
+
 
   const sliceTaskArr = section.taskOrder
-  const newTaskIds = experiemtnalTorder
-  // console.log("newTaskIds in handleDragEnd", newTaskIds)
+  const newTaskIds = experiemtnalTorder.filter((str) => str !== "")
+
 
   const sliceFunc = (element) => element === sliceTaskArr[0]
   const slicePoint = newTaskIds.findIndex(sliceFunc)
 
+
   newTaskIds.splice(source.index, 1);
   newTaskIds.splice(destination.index, 0, draggableId);
 
-  const taskOrderSlice = experiemtnalTorder.slice(slicePoint, slicePoint + sliceTaskArr.length)
+
+  // PREMPTIVE PERSISTANCE
+  sortTaskArray(newTaskIds)
+
+  const taskOrderSlice = newTaskIds.slice(slicePoint, slicePoint + sliceTaskArr.length)
+
 
   const newSection = {
     ...section,
     sectionId: section.id,
     taskOrder: taskOrderSlice
   }
-
-  // console.log("section, but now it's", newSection)
 
   try {
     // console.log("This is what you're sending", section)
@@ -152,7 +177,7 @@ const handleDragEnd = async (result) => {
 
     const startingSliceTaskArr = startingSection.taskOrder
     const endingSliceTaskArr = endingSection.taskOrder
-    const newTaskIds = experiemtnalTorder
+    const newTaskIds = experiemtnalTorder.filter((str) => str !== "")
 
     newTaskIds.splice(source.index, 1);
 
@@ -160,23 +185,41 @@ const handleDragEnd = async (result) => {
 
     newTaskIds.splice(destination.index, 0, draggableId);
 
+    // PREMPTIVE PERSISTANCE
+    sortTaskArray(newTaskIds)
+    taskArr[destination.index].sectionId = Number(destination.droppableId)
+
     const draggableIdSlicePoint = startingSliceTaskArr.indexOf(draggableId)
 
     // mutate original task order array from source section to be sent to DB
     startingSliceTaskArr.splice(draggableIdSlicePoint, 1)
 
     // new task order array from destination section now ready to be sent to DB
-    const endingTaskOrderSlice = newTaskIds.slice(endingSlicePoint, endingSlicePoint + endingSliceTaskArr.length + 1)
+    let endingTaskOrderSlice = []
+    if (endingSlicePoint === -1) {
+      endingTaskOrderSlice.push(`${draggableId}`)
+    } else {
+      endingTaskOrderSlice = newTaskIds.slice(endingSlicePoint, endingSlicePoint + endingSliceTaskArr.length + 1)
+    }
+
+    // CLEANUP
+    const endingTaskOrderSliceNoEmptyStrings = endingTaskOrderSlice.filter((str) => str !== "")
+
+    if (startingSliceTaskArr.length === 0) {
+      startingSliceTaskArr[0] = ""
+    } else if (endingTaskOrderSliceNoEmptyStrings.length === 0) {
+      endingTaskOrderSliceNoEmptyStrings[0] = ""
+    }
 
     const grabBag = {
       sourceSection: source.droppableId,
       destinationSection: destination.droppableId,
       sourceNewTaskOrder: startingSliceTaskArr,
-      destinationNewTaskOrder: endingTaskOrderSlice,
+      destinationNewTaskOrder: endingTaskOrderSliceNoEmptyStrings,
       taskId: draggableId
     }
 
-    // console.log("grabBag", grabBag)
+    // console.log("grabBag in component", grabBag)
 
     try {
       // console.log("This is what you're sending", section)
@@ -274,6 +317,10 @@ return (
                     >
                       {(provided) => (
                         <div
+                          className="section-droppable-div"
+                          style={{
+                            padding: section.taskOrder[0] === "" ? "10px 0" : null
+                          }}
                           ref = {provided.innerRef}
                           {...provided.droppableProps}
                         >

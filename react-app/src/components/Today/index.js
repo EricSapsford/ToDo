@@ -39,13 +39,12 @@ function Today () {
   useEffect(() => {
     dispatch(taskActions.getAllTasksForTodayThunk())
     setIsLoaded(true)
-    console.log("splash useEffect just went off")
+    // console.log("splash useEffect just went off")
   }, [dispatch])
 
   return (
     <>
       {isLoaded && projectIdSet.size > 0 && projectArr.length !== 0 && (
-        taskArr.length !== 0 ?
           <div className='task-card-center-div'>
             <div>
               <h1>Today's tasks</h1>
@@ -77,10 +76,14 @@ function Today () {
               </div>
             </div>
           </div>
-        :
-        <div className='task-card-center-div'>
+      )}
+
+      {isLoaded && projectIdSet.size === 0 && (
+        <div className='today-center-div'>
           <div>
             <h1>No tasks due today. Good work!</h1>
+            <img className="today-no-tasks-image" src="/enjoy_your_day_off.jpg" />
+            <h1>Enjoy your day off!</h1>
           </div>
         </div>
       )}

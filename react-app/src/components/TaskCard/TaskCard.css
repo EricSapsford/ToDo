@@ -50,3 +50,9 @@
   width: fit-content;
   right: -35.5%;
 }
+
+.section-droppable-div {
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  margin-top: 20px;
+}

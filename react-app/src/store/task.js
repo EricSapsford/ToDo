@@ -196,10 +196,14 @@ const taskReducer = (state = initialState, action) => {
 
     case GET_ALL_TASKS_FOR_TODAY: {
       const newState = { ...state, todaysTasks: {} }
-      action.tasks.forEach((taskObj) => {
-        newState.todaysTasks[taskObj.id] = taskObj
-      });
-      return newState
+      if (action.tasks) {
+        action.tasks.forEach((taskObj) => {
+          newState.todaysTasks[taskObj.id] = taskObj
+        });
+        return newState
+      } else {
+        return newState
+      }
     }
 
     case CREATE_TASK: {

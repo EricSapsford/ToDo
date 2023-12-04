@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-
-import { Draggable } from 'react-beautiful-dnd'
 
 import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";

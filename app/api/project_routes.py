@@ -20,6 +20,8 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 # Get all projects for a specific user
+
+
 @project_routes.route("/<int:id>")
 def get_all_projects(id):
     projects = Project.query.filter(id == Project.user_id).all()
@@ -27,6 +29,8 @@ def get_all_projects(id):
     return res
 
 # Get all sections for a specific project
+
+
 @project_routes.route("/<int:id>/sections")
 def get_all_sections(id):
     sections = Section.query.filter(Section.project_id == id).all()
@@ -34,6 +38,8 @@ def get_all_sections(id):
     return res
 
 # Get all tasks for a specific project
+
+
 @project_routes.route("/<int:id>/tasks")
 @login_required
 def get_all_tasks(id):
@@ -42,6 +48,8 @@ def get_all_tasks(id):
     return res
 
 # Get details for a specific project
+
+
 @project_routes.route("/<int:id>")
 @login_required
 def get_one_project(id):
@@ -50,6 +58,8 @@ def get_one_project(id):
     return res
 
 # Create a new Project for a user
+
+
 @project_routes.route("/create", methods=["POST"])
 @login_required
 def create_project():
@@ -70,7 +80,7 @@ def create_project():
         db.session.commit()
         new_section = Section(
             name="Section name",
-            task_order="empty",
+            task_order="",
             project_id=new_project.id,
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now()
@@ -83,6 +93,8 @@ def create_project():
         return {"errors": validation_errors_to_error_messages(form.errors)}, 400
 
 # Create a new Section for a project
+
+
 @project_routes.route("/<int:id>/section/create", methods=["POST"])
 @login_required
 def create_section(id):
@@ -94,7 +106,7 @@ def create_section(id):
         new_section = Section(
             name=form.data["name"],
             project_id=id,
-            task_order="empty",
+            task_order="",
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now()
         )
@@ -119,7 +131,7 @@ def create_task(id):
             name=form.data["name"],
             description=form.data["description"],
             labels=form.data["labels"],
-            due_date = form.data["due_date"],
+            due_date=form.data["due_date"],
             project_id=id,
             section_id=form.data["section_id"],
             created_at=datetime.datetime.now(),
@@ -128,10 +140,11 @@ def create_task(id):
         db.session.add(new_task)
         db.session.commit()
         section_to_update = Section.query.get(form.data["section_id"])
-        if section_to_update.task_order == "empty":
+        if section_to_update.task_order == "":
             section_to_update.task_order = f"{new_task.id}"
         else:
-            section_to_update.task_order = section_to_update.task_order + f",{new_task.id}"
+            section_to_update.task_order = section_to_update.task_order + \
+                f",{new_task.id}"
         db.session.commit()
         res = new_task.to_dict()
         return res
