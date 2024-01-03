@@ -2,7 +2,7 @@
   margin-top: 100px;
   border-top: 1px solid #dadada;
   border-bottom: .5px solid #cecece;
-  padding: 60px 30px;
+  padding: 10px 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -48,11 +48,17 @@
   gap: 40px;
 }
 
+.footer-row {
+  display: flex;
+  width: 1fr;
+  flex-direction: row;
+  gap: 40px;
+}
+
 .footer-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 15px;
-  font-weight: lighter;
 }
 
 .footer-name {

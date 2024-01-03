@@ -6,7 +6,7 @@ import "./HomePage.css"
 
 function HomePage () {
 
-  const [suffix, setSuffix] = useState("Today")
+  // const [suffix, setSuffix] = useState("Today")
 
   return (
     <>
@@ -16,7 +16,8 @@ function HomePage () {
             Welcome! Log in or sign up to begin managing your tasks!
           </h3>
           <h1 className='logo-ticker-span'>
-            <img className="checklist-image" src="../../checklist.png" /> Due{suffix}
+            {/* <img className="checklist-image" src="../../checklist.png" /> Due{suffix} */}
+            <img className="checklist-image" src="../../checklist.png" /> DueToo
           </h1>
         </div>
         <div className='home-page-login-form-span'>
