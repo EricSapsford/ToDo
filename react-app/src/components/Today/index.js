@@ -38,7 +38,7 @@ function Today () {
 
   useEffect(() => {
     dispatch(taskActions.getAllTasksForTodayThunk())
-    setIsLoaded(true)
+    .then(() => setIsLoaded(true))
     // console.log("splash useEffect just went off")
   }, [dispatch])
 
