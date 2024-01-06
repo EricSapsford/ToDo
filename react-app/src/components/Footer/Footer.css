@@ -5,6 +5,8 @@
   padding: 10px 10px;
   display: flex;
   justify-content: space-between;
+
+  bottom: 0
 }
 
 #footer-logo-text {
