@@ -38,7 +38,7 @@ export default function Footer() {
             </div>
           </div>
           <div id='footer-col'>
-            <div className='footer-right-header'>Contact Me</div>
+            <div className='footer-left-header'>Contact Me</div>
               <div className='footer-name'>
               <a href="https://ericsapsford.com" target="_blank" rel="noopener noreferrer">
                   <div>Eric Sapsford</div>
