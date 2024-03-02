@@ -1,12 +1,19 @@
 #footer {
-  margin-top: 100px;
-  border-top: 1px solid #dadada;
+  position: fixed;
+  width: 99%;
+
+  margin-top: 105px;
+  border-top: 1px solid #d1453b;
   border-bottom: .5px solid #cecece;
+
   padding: 10px 10px;
+
   display: flex;
   justify-content: space-between;
 
-  bottom: 0
+  bottom: 0;
+
+  background-color: whitesmoke;
 }
 
 #footer-logo-text {
