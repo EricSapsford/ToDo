@@ -2,11 +2,9 @@
   position: fixed;
   width: 99%;
 
-  margin-top: 105px;
   border-top: 1px solid #d1453b;
-  border-bottom: .5px solid #cecece;
 
-  padding: 10px 10px;
+  padding: 0 10px;
 
   display: flex;
   justify-content: space-between;
@@ -37,10 +35,25 @@
   gap: 50px;
 }
 
+#footer-col-1 a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .footer-right {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 100px;
+}
+
+#footer-copyright {
+  color: #828282;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 0 30px;
+  font-size: 13px;
 }
 
 .footer-right-header {
@@ -81,12 +94,4 @@
   display: flex;
   gap: 15px;
   margin-left: 50px;
-}
-
-#footer-copyright {
-  color: #828282;
-  display: flex;
-  justify-content: end;
-  padding: 25px 30px;
-  font-size: 13px;
 }
