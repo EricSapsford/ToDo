@@ -5,6 +5,7 @@ import * as taskActions from "../../store/task"
 
 import TodayTaskFormUpdate from '../TodayTaskFormUpdate';
 import TaskFormCreate from '../TaskFormCreate';
+import Footer from '../Footer';
 
 
 import "./Today.css"
@@ -87,6 +88,10 @@ function Today () {
           </div>
         </div>
       )}
+
+      <div className='whole-ass-footer'>
+				<Footer />
+			</div>
     </>
   )
 }

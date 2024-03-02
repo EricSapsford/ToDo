@@ -9,6 +9,7 @@ import TaskFormCreate from "../TaskFormCreate";
 import TaskFormUpdate from "../TaskFormUpdate";
 import SectionFormUpdate from "../SectionFormUpdate"
 import SectionFormCreate from "../SectionFormCreate"
+import Footer from '../Footer';
 
 import * as taskActions from "../../store/task";
 import * as sectionActions from "../../store/section";
@@ -353,6 +354,10 @@ return (
           </div>
         </>
       )}
+
+    <div className='whole-ass-footer'>
+			<Footer />
+		</div>
   </>
 
 )

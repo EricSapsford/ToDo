@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Footer from '../Footer';
+
 
 import ProfileButton from './ProfileButton';
 import UserControls from "../UserControls";
@@ -36,9 +36,6 @@ function Navigation({ isLoaded }){
 				</span>
 			</nav>
 
-			<div className='whole-ass-footer'>
-				<Footer />
-			</div>
 		</>
 	);
 }

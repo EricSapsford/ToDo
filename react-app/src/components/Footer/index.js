@@ -3,10 +3,13 @@ import SignupFormModal from '../SignupFormModal';
 import OpenModalButton from '../OpenModalButton';
 import { useSelector } from 'react-redux';
 import './Footer.css';
+import { useEffect } from 'react';
 
 export default function Footer() {
 
   const sessionUser = useSelector(state => state.session.user)
+
+
 
   return (
     <>
@@ -18,6 +21,9 @@ export default function Footer() {
               DueToo
             </div>
           </Link>
+          <div id='footer-copyright'>
+            @ 2024 Due Too
+          </div>
         </div>
         <div className='footer-right'>
           <div className='footer-row'>
@@ -49,8 +55,10 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div id='footer-copyright'>
-        @ 2024 Due Too
+
+      <div className='header-footer-placeholder'>
+        <a href='google.com'></a>
+        <nav></nav>
       </div>
     </>
   )
