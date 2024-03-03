@@ -39,6 +39,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  text-decoration: none;
+  color: #d1453b;
 }
 
 .footer-right {
@@ -109,6 +112,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  text-decoration: none;
 }
 
 .footer-links {
