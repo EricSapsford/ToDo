@@ -9,6 +9,7 @@ import TaskFormCreate from "../TaskFormCreate";
 import TaskFormUpdate from "../TaskFormUpdate";
 import SectionFormUpdate from "../SectionFormUpdate"
 import SectionFormCreate from "../SectionFormCreate"
+import Footer from "../Footer";
 
 import * as taskActions from "../../store/task";
 import * as sectionActions from "../../store/section";
@@ -255,6 +256,10 @@ return (
         <div className="add-task-button-empty-list-div">
           <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
         </div>
+
+        <div className='whole-ass-footer'>
+			    <Footer />
+		    </div>
       </>
       )}
 
@@ -293,6 +298,10 @@ return (
           </div>
 
       </div>
+
+      <div className='whole-ass-footer'>
+			  <Footer />
+		  </div>
       </>
       )}
 
@@ -349,6 +358,9 @@ return (
                 </span>
             </div>
 
+            <div className='whole-ass-footer'>
+			        <Footer />
+		        </div>
 
           </div>
         </>
