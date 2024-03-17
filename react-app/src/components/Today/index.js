@@ -79,13 +79,19 @@ function Today () {
       )}
 
       {isLoaded && projectIdSet.size === 0 && (
-        <div className='today-center-div'>
-          <div>
-            <h1>No tasks due today. Good work!</h1>
-            <img className="today-no-tasks-image" src="/enjoy_your_day_off.jpg" />
-            <h1>Enjoy your day off!</h1>
+        <>
+          <div className='today-center-div'>
+            <div>
+              <h1>No tasks due today. Good work!</h1>
+              <img className="today-no-tasks-image" src="/enjoy_your_day_off.jpg" />
+              <h1>Enjoy your day off!</h1>
+            </div>
           </div>
-        </div>
+
+          <div className='whole-ass-footer'>
+            <Footer />
+          </div>
+        </>
       )}
     </>
   )
