@@ -11,6 +11,8 @@ SCHEMA = os.environ.get("SCHEMA")
 db = SQLAlchemy()
 
 # helper function for adding prefix to foreign key column references in production
+
+
 def add_prefix_for_prod(attr):
     if environment == "production":
         return f"{SCHEMA}.{attr}"
@@ -40,7 +42,8 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.Date, nullable=False)
 
     # one-to-many: one user can have many projects
-    projects_rel = db.relationship("Project", back_populates="users_rel", cascade="all, delete-orphan")
+    projects_rel = db.relationship(
+        "Project", back_populates="users_rel", cascade="all, delete-orphan")
 
     @property
     def password(self):
@@ -94,27 +97,39 @@ class ProjectColor(enum.Enum):
 
     def to_list():
         return [
-           "BerryRed"
-           "Red"
-           "Orange"
-           "Yellow"
-           "OliveGreen"
-           "LimeGreen"
-           "Green"
-           "MintGreen"
-           "Teal"
-           "SkyBlue"
-           "LightBlue"
-           "Blue"
-           "Grape"
-           "Violet"
-           "Lavender"
-           "Magenta"
-           "Salmon"
-           "Charcoal"
-           "Grey"
-           "Taupe"
+            "BerryRed"
+            "Red"
+            "Orange"
+            "Yellow"
+            "OliveGreen"
+            "LimeGreen"
+            "Green"
+            "MintGreen"
+            "Teal"
+            "SkyBlue"
+            "LightBlue"
+            "Blue"
+            "Grape"
+            "Violet"
+            "Lavender"
+            "Magenta"
+            "Salmon"
+            "Charcoal"
+            "Grey"
+            "Taupe"
         ]
+
+
+class ProjectView(enum.Enum):
+    List = "List"
+    Board = "Board"
+
+    def to_list():
+        return [
+            "List"
+            "Board"
+        ]
+
 
 class Project(db.Model):
     __tablename__ = "projects"
@@ -125,8 +140,9 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     color = db.Column(db.Enum(ProjectColor), nullable=False)
-    view = db.Column(db.Boolean, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    view = db.Column(db.Enum(ProjectView), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        add_prefix_for_prod("users.id")), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 
@@ -134,17 +150,19 @@ class Project(db.Model):
     users_rel = db.relationship("User", back_populates="projects_rel")
 
     # one-to-many: one project can have many tasks
-    tasks_rel = db.relationship("Task", back_populates="projects_rel", cascade="all, delete-orphan")
+    tasks_rel = db.relationship(
+        "Task", back_populates="projects_rel", cascade="all, delete-orphan")
 
-    #one-to-many: one project can have many sections
-    sections_rel = db.relationship("Section", back_populates="projects_rel", cascade="all, delete-orphan")
+    # one-to-many: one project can have many sections
+    sections_rel = db.relationship(
+        "Section", back_populates="projects_rel", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "color": str(self.color).split(".")[1],
-            "view": self.view,
+            "view": str(self.view).split(".")[1],
             "userId": self.user_id,
             "createdAt": self.created_at,
             "updatedAt": self.updated_at,
@@ -166,14 +184,17 @@ class Task(db.Model):
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(2000), nullable=True)
     labels = db.Column(db.String(800), nullable=True)
-    status = db.Column(db.Boolean, nullable=False)
+    due_date = db.Column(db.String(10), nullable=True)
     project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
-    section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("sections.id")), nullable=True)
+    section_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("sections.id")), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 
     # one-to-many: one project can have many tasks
     projects_rel = db.relationship("Project", back_populates="tasks_rel")
+
+    # one-to-many: one section can have many tasks
+    sections_rel = db.relationship("Section", back_populates="tasks_rel")
 
     def to_dict(self):
         return {
@@ -181,11 +202,16 @@ class Task(db.Model):
             "name": self.name,
             "description": self.description,
             "labels": self.labels,
-            "status": self.status,
+            "dueDate": self.due_date,
             "projectId": self.project_id,
             "sectionId": self.section_id,
             "createdAt": self.created_at,
             "updatedAt": self.updated_at,
+        }
+
+    def to_dict_id(self):
+        return {
+            "id": self.id,
         }
 
 
@@ -202,12 +228,18 @@ class Section(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
+    task_order = db.Column(db.String(510), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey(
+        add_prefix_for_prod("projects.id")), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 
     # one-to-many: one project can have many sections
     projects_rel = db.relationship("Project", back_populates="sections_rel")
+
+    # one-to-many: one section can have many tasks
+    tasks_rel = db.relationship(
+        "Task", back_populates="sections_rel", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
@@ -216,4 +248,5 @@ class Section(db.Model):
             "projectId": self.project_id,
             "createdAt": self.created_at,
             "updatedAt": self.updated_at,
+            "taskOrder": self.task_order.split(",")
         }

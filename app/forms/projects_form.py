@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField, SelectField, BooleanField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, NumberRange
 
 color_options = [
   "BerryRed",
@@ -25,7 +25,12 @@ color_options = [
   "Taupe"
 ]
 
+view_options = [
+  "List",
+  "Board"
+]
+
 class ProjectForm(FlaskForm):
   name = StringField("Name", validators=[DataRequired(), Length(min=1, max=255)])
   color = SelectField("Color", choices=color_options, validators=[DataRequired()])
-  view = BooleanField("View", validators=[DataRequired()])
+  view = SelectField("View", choices=view_options, validators=[DataRequired()])

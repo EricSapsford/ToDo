@@ -1,11 +1,25 @@
+.project-form-modal-div {
+  padding: 50px;
+  border-radius: 12px;
+}
+
+.project-form-name-input input{
+  background-color: white;
+  border: none;
+  font-weight: 900;
+  color: black;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
 .modal-select-div select {
   border: none;
   cursor: pointer;
-  /* font-size: 7pt; */
   font-weight: 900;
   background-color: transparent;
   border-radius: 10px;
-  border: 2px solid rgb(255, 113, 113);
+  border: 1px solid black;
   padding: 5px 10px;
   color: black;
   margin-left: 15px;
@@ -16,4 +30,79 @@
 .modal-select-div {
   text-align: center;
   margin: 20px 0;
+}
+
+#list,
+#board {
+  appearance: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.project-view-radio-divs{
+  display: flex;
+  flex-direction: row;
+}
+
+.project-view-radio-overdiv {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  background-color: lightgrey;
+  border-radius: 10px;
+  padding: 3px 2px;
+}
+
+.project-input-radio-div {
+  line-height: 1.67;
+  min-width: 76px;
+  width: 50%;
+  padding: 0;
+  text-align: center;
+  margin: 0 2px;
+  border-radius: 5px;
+}
+
+.project-radio-label {
+  display: block;
+  cursor: pointer;
+  width: 100%;
+}
+
+#project-input-active {
+  background-color: white;
+}
+
+.project-form-add-button {
+  position: absolute;
+  background-color: #d1453b;
+  color: white;
+  bottom: 20px;
+  right: 115px;
+}
+
+.project-form-add-button:hover {
+  background-color: #b1382f;
+}
+
+.project-form-add-button:disabled {
+  background-color: grey;
+  cursor: default;
+}
+
+.project-form-cancel-button {
+  position: absolute;
+  bottom: 20px;
+  right: 50px;
+}
+
+.project-form-add-button,
+.project-form-cancel-button {
+  border: none;
+  border-radius: 7px;
+  padding: 6px 10px;
+  cursor: pointer;
 }

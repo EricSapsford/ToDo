@@ -1,4 +1,14 @@
 import datetime
+from datetime import timedelta
+import random
+
+
+def random_future_date():
+    start_date = datetime.date.today()
+    end_date = start_date + timedelta(days=10)
+    res = start_date + (end_date - start_date) * random.random()
+    return res
+
 
 users = [
     {
@@ -88,7 +98,7 @@ projects = [
         "id": 1,
         "name": "project1",
         "color": "Taupe",
-        "view": False,
+        "view": "Board",
         "user_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -97,7 +107,7 @@ projects = [
         "id": 2,
         "name": "project2",
         "color": "Green",
-        "view": False,
+        "view": "List",
         "user_id": 2,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -106,7 +116,7 @@ projects = [
         "id": 3,
         "name": "project3",
         "color": "Teal",
-        "view": False,
+        "view": "List",
         "user_id": 3,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -115,7 +125,7 @@ projects = [
         "id": 4,
         "name": "project4",
         "color": "Red",
-        "view": False,
+        "view": "List",
         "user_id": 4,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -124,7 +134,7 @@ projects = [
         "id": 5,
         "name": "project5",
         "color": "Salmon",
-        "view": False,
+        "view": "List",
         "user_id": 5,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -133,7 +143,7 @@ projects = [
         "id": 6,
         "name": "project6",
         "color": "Lavender",
-        "view": False,
+        "view": "List",
         "user_id": 6,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -142,7 +152,7 @@ projects = [
         "id": 7,
         "name": "project7",
         "color": "SkyBlue",
-        "view": False,
+        "view": "List",
         "user_id": 7,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -151,7 +161,7 @@ projects = [
         "id": 8,
         "name": "project8",
         "color": "LightBlue",
-        "view": False,
+        "view": "List",
         "user_id": 8,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -160,7 +170,7 @@ projects = [
         "id": 9,
         "name": "project9",
         "color": "Magenta",
-        "view": False,
+        "view": "List",
         "user_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -169,7 +179,7 @@ projects = [
         "id": 10,
         "name": "project10",
         "color": "Yellow",
-        "view": False,
+        "view": "List",
         "user_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -178,7 +188,7 @@ projects = [
         "id": 11,
         "name": "project11",
         "color": "BerryRed",
-        "view": False,
+        "view": "List",
         "user_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -187,7 +197,7 @@ projects = [
         "id": 12,
         "name": "project12",
         "color": "Charcoal",
-        "view": False,
+        "view": "List",
         "user_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -196,7 +206,7 @@ projects = [
         "id": 13,
         "name": "project13",
         "color": "Grey",
-        "view": False,
+        "view": "List",
         "user_id": 3,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -205,7 +215,7 @@ projects = [
         "id": 14,
         "name": "project14",
         "color": "Violet",
-        "view": False,
+        "view": "List",
         "user_id": 4,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
@@ -217,10 +227,10 @@ tasks = [
         "id": 1,
         "name": "task1",
         "description": "description of task1",
-        "labels": "Priority,Today,custom1",
-        "status": True,
+        "labels": "Priority,Today,custom01",
+        "due_date": datetime.date.today(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -229,9 +239,9 @@ tasks = [
         "name": "task2",
         "description": "description of task2",
         "labels": "Priority,Today,custom2",
-        "status": True,
+        "due_date": datetime.date.today(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -240,9 +250,9 @@ tasks = [
         "name": "task3",
         "description": "description of task3",
         "labels": "Priority,Today,custom3",
-        "status": True,
+        "due_date": random_future_date(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -251,9 +261,9 @@ tasks = [
         "name": "task4",
         "description": "description of task4",
         "labels": "Priority,Today,custom4",
-        "status": True,
+        "due_date": random_future_date(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -262,9 +272,9 @@ tasks = [
         "name": "task5",
         "description": "description of task5",
         "labels": "Priority,Today,custom5",
-        "status": True,
+        "due_date": datetime.date.today(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -273,9 +283,9 @@ tasks = [
         "name": "task6",
         "description": "description of task6",
         "labels": "Priority,Today,custom6",
-        "status": True,
+        "due_date": random_future_date(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -284,9 +294,9 @@ tasks = [
         "name": "task7",
         "description": "description of task7",
         "labels": "Priority,Today,custom7",
-        "status": True,
+        "due_date": random_future_date(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -295,9 +305,9 @@ tasks = [
         "name": "task8",
         "description": "description of task8",
         "labels": "Priority,Today,custom8",
-        "status": True,
+        "due_date": None,
         "project_id": 2,
-        "section_id": None,
+        "section_id": 2,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -306,9 +316,9 @@ tasks = [
         "name": "task9",
         "description": "description of task9",
         "labels": "Priority,Today,custom9",
-        "status": True,
+        "due_date": None,
         "project_id": 2,
-        "section_id": None,
+        "section_id": 2,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -317,9 +327,9 @@ tasks = [
         "name": "task10",
         "description": "description of task10",
         "labels": "Priority,Today,custom10",
-        "status": True,
+        "due_date": None,
         "project_id": 2,
-        "section_id": None,
+        "section_id": 2,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -328,9 +338,9 @@ tasks = [
         "name": "task11",
         "description": "description of task11",
         "labels": "Priority,Today,custom11",
-        "status": True,
+        "due_date": None,
         "project_id": 2,
-        "section_id": None,
+        "section_id": 2,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -339,9 +349,9 @@ tasks = [
         "name": "task12",
         "description": "description of task12",
         "labels": "Priority,Today,custom12",
-        "status": True,
+        "due_date": None,
         "project_id": 3,
-        "section_id": None,
+        "section_id": 3,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -350,9 +360,9 @@ tasks = [
         "name": "task13",
         "description": "description of task13",
         "labels": "Priority,Today,custom13",
-        "status": True,
+        "due_date": None,
         "project_id": 3,
-        "section_id": None,
+        "section_id": 3,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -361,9 +371,9 @@ tasks = [
         "name": "task14",
         "description": "description of task14",
         "labels": "Priority,Today,custom14",
-        "status": True,
+        "due_date": None,
         "project_id": 4,
-        "section_id": None,
+        "section_id": 4,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -372,9 +382,9 @@ tasks = [
         "name": "task15",
         "description": "description of task15",
         "labels": "Priority,Today,custom15",
-        "status": True,
+        "due_date": None,
         "project_id": 4,
-        "section_id": None,
+        "section_id": 4,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -383,9 +393,9 @@ tasks = [
         "name": "task16",
         "description": "description of task16",
         "labels": "Priority,Today,custom16",
-        "status": True,
+        "due_date": random_future_date(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 1,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -394,9 +404,9 @@ tasks = [
         "name": "task17",
         "description": "description of task17",
         "labels": "Priority,Today,custom17",
-        "status": True,
+        "due_date": None,
         "project_id": 5,
-        "section_id": None,
+        "section_id": 5,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -405,9 +415,9 @@ tasks = [
         "name": "task18",
         "description": "description of task18",
         "labels": "Priority,Today,custom18",
-        "status": True,
+        "due_date": None,
         "project_id": 6,
-        "section_id": None,
+        "section_id": 6,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -416,9 +426,9 @@ tasks = [
         "name": "task19",
         "description": "description of task19",
         "labels": "Priority,Today,custom19",
-        "status": True,
+        "due_date": random_future_date(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 15,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
@@ -427,20 +437,145 @@ tasks = [
         "name": "task20",
         "description": "description of task20",
         "labels": "Priority,Today,custom20",
-        "status": True,
+        "due_date": random_future_date(),
         "project_id": 1,
-        "section_id": None,
+        "section_id": 15,
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 21,
+        "name": "task21",
+        "description": "description of task21",
+        "labels": "Priority,Today,custom21",
+        "due_date": datetime.date.today(),
+        "project_id": 9,
+        "section_id": 9,
         "created_at": datetime.datetime.now(),
         "updated_at": datetime.datetime.now()
     },
 ]
 
-# sections = [
-#     {
-#         "id": 1,
-#         "name": "section1",
-#         "project_id": 1,
-#         "created_at": datetime.datetime.now(),
-#         "updated_at": datetime.datetime.now()
-#     }
-# ]
+sections = [
+    {
+        "id": 1,
+        "name": "section1",
+        "project_id": 1,
+        "task_order": "1,2,3,4,5,6,7,16",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 2,
+        "name": "section2",
+        "project_id": 2,
+        "task_order": "8,9,10,11",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 3,
+        "name": "section3",
+        "project_id": 3,
+        "task_order": "12,13",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 4,
+        "name": "section4",
+        "project_id": 4,
+        "task_order": "14,15",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 5,
+        "name": "section5",
+        "project_id": 5,
+        "task_order": "17",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 6,
+        "name": "section6",
+        "project_id": 6,
+        "task_order": "18",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 7,
+        "name": "section7",
+        "project_id": 7,
+        "task_order": "",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 8,
+        "name": "section8",
+        "project_id": 8,
+        "task_order": "",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 9,
+        "name": "section9",
+        "project_id": 9,
+        "task_order": "21",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 10,
+        "name": "section10",
+        "project_id": 10,
+        "task_order": "",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 11,
+        "name": "section11",
+        "project_id": 11,
+        "task_order": "",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 12,
+        "name": "section12",
+        "project_id": 12,
+        "task_order": "",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 13,
+        "name": "section13",
+        "project_id": 13,
+        "task_order": "",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 14,
+        "name": "section14",
+        "project_id": 14,
+        "task_order": "",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+    {
+        "id": 15,
+        "name": "section15",
+        "project_id": 1,
+        "task_order": "19,20",
+        "created_at": datetime.datetime.now(),
+        "updated_at": datetime.datetime.now()
+    },
+
+]

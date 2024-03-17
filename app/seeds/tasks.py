@@ -12,7 +12,7 @@ def seed_tasks():
             name = task["name"],
             description = task["description"],
             labels = task["labels"],
-            status = task["status"],
+            due_date = task["due_date"],
             project_id = task["project_id"],
             section_id = task["section_id"],
             created_at = task["created_at"],

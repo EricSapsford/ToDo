@@ -1,40 +1,180 @@
-.task-form-textarea textarea{
+.task-form-input {
   border: none;
-  cursor: pointer;
-  font-weight: 900;
-  background-color: white;
-  border: 2px solid rgb(255, 113, 113);
-  padding: 5px 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: medium;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  outline: none;
 }
 
-.task-form-textarea {
-  text-align: center;
-  margin: 20px 0;
+.task-form-input:hover {
+  background-color: lightgrey;
 }
 
-.task-form-label-input-div {
+.task-form-label-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.task-form-label-input {
   border: none;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: medium;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  outline: none;
+  margin-right: 10px;
+  padding: 2px 0;
+}
+
+.task-form-label-input:hover {
+  background-color: lightgrey;
+}
+
+.add-label-button {
+  border-radius: 7px;
+  border: 1px solid #d1453b;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: medium;
   cursor: pointer;
+  background-color: #d1453b;
+  color: white;
+}
+
+.add-label-button:hover {
+  background-color: rgb(255, 113, 113);
+}
+
+.add-label-button:disabled {
+  background-color: transparent;
+  border: 1px solid lightgrey;
+  color: lightgrey;
+  cursor: default;
+}
+
+.task-form-added-label-div {
+  display: flex;
+  flex-direction: row;
   font-weight: 900;
-  background-color: white;
-  border: 2px solid rgb(255, 113, 113);
-  padding: 5px 10px;
+  padding: 5px 5px 5px 0;
   margin-bottom: 20px;
 }
 
-.task-form-label-input-div input {
-  border: none;
+.task-form-added-label-span {
+  padding: 5px 10px;
+  border: 1px solid grey;
+  border-radius: 7px;
+  margin-right: 5px;
+  background-color: white;
+  cursor: default;
 }
 
-.task-form-label-input-div span button {
+.task-form-buttons-div {
+  display: flex;
+  flex-direction: row;
+}
+
+/* FORM BUTTONS */
+
+
+/* SUBMIT */
+
+.task-form-submit-button {
+  padding: 10px 8px;
+  margin-right: 8px;
   border: none;
-  background-color: rgb(255, 207, 207);
-  border-radius: 5px;
-  padding: 3px;
+  background-color: #d1453b;
+  border-radius: 7px;
+  color: white;
   cursor: pointer;
-  font-weight: bolder;
+
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.task-form-label-input-div span button:hover {
-  background-color: rgb(255, 113, 113);
+.task-form-submit-button:hover {
+  background-color: #b1382f;
+}
+
+.task-form-submit-button:active {
+  background-color: #992f28;
+}
+
+
+/* CANCEL */
+
+.task-form-update-cancel-button {
+  padding: 10px 8px;
+  margin-right: 8px;
+  border: none;
+  background-color: lightgrey;
+  border-radius: 7px;
+  color: black;
+  cursor: pointer;
+}
+
+.task-form-update-cancel-button:hover {
+  background-color: rgb(148, 148, 148);
+}
+
+.task-form-update-cancel-button:active {
+  background-color: grey;
+}
+
+/* CREATE TASK */
+
+.task-form-create-add-task-button {
+  margin: 20px 0;
+
+  border: 1px solid lightgrey;
+  background-color: transparent;
+  color: black;
+  border-radius: 7px;
+  padding: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.1em;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+}
+
+.task-form-create-add-task-button:hover {
+  border: 1px solid #d1453b;
+  background-color: #d1453b;
+  color: white;
+}
+
+.task-form-create-add-task-button:active {
+  background-color: #992f28;
+  border: 1px solid #992f28;
+  color: white;
+}
+
+/* CANCEL CREATE */
+
+.task-form-create-cancel-button {
+  position: relative;
+  right: -74px;
+  bottom: 37px;
+
+
+  border: 1px solid lightgrey;
+  background-color: transparent;
+  border-radius: 7px;
+  padding: 9px 8px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  cursor: pointer;
+}
+
+.task-form-create-cancel-button:hover {
+  border: 1px solid lightgrey;
+  background-color: lightgrey;
+  color: black;
+}
+
+.task-form-create-cancel-button:active {
+  background-color: grey;
+  border: 1px solid grey;
+  color: white;
 }

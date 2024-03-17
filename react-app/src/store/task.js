@@ -1,12 +1,20 @@
+const today = Date()
+const dayStringArr = today.split(" ")
+const dayString = `${dayStringArr[0]}, ${dayStringArr[2]} ${dayStringArr[1]} ${dayStringArr[3]} 00:00:00 GMT`
+
+
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
 
 const GET_ALL_TASKS_FOR_A_PROJECT = "tasks/getAllTasksForAProject"
+const GET_ALL_TASKS_FOR_TODAY = "tasks/getAllTasksForToday"
 const CREATE_TASK = "tasks/createTask"
 const UPDATE_TASK = "tasks/updateTask"
 const DELETE_TASK = "tasks/deleteTask"
+
+const DRAG_BETWEEN_TASK = "tasks/dragBetweenTask"
 
 //================================ ACTION CREATORS ================================
 //================================ ACTION CREATORS ================================
@@ -16,6 +24,13 @@ const DELETE_TASK = "tasks/deleteTask"
 const getAllTasksForAProject = (tasks) => {
   return {
     type: GET_ALL_TASKS_FOR_A_PROJECT,
+    tasks
+  }
+}
+
+const getAllTasksForToday = (tasks) => {
+  return {
+    type: GET_ALL_TASKS_FOR_TODAY,
     tasks
   }
 }
@@ -34,10 +49,17 @@ const updateTask = (task) => {
   }
 }
 
-const deleteTask = (taskId) => {
+const deleteTask = (task) => {
   return {
     type: DELETE_TASK,
-    taskId
+    task
+  }
+}
+
+export const dragBetweenTask = (grabBag) => {
+  return {
+    type: DRAG_BETWEEN_TASK,
+    grabBag
   }
 }
 
@@ -63,9 +85,26 @@ export const getAllTasksForAProjectThunk = (projectId) => async (dispatch) => {
   }
 }
 
+// GET ALL TASKS FOR TODAY
+export const getAllTasksForTodayThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/tasks/today`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+  if (res.ok) {
+    const { tasks } = await res.json();
+
+    dispatch(getAllTasksForToday(tasks))
+    return tasks
+  } else {
+    const errors = await res.json();
+    return errors
+  }
+}
+
 // CREATE A TASK
 export const createTaskThunk = (createdTask) => async (dispatch) => {
-  const { name, description, labels, section_id, projectId } = createdTask
+  const { name, description, dueDate, labels, sectionId, projectId } = createdTask
   const res = await fetch(`/api/projects/${projectId}/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -73,7 +112,8 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
       name,
       description,
       labels,
-      section_id
+      due_date: dueDate,
+      section_id: sectionId
     })
   })
   if (res.ok) {
@@ -88,7 +128,9 @@ export const createTaskThunk = (createdTask) => async (dispatch) => {
 
 // UPDATE A TASK
 export const updateTaskThunk = (updatedTask) => async (dispatch) => {
-  const { name, description, labels, section_id, taskId } = updatedTask
+  const { name, description, labels, dueDate, sectionId, taskId } = updatedTask
+  console.log("task coming into thunk", updatedTask)
+
   const res = await fetch(`/api/tasks/${taskId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -96,29 +138,33 @@ export const updateTaskThunk = (updatedTask) => async (dispatch) => {
       name,
       description,
       labels,
-      section_id
+      due_date: dueDate,
+      section_id: sectionId
     })
   })
+  // console.log("res inside thunk", res)
   if (res.ok) {
     const data = await res.json();
+    // console.log("res.ok data", data)
     dispatch(updateTask(data));
     return data
   } else {
     const errors = await res.json();
+    // console.log("res not ok errors", errors)
     return errors
   }
 }
 
 // DELETE A TASK
-export const deleteTaskThunk = (taskId) => async (dispatch) => {
-  const res = await fetch(`/api/tasks/${taskId}/delete`, {
+export const deleteTaskThunk = (task) => async (dispatch) => {
+  const res = await fetch(`/api/tasks/${task.id}/delete`, {
     method: "DELETE",
     headers: { 'Content-Type': 'application/json' },
   })
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(deleteTask(taskId));
+    dispatch(deleteTask(task));
     return data;
   } else {
     const errors = await res.json()
@@ -133,7 +179,7 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
 
 const initialState = {
   allTasks: {},
-  singleTask: {}
+  todaysTasks: {}
 }
 
 const taskReducer = (state = initialState, action) => {
@@ -148,10 +194,25 @@ const taskReducer = (state = initialState, action) => {
       return newState
     }
 
+    case GET_ALL_TASKS_FOR_TODAY: {
+      const newState = { ...state, todaysTasks: {} }
+      if (action.tasks) {
+        action.tasks.forEach((taskObj) => {
+          newState.todaysTasks[taskObj.id] = taskObj
+        });
+        return newState
+      } else {
+        return newState
+      }
+    }
+
     case CREATE_TASK: {
       if (action.task.id) {
-        const newState = { ...state, allTasks: { ...state.allTasks } }
+        const newState = { ...state, allTasks: { ...state.allTasks }, todaysTasks: { ...state.todaysTasks } }
         newState.allTasks[action.task.id] = action.task
+        if (action.task.dueDate === dayString) {
+          newState.todaysTasks[action.task.id] = action.task
+        }
         return newState;
       } else if (action.task.errors) {
         return state
@@ -162,8 +223,11 @@ const taskReducer = (state = initialState, action) => {
 
     case UPDATE_TASK: {
       if (action.task.id) {
-        const newState = { ...state, allTasks: { ...state.allTasks } }
+        const newState = { ...state, allTasks: { ...state.allTasks }, todaysTasks: { ...state.todaysTasks } }
         newState.allTasks[action.task.id] = action.task
+        if (action.task.dueDate === dayString) {
+          newState.todaysTasks[action.task.id] = action.task
+        }
         return newState;
       } else if (action.task.errors) {
         return state
@@ -173,8 +237,18 @@ const taskReducer = (state = initialState, action) => {
     }
 
     case DELETE_TASK: {
-      const newState = { ...state, allTasks: { ...state.allTasks } }
-      delete newState.allTasks[action.taskId]
+      const newState = { ...state, allTasks: { ...state.allTasks }, todaysTasks: { ...state.todaysTasks } }
+      delete newState.allTasks[action.task.id]
+      if (action.task.dueDate === dayString) {
+        delete newState.todaysTasks[action.task.id]
+      }
+      return newState
+    }
+
+    case DRAG_BETWEEN_TASK: {
+      const newState = { ...state, allTasks: { ... state.allTasks } }
+      newState.allTasks[action.grabBag.task.id] = action.grabBag.task
+
       return newState
     }
 

@@ -1,8 +1,9 @@
 from flask import Blueprint, request
-from ..models.db import db, Task
+from ..models.db import db, Task, Section
 from flask_login import login_required, current_user
 from ..forms.tasks_form import TaskForm
 import datetime
+import re
 
 
 task_routes = Blueprint("tasks", __name__)
@@ -17,6 +18,19 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
+### Get all tasks for today
+@task_routes.route("/today")
+@login_required
+def todays_tasks():
+    tasks = Task.query.filter(Task.due_date == str(datetime.date.today())).all()
+    if tasks:
+        res = {"tasks": [task.to_dict() for task in tasks]}
+        return res
+    else:
+        res = { "message": "No tasks for today"}, 200
+        return res
+
+
 ### Update a task
 @task_routes.route("/<int:id>/update", methods=["PUT"])
 @login_required
@@ -30,8 +44,7 @@ def update_task(id):
         task_to_update.name = form.data["name"]
         task_to_update.description = form.data["description"]
         task_to_update.labels = form.data["labels"]
-        task_to_update.status = True
-        task_to_update.project_id = id
+        task_to_update.due_date = form.data["due_date"]
         task_to_update.section_id = form.data["section_id"]
         task_to_update.updated_at = datetime.datetime.now()
         db.session.commit()
@@ -45,12 +58,28 @@ def update_task(id):
 def delete_task(id):
 
     task_to_delete = Task.query.get(id)
+    section_to_update = Section.query.get(task_to_delete.section_id)
+
+    #regex optimization start
+    #--------------------------------------
+    task_order_string = section_to_update.task_order
+
+    patternBegEnd = r'^' + re.escape(str(id)) + ',|,' + re.escape(str(id)) + '$'
+    patternMid = r',' + re.escape(str(id)) + ','
+
+    task_order_string = re.sub(patternBegEnd, "", task_order_string)
+    task_order_string = re.sub(patternMid, ",", task_order_string)
+
+    section_to_update.task_order = task_order_string
+    #regex optimization end
+    #--------------------------------------
+
     db.session.delete(task_to_delete)
     db.session.commit()
     was_it_deleted = Task.query.get(id)
     if was_it_deleted == None:
         res = {
-            "message": "Successfully deleted project",
+            "message": "Successfully deleted task",
             "id": id
         }
         return res

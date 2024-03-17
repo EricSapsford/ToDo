@@ -2,7 +2,6 @@
   background-color: white;
   border: none;
   cursor: pointer;
-  /* font-size: 7pt; */
   font-weight: bolder;
   color: white;
   background-color: transparent;
@@ -10,17 +9,15 @@
   border: 1px solid white;
   padding: 5px 10px;
   margin-left: 15px;
-  animation:
-    0.2s ease-in buttonFadeOut,
-    0.2s ease-in wordFadeOut;
-  animation-fill-mode: forwards;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .projects-button-actual:hover {
-  animation:
-    0.2s ease-in alternate buttonFadeIn,
-    0.2s ease-in alternate wordFadeIn;
-  animation-fill-mode: forwards;
+  background-color: whitesmoke;
+  color: #d1453b;
 }
 
 .project-update-button:hover button{
@@ -32,24 +29,24 @@
 }
 
 .user-control-dropdown {
-  border-right: 2px solid rgb(255, 113, 113);
+  border-right: 2px solid #d1453b;
   position: fixed;
   top: 33px;
   left: -1px;
   height: 100%;
   width: 200px;
   padding: 40px 50px;
-  background-color: rgb(255, 207, 207);
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
   gap: 15px;
 
   z-index: 1;
-  animation: 0.2s ease-in-out slidein;
-  /* animation-direction: alternate; */
+
+  transition: left 0.2s ease-in;
 }
 
-@keyframes slidein {
+/* @keyframes slidein {
   0% {
     left: -300px;
   }
@@ -65,22 +62,24 @@
   100% {
     left: -300px;
   }
-}
+} */
 
 .user-control-dropdown-false {
+  border-right: 2px solid #d1453b;
   position: fixed;
   top: 33px;
-  left: -300px;
+  left: -302px;
   height: 100%;
   width: 200px;
   padding: 40px 50px;
-  background-color: rgb(255, 207, 207);
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
   gap: 15px;
 
   z-index: 1;
-  animation: 0.2s ease-in slideout;
+
+  transition: left 0.2s ease-in;
 }
 
 .user-control-login-buttons {
@@ -93,7 +92,6 @@
   background-color: white;
   border: none;
   cursor: pointer;
-  /* font-size: 7pt; */
   font-weight: 900;
   color: white;
   background-color: transparent;
@@ -101,43 +99,65 @@
   border: 2px solid white;
   padding: 5px 10px;
   margin-left: 15px;
-  animation:
-    0.2s ease-in buttonFadeOut,
-    0.2s ease-in wordFadeOut;
-  animation-fill-mode: forwards;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .user-control-login-buttons button:hover {
-  animation:
-  0.2s ease-in alternate buttonFadeIn,
-  0.2s ease-in alternate wordFadeIn;
-animation-fill-mode: forwards;
+  background-color: whitesmoke;
+  color: #d1453b;
 }
 
 .create-project-button-div {
-  text-align: center;
+  position: relative;
+  left: 100px;
 }
 
 .create-project-button-div button {
   background-color: white;
-  border: none;
+  border: 1px solid whitesmoke;
   cursor: pointer;
-  /* font-size: 7pt; */
-  font-weight: 900;
-  color: white;
+  font-size: 0.9em;
+  color: black;
   background-color: transparent;
-  border-radius: 10px;
-  border: 2px solid white;
+  border-radius: 5px;
   padding: 5px 10px;
-  animation:
-    0.2s ease-in buttonFadeOut,
-    0.2s ease-in wordFadeOut;
-  animation-fill-mode: forwards;
+
+  transition:
+    background-color 0.2s ease-out,
+    border 0.2s,
+    color 0.2s ease-out;
 }
 
 .create-project-button-div button:hover {
-  animation:
-    0.2s ease-in alternate buttonFadeIn,
-    0.2s ease-in alternate wordFadeIn;
-  animation-fill-mode: forwards;
+  background-color: whitesmoke;
+  color: #d1453b;
+  border: 1px solid #d1453b;
+}
+
+.projects-title-and-add-button-div {
+  height: 70px;
+  height: 32px;
+}
+
+.projects-today-link {
+  margin: 15px 0;
+  padding: 5px 0;
+  border-radius: 7px;
+  background-color: whitesmoke;
+  transition: background-color 0.2s ease-in;
+}
+
+.projects-today-link:hover {
+  margin: 15px 0;
+  padding: 5px 0;
+  border-radius: 7px;
+  background-color: lightgrey;
+}
+
+.project-today-svg-text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
 }

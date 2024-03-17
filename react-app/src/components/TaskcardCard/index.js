@@ -8,6 +8,14 @@ function TaskcardCard({ task, projectId }) {
 
   let labelsArr = task.labels.split(",")
 
+  let dueDateArr = [];
+  let day = "";
+
+  if (task.dueDate) {
+    dueDateArr = task.dueDate.split(" ")
+    day = dueDateArr[0].slice(0, -1)
+  }
+
   return (
     <>
       <div className="task-card-card-overdiv">
@@ -18,10 +26,17 @@ function TaskcardCard({ task, projectId }) {
           <div className="task-card-card-name-div">
             {task.name}
           </div>
-            <OpenModalButton
+            {/* <OpenModalButton
               buttonText={<i class="fa-solid fa-pen-to-square fa-xl"></i>}
               modalComponent={<TaskFormUpdate task={task}/>}
-            />
+            /> */}
+            {/* <button
+              className="update-task-button"
+              onClick={toggleUpdateForm}
+              // style={{position: "relative", top: "-5px"}}
+            >
+              <i class="fa-solid fa-pen-to-square fa-xl"></i>
+            </button> */}
             <OpenModalButton
               buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
               modalComponent={<TaskFormDelete taskId={task.id}/>}
@@ -32,6 +47,9 @@ function TaskcardCard({ task, projectId }) {
           {labelsArr.map((label) => (
             <span className="task-card-card-label-span">{label}</span>
           ))}
+        </div>
+        <div>
+          {dueDateArr.length > 0 ? <span>{day} {dueDateArr[2]} {dueDateArr[1]}</span> : null}
         </div>
       </div>
     </>

@@ -6,6 +6,8 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import TaskCard from "./components/TaskCard";
+import Today from "./components/Today";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +26,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/projects">
+            <Today />
           </Route>
           <Route path="/projects/:projectId">
             <TaskCard />

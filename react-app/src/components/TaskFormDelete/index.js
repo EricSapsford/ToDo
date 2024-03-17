@@ -1,18 +1,22 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as taskActions from "../../store/task"
+import * as sectionActions from "../../store/section"
 
 
-function TaskFormDelete({ taskId }) {
+function TaskFormDelete({ task }) {
   // console.log("here's what's coming in", taskId)
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+
+  const projectId = task.projectId
 
   const handleDelete = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await dispatch(taskActions.deleteTaskThunk(taskId))
+      const res = await dispatch(taskActions.deleteTaskThunk(task))
+      await dispatch(sectionActions.getAllSectionsForAUserThunk(projectId))
       if (res.message) {
         closeModal();
       }
@@ -28,11 +32,11 @@ function TaskFormDelete({ taskId }) {
 
   return (
     <>
-      <div className="login-modal-div">
+      <div className="project-form-modal-div">
         <div className="log-in-title">
           <h1>Delete this Task?</h1>
         </div>
-        <div className="inputs-and-login-button">
+        <div className="project-form-modal-buttons">
           <button onClick={closeModal}>
             No, keep
           </button>

@@ -7,6 +7,11 @@
 
 .task-card-card-overdiv {
   width: 100%;
+  min-width: 300px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 7px;
+  padding: 10px;
 }
 
 .task-card-card-overdiv div {
@@ -15,9 +20,9 @@
 
 .task-card-card-first-row-div {
   margin: 6px 0;
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .task-card-card-name-div {
@@ -34,8 +39,13 @@
 }
 
 .task-card-card-first-row-div button:hover {
-  background-color: rgb(255, 207, 207);
+  background-color: #d1453b;
+  color: white;
   border-radius: 7px;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 .task-card-card-button-container {
@@ -47,6 +57,9 @@
 .task-card-card-label-div {
   padding: 8px 0;
   /* border: 1px solid green; */
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 350px;
 }
 
 .task-card-card-label-div {

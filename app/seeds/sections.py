@@ -9,10 +9,11 @@ def seed_sections():
 
     for section in sections:
         new_section = Section(
-            name = section["name"],
-            project_id = section["project_id"],
-            created_at = section["created_at"],
-            updated_at = section["updated_at"],
+            name=section["name"],
+            project_id=section["project_id"],
+            task_order=section["task_order"],
+            created_at=section["created_at"],
+            updated_at=section["updated_at"],
         )
         db.session.add(new_section)
 
@@ -21,7 +22,8 @@ def seed_sections():
 
 def undo_sections():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.sections RESTART IDENTITY CASCADE;")
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.sections RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM sections"))
 

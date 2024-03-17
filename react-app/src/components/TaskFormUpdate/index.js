@@ -1,12 +1,25 @@
 import TaskForm from "../TaskForm";
+import { Draggable } from "react-beautiful-dnd";
 
-function TaskFormUpdate({task}) {
+function TaskFormUpdate({task, index}) {
 
   return (
     <>
-      <div>
-        <TaskForm task={task} formType={"Update"} />
-      </div>
+      <Draggable
+        draggableId={`${task.id}`}
+        index={index}
+      >
+        {(provided, snapshot) => (
+          <div
+            ref = {provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className="task-card-card-overdiv"
+          >
+            <TaskForm task={task} index={index} formType={"Update"} />
+          </div>
+        )}
+      </Draggable>
     </>
   )
 }

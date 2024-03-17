@@ -1,0 +1,40 @@
+.home-page-overdiv {
+  background-color: #d1453b;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  position: absolute;
+  width: 100%;
+}
+
+.logo-ticker {
+  color: white;
+  height: 50%;
+  width: 50%;
+  position: relative;
+  top: 30%;
+  left: 18%;
+
+  font-size: xx-large;
+}
+
+.checklist-image {
+  width: 50px;
+  position: relative;
+  top: 5px;
+}
+
+.welcome-message {
+  position: absolute;
+  top: 80%;
+  right: 3.4%;
+  width: 100%;
+  text-align: center;
+}
+
+.error-message-div {
+  max-width: 200px;
+  margin-bottom: 20px;
+}

@@ -1,3 +1,11 @@
+/* UNIVERSAL MODAL STYLINGS
+DO NOT DELETE UNLESS YOU WANT TO
+RESTYLE ALL REMAINING MODALS */
+
+/* JOKES ON YOU, I DID AND NOW
+ALMOST ALL OF THESE ARE COMPLETELY
+USELESS */
+
 .log-in-title {
   width: 100%;
   text-align: center;
@@ -52,3 +60,99 @@
     0.2s ease-in alternate wordFadeIn;
   animation-fill-mode: forwards;
 }
+
+/* LOGIN FORM EMBEDDED IN SPLASH PAGE */
+
+.login-form-div {
+  position: relative;
+  top: 30%;
+  right: -160%;
+}
+
+.signup-form-div {
+  position: relative;
+  top: 20%;
+  right: -160%;
+}
+
+.login-buttons-and-inputs-div,
+.login-inputs-div,
+.login-buttons-div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+}
+
+.login-inputs-div input {
+  background-color: white;
+  border: none;
+  font-weight: 900;
+  color: #d1453b;
+  border: 2px solid #d1453b;
+  border-radius: 7px;
+  padding: 5px 10px;
+}
+
+.login-buttons-div button {
+  background-color: transparent;
+  border: 1px solid whitesmoke;
+  border-radius: 7px;
+  padding: 5px 10px;
+  color: white;
+  font-weight: 900;
+  font-size: medium;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+}
+
+.login-buttons-div button:hover {
+  background-color: white;
+  color: #d1453b;
+}
+
+
+
+/* SPLASH KEYFRAMES */
+
+@keyframes buttonSplashFadeIn {
+  0% {
+    background-color: transparent;
+  }
+
+  100%{
+    background-color: whitesmoke;
+  }
+}
+
+@keyframes buttonSplashFadeOut {
+  0% {
+    background-color: whitesmoke;
+  }
+
+  100%{
+    background-color: transparent;
+  }
+}
+
+@keyframes wordSplashFadeIn {
+ 0% {
+  color: white;
+ }
+
+ 100% {
+  color: #d1453b;
+ }
+}
+
+@keyframes wordSplashFadeOut {
+  0% {
+   color: #d1453b;
+  }
+
+  100% {
+   color: white;
+  }
+ }
