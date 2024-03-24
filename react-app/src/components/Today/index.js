@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import * as taskActions from "../../store/task"
 
 import TodayTaskFormUpdate from '../TodayTaskFormUpdate';
+import Footer from '../Footer';
 import TaskFormCreate from '../TaskFormCreate';
 
 
