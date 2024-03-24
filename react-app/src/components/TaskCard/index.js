@@ -358,11 +358,12 @@ return (
                 </span>
             </div>
 
-            <div className='whole-ass-footer'>
-			        <Footer />
-		        </div>
 
           </div>
+
+          <div className='whole-ass-footer'>
+			      <Footer />
+		      </div>
         </>
       )}
   </>
