@@ -57,7 +57,7 @@ def update_task(id):
 
 
 # Complete a task
-@task_routes.route("/<int:id>/complete", methods=["PUT"])
+@task_routes.route("/<int:id>/complete")
 @login_required
 def complete_task(id):
 
@@ -68,6 +68,7 @@ def complete_task(id):
         print(task)
         res = { "message": "Task does not exist, somehow"}
         return res
+
 
 # Delete a task
 @task_routes.route("/<int:id>/delete", methods=["DELETE"])
@@ -81,16 +82,15 @@ def delete_task(id):
     # --------------------------------------
     task_order_string = section_to_update.task_order
 
-    patternBegEnd = r'^' + re.escape(str(id)) + \
-        ',|,' + re.escape(str(id)) + '$'
+    patternBegEnd = r'^' + re.escape(str(id)) + ',|,' + re.escape(str(id)) + '$'
     patternMid = r',' + re.escape(str(id)) + ','
 
     task_order_string = re.sub(patternBegEnd, "", task_order_string)
     task_order_string = re.sub(patternMid, ",", task_order_string)
 
     section_to_update.task_order = task_order_string
-    # regex optimization end
     # --------------------------------------
+    # regex optimization end
 
     db.session.delete(task_to_delete)
     db.session.commit()
