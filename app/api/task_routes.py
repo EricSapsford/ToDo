@@ -25,8 +25,7 @@ def validation_errors_to_error_messages(validation_errors):
 @task_routes.route("/today")
 @login_required
 def todays_tasks():
-    tasks = Task.query.filter(
-        Task.due_date == str(datetime.date.today())).all()
+    tasks = Task.query.filter(Task.due_date == str(datetime.date.today())).all()
     if tasks:
         res = {"tasks": [task.to_dict() for task in tasks]}
         return res
@@ -60,6 +59,16 @@ def update_task(id):
 # Complete a task
 @task_routes.route("/<int:id>/complete", methods=["PUT"])
 @login_required
+def complete_task(id):
+
+    task = Task.query.get(id)
+    if task:
+        return task.to_dict()
+    else:
+        print(task)
+        res = { "message": "Task does not exist, somehow"}
+        return res
+
 # Delete a task
 @task_routes.route("/<int:id>/delete", methods=["DELETE"])
 @login_required
