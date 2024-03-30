@@ -8,6 +8,7 @@ import re
 
 task_routes = Blueprint("tasks", __name__)
 
+
 def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
@@ -18,7 +19,9 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
-### Get all tasks for today
+# Get all tasks for today
+
+
 @task_routes.route("/today")
 @login_required
 def todays_tasks():
@@ -27,11 +30,11 @@ def todays_tasks():
         res = {"tasks": [task.to_dict() for task in tasks]}
         return res
     else:
-        res = { "message": "No tasks for today"}, 200
+        res = {"message": "No tasks for today"}, 200
         return res
 
 
-### Update a task
+# Update a task
 @task_routes.route("/<int:id>/update", methods=["PUT"])
 @login_required
 def update_task(id):
@@ -50,9 +53,24 @@ def update_task(id):
         db.session.commit()
         return task_to_update.to_dict()
     if form.errors:
-        return { "errors": validation_errors_to_error_messages(form.errors) }
+        return {"errors": validation_errors_to_error_messages(form.errors)}
 
-### Delete a task
+
+# Complete a task
+@task_routes.route("/<int:id>/complete")
+@login_required
+def complete_task(id):
+
+    task = Task.query.get(id)
+    if task:
+        return task.to_dict()
+    else:
+        print(task)
+        res = { "message": "Task does not exist, somehow"}
+        return res
+
+
+# Delete a task
 @task_routes.route("/<int:id>/delete", methods=["DELETE"])
 @login_required
 def delete_task(id):
@@ -60,8 +78,8 @@ def delete_task(id):
     task_to_delete = Task.query.get(id)
     section_to_update = Section.query.get(task_to_delete.section_id)
 
-    #regex optimization start
-    #--------------------------------------
+    # regex optimization start
+    # --------------------------------------
     task_order_string = section_to_update.task_order
 
     patternBegEnd = r'^' + re.escape(str(id)) + ',|,' + re.escape(str(id)) + '$'
@@ -71,8 +89,8 @@ def delete_task(id):
     task_order_string = re.sub(patternMid, ",", task_order_string)
 
     section_to_update.task_order = task_order_string
-    #regex optimization end
-    #--------------------------------------
+    # --------------------------------------
+    # regex optimization end
 
     db.session.delete(task_to_delete)
     db.session.commit()
@@ -84,4 +102,4 @@ def delete_task(id):
         }
         return res
     else:
-        return { "message": "Unable to delete" }, 400
+        return {"message": "Unable to delete"}, 400
