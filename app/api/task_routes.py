@@ -25,8 +25,7 @@ def validation_errors_to_error_messages(validation_errors):
 @task_routes.route("/today")
 @login_required
 def todays_tasks():
-    tasks = Task.query.filter(
-        Task.due_date == str(datetime.date.today())).all()
+    tasks = Task.query.filter(Task.due_date == str(datetime.date.today())).all()
     if tasks:
         res = {"tasks": [task.to_dict() for task in tasks]}
         return res
@@ -58,8 +57,19 @@ def update_task(id):
 
 
 # Complete a task
-@task_routes.route("/<int:id>/complete", methods=["PUT"])
+@task_routes.route("/<int:id>/complete")
 @login_required
+def complete_task(id):
+
+    task = Task.query.get(id)
+    if task:
+        return task.to_dict()
+    else:
+        print(task)
+        res = { "message": "Task does not exist, somehow"}
+        return res
+
+
 # Delete a task
 @task_routes.route("/<int:id>/delete", methods=["DELETE"])
 @login_required
@@ -72,16 +82,15 @@ def delete_task(id):
     # --------------------------------------
     task_order_string = section_to_update.task_order
 
-    patternBegEnd = r'^' + re.escape(str(id)) + \
-        ',|,' + re.escape(str(id)) + '$'
+    patternBegEnd = r'^' + re.escape(str(id)) + ',|,' + re.escape(str(id)) + '$'
     patternMid = r',' + re.escape(str(id)) + ','
 
     task_order_string = re.sub(patternBegEnd, "", task_order_string)
     task_order_string = re.sub(patternMid, ",", task_order_string)
 
     section_to_update.task_order = task_order_string
-    # regex optimization end
     # --------------------------------------
+    # regex optimization end
 
     db.session.delete(task_to_delete)
     db.session.commit()
