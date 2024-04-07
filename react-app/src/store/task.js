@@ -2,8 +2,6 @@ const today = Date()
 const dayStringArr = today.split(" ")
 const dayString = `${dayStringArr[0]}, ${dayStringArr[2]} ${dayStringArr[1]} ${dayStringArr[3]} 00:00:00 GMT`
 
-//"/<int:id>/complete"
-
 
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
@@ -106,6 +104,25 @@ export const getAllTasksForTodayThunk = () => async (dispatch) => {
 
     dispatch(getAllTasksForToday(tasks))
     return tasks
+  } else {
+    const errors = await res.json();
+    return errors
+  }
+}
+
+//"/<int:id>/complete"
+
+// COMPLETE A TASK
+export const completeTaskThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/tasks/${taskId}/complete`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+  if (res.ok) {
+    const { task } = await res.json();
+
+    dispatch(completeTask(task))
+    return task
   } else {
     const errors = await res.json();
     return errors
