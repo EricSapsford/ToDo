@@ -13,6 +13,7 @@ const GET_ALL_TASKS_FOR_TODAY = "tasks/getAllTasksForToday"
 const CREATE_TASK = "tasks/createTask"
 const UPDATE_TASK = "tasks/updateTask"
 const DELETE_TASK = "tasks/deleteTask"
+const COMPLETE_TASK = "tasks/completeTask"
 
 const DRAG_BETWEEN_TASK = "tasks/dragBetweenTask"
 
@@ -52,6 +53,13 @@ const updateTask = (task) => {
 const deleteTask = (task) => {
   return {
     type: DELETE_TASK,
+    task
+  }
+}
+
+const completeTask = (task) => {
+  return {
+    type: COMPLETE_TASK,
     task
   }
 }
@@ -172,6 +180,23 @@ export const deleteTaskThunk = (task) => async (dispatch) => {
   }
 }
 
+// COMPLETE A TASK
+export const completeTaskThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/tasks/${taskId}/complete`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+  if (res.ok) {
+    const { task } = await res.json();
+
+    dispatch(completeTask(task))
+    return task
+  } else {
+    const errors = await res.json();
+    return errors
+  }
+}
+
 //===================================== REDUCER ===================================
 //===================================== REDUCER ===================================
 //===================================== REDUCER ===================================
@@ -179,7 +204,8 @@ export const deleteTaskThunk = (task) => async (dispatch) => {
 
 const initialState = {
   allTasks: {},
-  todaysTasks: {}
+  todaysTasks: {},
+  completedTask: {}
 }
 
 const taskReducer = (state = initialState, action) => {
@@ -243,6 +269,16 @@ const taskReducer = (state = initialState, action) => {
         delete newState.todaysTasks[action.task.id]
       }
       return newState
+    }
+
+    case COMPLETE_TASK: {
+      const newState = { ...state, completeTask: { ...state.completedTask} }
+      if (action.task) {
+        newState.completeTask[task.id]
+        return newState
+      } else {
+        return newState
+      }
     }
 
     case DRAG_BETWEEN_TASK: {
