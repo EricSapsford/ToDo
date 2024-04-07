@@ -2,6 +2,8 @@ const today = Date()
 const dayStringArr = today.split(" ")
 const dayString = `${dayStringArr[0]}, ${dayStringArr[2]} ${dayStringArr[1]} ${dayStringArr[3]} 00:00:00 GMT`
 
+//"/<int:id>/complete"
+
 
 //=================================== CONSTANTS ===================================
 //=================================== CONSTANTS ===================================
@@ -13,6 +15,7 @@ const GET_ALL_TASKS_FOR_TODAY = "tasks/getAllTasksForToday"
 const CREATE_TASK = "tasks/createTask"
 const UPDATE_TASK = "tasks/updateTask"
 const DELETE_TASK = "tasks/deleteTask"
+const COMPLETE_TASK = "tasks/completeTask"
 
 const DRAG_BETWEEN_TASK = "tasks/dragBetweenTask"
 
@@ -52,6 +55,13 @@ const updateTask = (task) => {
 const deleteTask = (task) => {
   return {
     type: DELETE_TASK,
+    task
+  }
+}
+
+const completeTask = (task) => {
+  return {
+    type: COMPLETE_TASK,
     task
   }
 }
