@@ -110,25 +110,6 @@ export const getAllTasksForTodayThunk = () => async (dispatch) => {
   }
 }
 
-//"/<int:id>/complete"
-
-// COMPLETE A TASK
-export const completeTaskThunk = () => async (dispatch) => {
-  const res = await fetch(`/api/tasks/${taskId}/complete`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  })
-  if (res.ok) {
-    const { task } = await res.json();
-
-    dispatch(completeTask(task))
-    return task
-  } else {
-    const errors = await res.json();
-    return errors
-  }
-}
-
 // CREATE A TASK
 export const createTaskThunk = (createdTask) => async (dispatch) => {
   const { name, description, dueDate, labels, sectionId, projectId } = createdTask
@@ -199,6 +180,23 @@ export const deleteTaskThunk = (task) => async (dispatch) => {
   }
 }
 
+// COMPLETE A TASK
+export const completeTaskThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/tasks/${taskId}/complete`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+  if (res.ok) {
+    const { task } = await res.json();
+
+    dispatch(completeTask(task))
+    return task
+  } else {
+    const errors = await res.json();
+    return errors
+  }
+}
+
 //===================================== REDUCER ===================================
 //===================================== REDUCER ===================================
 //===================================== REDUCER ===================================
@@ -206,7 +204,8 @@ export const deleteTaskThunk = (task) => async (dispatch) => {
 
 const initialState = {
   allTasks: {},
-  todaysTasks: {}
+  todaysTasks: {},
+  completedTask: {}
 }
 
 const taskReducer = (state = initialState, action) => {
@@ -270,6 +269,16 @@ const taskReducer = (state = initialState, action) => {
         delete newState.todaysTasks[action.task.id]
       }
       return newState
+    }
+
+    case COMPLETE_TASK: {
+      const newState = { ...state, completeTask: { ...state.completedTask} }
+      if (action.task) {
+        newState.completeTask[task.id]
+        return newState
+      } else {
+        return newState
+      }
     }
 
     case DRAG_BETWEEN_TASK: {
