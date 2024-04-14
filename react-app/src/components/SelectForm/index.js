@@ -75,6 +75,44 @@ function SelectForm() {
 
 	return (
 		<>
+    {toggleForm ?
+      <div className="login-form-div">
+        <div className="log-in-title">
+        </div>
+        <form onSubmit={handleLogin}>
+          <ul>
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
+          <div className="login-buttons-and-inputs-div">
+            <div className="login-inputs-div">
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="Email"
+                />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Password"
+                />
+            </div>
+            <div className="login-buttons-div">
+              <button type="submit">Log In</button>
+              <button onClick={handleDemoUser}>
+                Log In as Demo User
+              </button>
+              <button type="button" onClick={clickToggleForm}>Not a user? Sign up here!</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    :
 		<div className="signup-form-div">
 			<form onSubmit={handleSignup}>
 				<div className="error-message-div">
