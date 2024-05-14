@@ -83,26 +83,47 @@ function SelectModal ({ section, sectionId, projectId, formType }) {
         {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
       </div>}
 
-      <div className="section-form-buttons">
+      {isLoaded && sectionsArr.length > 0 && project.view === "List" && taskArr.length > 0 && (
+      <>
+      <div className="task-card-center-div">
         <div>
-          <button
-            className="section-form-submit-button"
-            onClick={handleSubmit}
-            disabled={disabled}
-          >
-            {formType === "Create" ? "Add section" : "Save"}
-          </button>
+          <h1>{project.name}</h1>
         </div>
 
-        <div>
-          <button
-            className="section-form-cancel-button"
-            onClick={toggleSectionName}
+        <DragDropContext
+          onDragEnd={handleDragEnd}
+        >
+          <Droppable
+            droppableId={`${sectionsArr[0].id}`}
           >
-            Cancel
-          </button>
-        </div>
+            {(provided) => (
+              <div
+                //! GON BE HONEST, DON'T KNOW EXACTLY HOW TO USE THESE
+                ref = {provided.innerRef}
+                {...provided.droppableProps}
+              >
+              {taskArr.map((task, index) => (
+                <div key={task.id} className="task-update-button">
+                <TaskFormUpdate key={task.id} task={task} index={index}/>
+              </div>
+              ))}
+              {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+          <div className="add-task-button-div">
+            <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
+          </div>
+
       </div>
+
+      <div className='whole-ass-footer'>
+			  <Footer />
+		  </div>
+      </>
+      )}
 
       </form>
       :
