@@ -53,13 +53,13 @@ function Projection({ project }) {
       <div className="project-card-modal-button-edit">
         <OpenModalButton
           buttonText={<i class="fa-solid fa-pen-to-square fa-xl"></i>}
-          modalComponent={<ProjectFormUpdate project={project}/>}
+          modalComponent={<selectUpdate project={project}/>}
           />
       </div>
       <div className="project-card-modal-button-delete">
           <OpenModalButton
           buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
-          modalComponent={<ProjectFormDelete projectId={project.id}/>}
+          modalComponent={<selectDelete projectId={project.id}/>}
           />
       </div>
     </div>
