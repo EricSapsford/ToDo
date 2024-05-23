@@ -56,12 +56,28 @@ function Projection({ project }) {
           modalComponent={<selectUpdate project={project}/>}
           />
       </div>
-      <div className="project-card-modal-button-delete">
-          <OpenModalButton
-          buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
-          modalComponent={<selectDelete projectId={project.id}/>}
-          />
-      </div>
+        <div className='today-project-center-div'>
+          <div className='today-project-column-overdiv'>
+            {[...projectIdSet].map((projectId) =>(
+            <div key={projectId} className='today-project-header'>
+              <Link
+                to={`/projects/${projectId}`}
+                style={{textDecoration: "none"}}
+              >
+                <h2>{projectNameObj[projectId]}</h2>
+              </Link>
+              {taskArr.map((task) => (
+                task.projectId === projectId ?
+                <div key={task.id} className="task-update-button">
+                  <TodayTaskFormUpdate task={task} />
+                </div>
+              :
+                null
+              ))}
+            </div>
+            ))}
+          </div>
+        </div>
     </div>
     </>
   )
