@@ -127,28 +127,7 @@ function SelectUpdate ({ section, sectionId, projectId }) {
 
       </form>
       :
-      formType === "Create" ?
-      <button
-        className="section-title-create-button"
-        onClick={toggleSectionName}
-        onMouseEnter={toggleGuts}
-        onMouseLeave={toggleGuts}
-      >
-        <div className="section-form-create-button-div">Add Section</div>
-      </button>
-      :
-      <span>
-        <button className="section-title-edit-button" onClick={toggleSectionName}   aria-label={`${section.name} section. Click to edit`}>
-          {section.name}
-        </button>
-
-        <span className="section-form-delete-button">
-        <OpenModalButton
-          buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
-          modalComponent={<SectionFormDelete sectionId={sectionId}/>}
-        />
-        </span>
-      </span>
+        <div>this shouldn't be possible, fix your code</div>
       }
     </div>
     </>
