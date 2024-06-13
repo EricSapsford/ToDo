@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 import * as projectActions from "../../store/project";
 import "./ProjectForm.css"
 
-function ProjectForm({ project, formType }) {
+function SelectProjForm({ project, formType }) {
   // console.log("project coming in from update", project)
   // console.log("and here's the project id", project.id)
   const dispatch = useDispatch();
@@ -193,4 +193,4 @@ function ProjectForm({ project, formType }) {
   )
 }
 
-export default ProjectForm
+export default SelectProjForm
