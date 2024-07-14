@@ -57,42 +57,6 @@ function selectRead () {
             </div>
           </div>
       )}
-
-      {isLoaded && projectIdSet.size === 0 && (
-    <>
-    <div className="task-card-card-overdiv">
-
-      <div className="task-card-card-first-row-div">
-        <div className="task-card-card-name-div">
-          {task.name}
-        </div>
-          <OpenModalButton
-            buttonText={<i class="fa-solid fa-pen-to-square fa-xl"></i>}
-            modalComponent={<TaskFormUpdate task={task}/>}
-          />
-          <button
-            className="update-task-button"
-            onClick={toggleUpdateForm}
-          >
-            <i class="fa-solid fa-pen-to-square fa-xl"></i>
-          </button>
-          <OpenModalButton
-            buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
-            modalComponent={<TaskFormDelete taskId={task.id}/>}
-          />
-      </div>
-      <div className="task-card-card-description-div">{task.description}</div>
-      <div className="task-card-card-label-div">Labels:
-        {labelsArr.map((label) => (
-          <span className="task-card-card-label-span">{label}</span>
-        ))}
-      </div>
-      <div>
-        {dueDateArr.length > 0 ? <span>{day} {dueDateArr[2]} {dueDateArr[1]}</span> : null}
-      </div>
-    </div>
-  </>
-      )}
     </>
   )
 }
