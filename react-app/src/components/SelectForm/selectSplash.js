@@ -59,42 +59,110 @@ function selectSplash(userInfo) {
 	return (
 		<>
     {
-      <div className="login-form-div">
-        <div className="log-in-title">
+    <div className="section-form-overdiv">
+      {editSectionNameToggle ?
+      <form
+        onSubmit={handleSubmit}
+        // encType="multipart/form-data"
+      >
+
+      {formType === "Update" ?
+      <div>
+        <div>
+          <input
+            className="section-name-input-div"
+            type="text"
+            name="name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            placeholder={section.name}
+          />
         </div>
-        <form onSubmit={handleLogin}>
-          <ul>
-            {errors.map((error, idx) => (
-              <li key={idx}>{error}</li>
-            ))}
-          </ul>
-          <div className="login-buttons-and-inputs-div">
-            <div className="login-inputs-div">
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="Email"
-                />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="Password"
-                />
-            </div>
-            <div className="login-buttons-div">
-              <button type="submit">Log In</button>
-              <button onClick={handleDemoUser}>
-                Log In as Demo User
-              </button>
-              <button type="button" onClick={clickToggleForm}>Not a user? Sign up here!</button>
-            </div>
-          </div>
-        </form>
+        {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
       </div>
+      :
+      <div>
+        <div>
+          <input
+            className="section-name-input-div"
+            type="text"
+            name="name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            placeholder={"Name this section"}
+          />
+        </div>
+        {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
+      </div>}
+
+      {isLoaded && sectionsArr.length > 0 && project.view === "List" && taskArr.length > 0 && (
+      <>
+      <div className="task-card-center-div">
+        <div>
+          <h1>{project.name}</h1>
+        </div>
+
+        <DragDropContext
+          onDragEnd={handleDragEnd}
+        >
+          <Droppable
+            droppableId={`${sectionsArr[0].id}`}
+          >
+            {(provided) => (
+              <div
+                //! GON BE HONEST, DON'T KNOW EXACTLY HOW TO USE THESE
+                ref = {provided.innerRef}
+                {...provided.droppableProps}
+              >
+              {taskArr.map((task, index) => (
+                <div key={task.id} className="task-update-button">
+                <TaskFormUpdate key={task.id} task={task} index={index}/>
+              </div>
+              ))}
+              {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+          <div className="add-task-button-div">
+            <TaskFormCreate projectId={projectId} sectionId={sectionsArr[0].id}/>
+          </div>
+
+      </div>
+
+      <div className='whole-ass-footer'>
+			  <Footer />
+		  </div>
+      </>
+      )}
+
+      </form>
+      :
+      formType === "Create" ?
+      <button
+        className="section-title-create-button"
+        onClick={toggleSectionName}
+        onMouseEnter={toggleGuts}
+        onMouseLeave={toggleGuts}
+      >
+        <div className="section-form-create-button-div">Add Section</div>
+      </button>
+      :
+      <span>
+        <button className="section-title-edit-button" onClick={toggleSectionName}   aria-label={`${section.name} section. Click to edit`}>
+          {section.name}
+        </button>
+
+        <span className="section-form-delete-button">
+        <OpenModalButton
+          buttonText={<i class="fa-regular fa-trash-can fa-xl"></i>}
+          modalComponent={<SectionFormDelete sectionId={sectionId}/>}
+        />
+        </span>
+      </span>
+      }
+    </div>
     }
 		</>
 	);
