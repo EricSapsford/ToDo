@@ -60,27 +60,12 @@ function selectSplash(userInfo) {
 		<>
     {
     <div className="section-form-overdiv">
-      {editSectionNameToggle ?
+
       <form
         onSubmit={handleSubmit}
         // encType="multipart/form-data"
       >
 
-      {formType === "Update" ?
-      <div>
-        <div>
-          <input
-            className="section-name-input-div"
-            type="text"
-            name="name"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            placeholder={section.name}
-          />
-        </div>
-        {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
-      </div>
-      :
       <div>
         <div>
           <input
@@ -93,7 +78,7 @@ function selectSplash(userInfo) {
           />
         </div>
         {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
-      </div>}
+      </div>
 
       {isLoaded && sectionsArr.length > 0 && project.view === "List" && taskArr.length > 0 && (
       <>
@@ -161,7 +146,7 @@ function selectSplash(userInfo) {
         />
         </span>
       </span>
-      }
+
     </div>
     }
 		</>
