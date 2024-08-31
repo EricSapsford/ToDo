@@ -135,9 +135,6 @@ function selectSplash(userInfo) {
       </button>
       :
       <span>
-        <button className="section-title-edit-button" onClick={toggleSectionName}   aria-label={`${section.name} section. Click to edit`}>
-          {section.name}
-        </button>
 
         <span className="section-form-delete-button">
         <OpenModalButton

@@ -34,10 +34,6 @@ function selectRead () {
               <div className='today-project-column-overdiv'>
                 {[...projectIdSet].map((projectId) =>(
                 <div key={projectId} className='today-project-header'>
-                  <Link
-                    to={`/projects/${projectId}`}
-                    style={{textDecoration: "none"}}
-                  >
                     <h2>{projectNameObj[projectId]}</h2>
                   </Link>
                   {taskArr.map((task) => (
