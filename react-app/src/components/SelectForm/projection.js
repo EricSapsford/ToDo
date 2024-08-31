@@ -50,12 +50,6 @@ function Projection({ project }) {
           <div alt={project.name}>{project.name}</div>
         </div>
       </Link>
-      <div className="project-card-modal-button-edit">
-        <OpenModalButton
-          buttonText={<i class="fa-solid fa-pen-to-square fa-xl"></i>}
-          modalComponent={<selectUpdate project={project}/>}
-          />
-      </div>
         <div className='today-project-center-div'>
           <div className='today-project-column-overdiv'>
             {[...projectIdSet].map((projectId) =>(

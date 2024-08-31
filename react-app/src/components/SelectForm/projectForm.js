@@ -113,10 +113,6 @@ function SelectProjForm({ project, formType }) {
           {errors.name && (<div className="errorsDiv">{errors.name}</div>)}
         </div>
 
-        <div>
-          {errors.color && (<div className="errorsDiv">{errors.color}</div>)}
-        </div>
-
         <div className="project-view-radio-overdiv">
             <div className="project-view-radio-divs">
             <div
@@ -173,12 +169,6 @@ function SelectProjForm({ project, formType }) {
         </div>
 
         <div className="project-form-add-cancel-buttons">
-          <button
-            className="project-form-add-button"
-            disabled={disabled}
-          >
-            {formType === "Create" ? "Add" : "Save"}
-          </button>
           <button
             className="project-form-cancel-button"
             type="button"

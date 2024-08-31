@@ -39,9 +39,6 @@ function selectDelete({ projectId }) {
           <h1>Delete this Project?</h1>
         </div>
         <div className="project-form-modal-buttons">
-          <button onClick={closeModal}>
-            No, keep
-          </button>
           <button onClick={handleDelete}>
             Yes, delete
           </button>
